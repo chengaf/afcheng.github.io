@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. 单看RWR公式和PageRank略相似，再过一遍再理解c.这里的记录只针对我关注的（个人笔记），必定片面，想对相关技术做全面了解这里不合适，望别被我带偏    符号化表示1, N 个网页（Network中N个节点），2, 网页间链接关系（节点间的">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-01T12:23:09.436Z">
+<meta property="og:updated_time" content="2019-01-01T12:37:25.304Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PageRank and RWR">
 <meta name="twitter:description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. 单看RWR公式和PageRank略相似，再过一遍再理解c.这里的记录只针对我关注的（个人笔记），必定片面，想对相关技术做全面了解这里不合适，望别被我带偏    符号化表示1, N 个网页（Network中N个节点），2, 网页间链接关系（节点间的">
@@ -93,17 +93,18 @@
 <hr>
 <ul>
 <li><h4 id="符号化表示"><a href="#符号化表示" class="headerlink" title="符号化表示"></a>符号化表示</h4><p>1, <script type="math/tex">N</script> 个网页（Network中<script type="math/tex">N</script>个节点），<br>2, 网页间链接关系（节点间的邻接关系）<script type="math/tex">A\in R^{N*N}</script>(可以类似马氏链的状态转移矩阵)。</p>
-<hr>
 </li>
 </ul>
-<p>  最原始PageRank要得到网页的重要性(被用户访问到的可能性) 用向量 <script type="math/tex">B=(b_{1},b_{2},...,{b_{N}})^{T}</script> 表示。<script type="math/tex">B</script> 可根据如下公式计算:</p>
-<script type="math/tex; mode=display">B_{t}=B_{t-1}A</script><p>  <script type="math/tex">t</script> 时刻的网页重要性<script type="math/tex">B_{t}</script> 取决于<script type="math/tex">t-1</script> 时刻的 <script type="math/tex">B_{t-1}</script> 以及链接关系<script type="math/tex">A</script> 。最终PageRank需要的是马尔科夫链的平稳分布，</p>
-<p>  将用户个人偏好考虑到（Personalized PageRank）:</p>
+<hr>
+<p>​    最原始PageRank要得到网页的重要性(被用户访问到的可能性) 用向量 <script type="math/tex">B=(b_{1},b_{2},...,{b_{N}})^{T}</script> 表示。<script type="math/tex">B</script> 可根据如下公式计算:</p>
+<p>​    <script type="math/tex">B_{t}=B_{t-1}A​</script>     公式（1）</p>
+<p>​    <script type="math/tex">t</script> 时刻的网页重要性<script type="math/tex">B_{t}</script> 取决于<script type="math/tex">t-1</script> 时刻的 <script type="math/tex">B_{t-1}</script> 以及链接关系<script type="math/tex">A</script> 。最终PageRank需要的是马尔科夫链的平稳分布，</p>
+<p>将用户个人偏好考虑到（Personalized PageRank）:</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://chengaf.github.io/afcheng.github.io/2018/12/29/PageRank-and-RWR/" data-id="cjqdq4iss0000fob6bg1xgioj" class="article-share-link">Share</a>
+      <a data-url="https://chengaf.github.io/afcheng.github.io/2018/12/29/PageRank-and-RWR/" data-id="cjqdqmy220000jib6avfi7qcm" class="article-share-link">Share</a>
       
       
     </footer>

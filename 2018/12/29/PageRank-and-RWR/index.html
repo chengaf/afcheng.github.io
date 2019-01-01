@@ -7,17 +7,17 @@
   
   <title>PageRank and RWR | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="-写在前面 a. 看到一篇paper里用RWR (random walk with restart)，顺便把PageRank过一遍儿。 b. 已知-输入-输出    已知 1, N 个网页，2, 网页间链接矩阵A\in R^{N*N}(可以类似马氏链的状态转移矩阵)。3, PageRank：网页的重要性(被用户访问到的可能性) 用向量 B=(b_{1},b_{2},...,{b_{N}})^{">
+  <meta name="description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，顺便把PageRank过一遍儿。b. 已知-输入-输出    已知1, N 个网页，2, 网页间链接矩阵A\in R^{N*N}(可以类似马氏链的状态转移矩阵)。3, PageRank：网页的重要性(被用户访问到的可能性) 用向量 B=(b_{1},b_{2},...,{b_{N}})^{T} 表">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PageRank and RWR">
 <meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2018/12/29/PageRank-and-RWR/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="-写在前面 a. 看到一篇paper里用RWR (random walk with restart)，顺便把PageRank过一遍儿。 b. 已知-输入-输出    已知 1, N 个网页，2, 网页间链接矩阵A\in R^{N*N}(可以类似马氏链的状态转移矩阵)。3, PageRank：网页的重要性(被用户访问到的可能性) 用向量 B=(b_{1},b_{2},...,{b_{N}})^{">
+<meta property="og:description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，顺便把PageRank过一遍儿。b. 已知-输入-输出    已知1, N 个网页，2, 网页间链接矩阵A\in R^{N*N}(可以类似马氏链的状态转移矩阵)。3, PageRank：网页的重要性(被用户访问到的可能性) 用向量 B=(b_{1},b_{2},...,{b_{N}})^{T} 表">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-01T07:35:52.612Z">
+<meta property="og:updated_time" content="2019-01-01T08:15:45.232Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PageRank and RWR">
-<meta name="twitter:description" content="-写在前面 a. 看到一篇paper里用RWR (random walk with restart)，顺便把PageRank过一遍儿。 b. 已知-输入-输出    已知 1, N 个网页，2, 网页间链接矩阵A\in R^{N*N}(可以类似马氏链的状态转移矩阵)。3, PageRank：网页的重要性(被用户访问到的可能性) 用向量 B=(b_{1},b_{2},...,{b_{N}})^{">
+<meta name="twitter:description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，顺便把PageRank过一遍儿。b. 已知-输入-输出    已知1, N 个网页，2, 网页间链接矩阵A\in R^{N*N}(可以类似马氏链的状态转移矩阵)。3, PageRank：网页的重要性(被用户访问到的可能性) 用向量 B=(b_{1},b_{2},...,{b_{N}})^{T} 表">
   
     <link rel="alternate" href="/afcheng.github.io/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -87,22 +87,19 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><br></p>
-<div style="background:#D3D3D3">
-<strong>-写在前面</strong><br>
-a. 看到一篇paper里用RWR (random walk with restart)，顺便把PageRank过一遍儿。<br>
-b. 已知-输入-输出<br></div>
-
-
 <ul>
-<li><p><strong>已知</strong></p>
-<p>1, <script type="math/tex">N</script> 个网页，<br>2, 网页间链接矩阵<script type="math/tex">A\in R^{N*N}</script>(可以类似马氏链的状态转移矩阵)。<br>3, PageRank：网页的重要性(被用户访问到的可能性) 用向量 <script type="math/tex">B=(b_{1},b_{2},...,{b_{N}})^{T}</script> 表示。  </p>
+<li><h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><em>a. 看到一篇paper里用RWR (random walk with restart)，顺便把PageRank过一遍儿。<br>b. 已知-输入-输出</em></li>
+</ul>
+<hr>
+<ul>
+<li><h4 id="已知"><a href="#已知" class="headerlink" title="已知"></a>已知</h4><p>1, <script type="math/tex">N</script> 个网页，<br>2, 网页间链接矩阵<script type="math/tex">A\in R^{N*N}</script>(可以类似马氏链的状态转移矩阵)。<br>3, PageRank：网页的重要性(被用户访问到的可能性) 用向量 <script type="math/tex">B=(b_{1},b_{2},...,{b_{N}})^{T}</script> 表示。  </p>
 </li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://chengaf.github.io/afcheng.github.io/2018/12/29/PageRank-and-RWR/" data-id="cjqdfv19b0000y2b61eh77zn0" class="article-share-link">Share</a>
+      <a data-url="https://chengaf.github.io/afcheng.github.io/2018/12/29/PageRank-and-RWR/" data-id="cjqdhadpq00006ub6ww78p3jy" class="article-share-link">Share</a>
       
       
     </footer>

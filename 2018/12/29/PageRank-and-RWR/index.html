@@ -7,17 +7,17 @@
   
   <title>PageRank and RWR | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. 单看RWR公式和PageRank略相似，再过一遍再理解c. 这里的记录只针对我关注的（个人笔记），必定片面，想对相关技术做全面了解这里不合适，望别被我带偏    符号化表示1, N 个网页（Network中N个节点），2, 网页间链接关系（节点间">
+  <meta name="description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. 单看RWR公式和PageRank略相似，再过一遍再理解c. 这里的记录只针对我关注的（个人笔记），必定片面，想对相关技术做全面了解这里不合适，望别被我带偏    符号化表示1, N 个网页（Network中N个节点），2, 归一化的网页间链接关系">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PageRank and RWR">
 <meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2018/12/29/PageRank-and-RWR/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. 单看RWR公式和PageRank略相似，再过一遍再理解c. 这里的记录只针对我关注的（个人笔记），必定片面，想对相关技术做全面了解这里不合适，望别被我带偏    符号化表示1, N 个网页（Network中N个节点），2, 网页间链接关系（节点间">
+<meta property="og:description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. 单看RWR公式和PageRank略相似，再过一遍再理解c. 这里的记录只针对我关注的（个人笔记），必定片面，想对相关技术做全面了解这里不合适，望别被我带偏    符号化表示1, N 个网页（Network中N个节点），2, 归一化的网页间链接关系">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-02T01:51:51.009Z">
+<meta property="og:updated_time" content="2019-01-07T01:46:10.074Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PageRank and RWR">
-<meta name="twitter:description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. 单看RWR公式和PageRank略相似，再过一遍再理解c. 这里的记录只针对我关注的（个人笔记），必定片面，想对相关技术做全面了解这里不合适，望别被我带偏    符号化表示1, N 个网页（Network中N个节点），2, 网页间链接关系（节点间">
+<meta name="twitter:description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. 单看RWR公式和PageRank略相似，再过一遍再理解c. 这里的记录只针对我关注的（个人笔记），必定片面，想对相关技术做全面了解这里不合适，望别被我带偏    符号化表示1, N 个网页（Network中N个节点），2, 归一化的网页间链接关系">
   
     <link rel="alternate" href="/afcheng.github.io/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -92,7 +92,7 @@
 </ul>
 <hr>
 <ul>
-<li><h4 id="符号化表示"><a href="#符号化表示" class="headerlink" title="符号化表示"></a>符号化表示</h4><p>1, <script type="math/tex">N</script> 个网页（Network中<script type="math/tex">N</script>个节点），<br>2, 网页间链接关系（节点间的邻接关系）<script type="math/tex">A\in R^{N*N}</script>(可以类似马氏链的状态转移矩阵)。</p>
+<li><h4 id="符号化表示"><a href="#符号化表示" class="headerlink" title="符号化表示"></a>符号化表示</h4><p>1, <script type="math/tex">N</script> 个网页（Network中<script type="math/tex">N</script>个节点），<br>2, 归一化的网页间链接关系（节点间的邻接关系）<script type="math/tex">A\in R^{N*N}</script>(可以类似马氏链的状态转移矩阵)。</p>
 <ul>
 <li><p><strong>PageRank</strong> </p>
 <p>最原始PageRank要得到网页的重要性(被用户访问到的可能性) 用向量 <script type="math/tex">B=(b_{1},b_{2},...,{b_{N}})^{T}</script> 表示。<script type="math/tex">B</script> 可根据如下公式计算:</p>
@@ -103,6 +103,7 @@
 <script type="math/tex; mode=display">B_{t} = c\ B_{t-1}\ A+(1-c)\ p\ \ \ 公式(2)</script><p>其中，<script type="math/tex">1-c</script> 表示用户不按照链接关系随机访问其它页面的概率，<script type="math/tex">p=(\frac{1}{N},\frac{1}{N},...)^{T}</script> 表示均匀的访问其它页面。</p>
 </li>
 <li><p><strong>Random Walk with Restart</strong> </p>
+<p>Random Walk的游走规则公式(1)</p>
 </li>
 </ul>
 </li>
@@ -111,7 +112,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://chengaf.github.io/afcheng.github.io/2018/12/29/PageRank-and-RWR/" data-id="cjqej0pgy0000qkb6m1ldsy30" class="article-share-link">Share</a>
+      <a data-url="https://chengaf.github.io/afcheng.github.io/2018/12/29/PageRank-and-RWR/" data-id="cjsubjto30002g8b69yu14swu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -119,6 +120,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/afcheng.github.io/2019/03/04/gcn/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          gcn
+        
+      </div>
+    </a>
   
   
     <a href="/afcheng.github.io/2018/12/29/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
@@ -147,7 +157,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/afcheng.github.io/archives/2018/12/">December 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/afcheng.github.io/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/afcheng.github.io/archives/2018/12/">December 2018</a></li></ul>
     </div>
   </div>
 
@@ -158,6 +168,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/afcheng.github.io/2019/03/04/gcn/">gcn</a>
+          </li>
         
           <li>
             <a href="/afcheng.github.io/2018/12/29/PageRank-and-RWR/">PageRank and RWR</a>

@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
   <title>PageRank and RWR | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. 单看RWR公式和PageRank略相似，再过一遍再理解c. 这里的记录只针对我关注的（个人笔记），必定片面，想对相关技术做全面了解这里不合适，望别被我带偏    符号化表示1, N 个网页（Network中N个节点），2, 归一化的网页间链接关系">
+  <meta name="description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. 单看RWR公式和PageRank略相似，再过一遍再理解    符号化表示1, N 个网页（Network中N个节点），2, 归一化的网页间链接关系（节点间的邻接关系）A\in R^{N*N}(可以类似马氏链的状态转移矩阵)。  PageRank">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PageRank and RWR">
 <meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2018/12/29/PageRank-and-RWR/index.html">
 <meta property="og:site_name" content="Little&#39;s Blogs">
-<meta property="og:description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. 单看RWR公式和PageRank略相似，再过一遍再理解c. 这里的记录只针对我关注的（个人笔记），必定片面，想对相关技术做全面了解这里不合适，望别被我带偏    符号化表示1, N 个网页（Network中N个节点），2, 归一化的网页间链接关系">
+<meta property="og:description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. 单看RWR公式和PageRank略相似，再过一遍再理解    符号化表示1, N 个网页（Network中N个节点），2, 归一化的网页间链接关系（节点间的邻接关系）A\in R^{N*N}(可以类似马氏链的状态转移矩阵)。  PageRank">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-07T01:46:10.074Z">
+<meta property="og:updated_time" content="2019-07-10T10:36:36.670Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PageRank and RWR">
-<meta name="twitter:description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. 单看RWR公式和PageRank略相似，再过一遍再理解c. 这里的记录只针对我关注的（个人笔记），必定片面，想对相关技术做全面了解这里不合适，望别被我带偏    符号化表示1, N 个网页（Network中N个节点），2, 归一化的网页间链接关系">
+<meta name="twitter:description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. 单看RWR公式和PageRank略相似，再过一遍再理解    符号化表示1, N 个网页（Network中N个节点），2, 归一化的网页间链接关系（节点间的邻接关系）A\in R^{N*N}(可以类似马氏链的状态转移矩阵)。  PageRank">
   
     <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
   
@@ -180,7 +180,7 @@
       
         <p><br></p>
 <ul>
-<li><h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><em>a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。<br>b. 单看RWR公式和PageRank略相似，再过一遍再理解<br>c. 这里的记录只针对我关注的（个人笔记），必定片面，想对相关技术做<strong>全面</strong>了解这里<strong>不合适</strong>，望别被我带偏</em></li>
+<li><h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><em>a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。<br>b. 单看RWR公式和PageRank略相似，再过一遍再理解</em></li>
 </ul>
 <hr>
 <ul>

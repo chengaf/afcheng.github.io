@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
   <title>PageRank and RWR | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. 单看RWR公式和PageRank略相似，再过一遍再理解    符号化表示1, N 个网页（Network中N个节点），2, 归一化的网页间链接关系（节点间的邻接关系）A\in R^{N*N}(可以类似马氏链的状态转移矩阵)。  PageRank">
+  <meta name="description" content="a. 一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. RWR以及PageRank的简单理解">
 <meta name="keywords" content="基础算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PageRank and RWR">
 <meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2018/12/29/PageRank-and-RWR/index.html">
 <meta property="og:site_name" content="Little&#39;s Blogs">
-<meta property="og:description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. 单看RWR公式和PageRank略相似，再过一遍再理解    符号化表示1, N 个网页（Network中N个节点），2, 归一化的网页间链接关系（节点间的邻接关系）A\in R^{N*N}(可以类似马氏链的状态转移矩阵)。  PageRank">
+<meta property="og:description" content="a. 一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. RWR以及PageRank的简单理解">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-10T10:50:31.017Z">
+<meta property="og:updated_time" content="2019-07-10T11:07:49.910Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PageRank and RWR">
-<meta name="twitter:description" content="写在前面a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. 单看RWR公式和PageRank略相似，再过一遍再理解    符号化表示1, N 个网页（Network中N个节点），2, 归一化的网页间链接关系（节点间的邻接关系）A\in R^{N*N}(可以类似马氏链的状态转移矩阵)。  PageRank">
+<meta name="twitter:description" content="a. 一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. RWR以及PageRank的简单理解">
   
     <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
   
@@ -180,10 +180,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><br></p>
-<ul>
-<li><h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><em>a. 看到一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。<br>b. 单看RWR公式和PageRank略相似，再过一遍再理解</em></li>
-</ul>
+<p><em>a. 一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。<br>b. RWR以及PageRank的简单理解</em></p>
 <hr>
+<a id="more"></a>
 <ul>
 <li><h4 id="符号化表示"><a href="#符号化表示" class="headerlink" title="符号化表示"></a>符号化表示</h4><p>1, <script type="math/tex">N</script> 个网页（Network中<script type="math/tex">N</script>个节点），<br>2, 归一化的网页间链接关系（节点间的邻接关系）<script type="math/tex">A\in R^{N*N}</script>(可以类似马氏链的状态转移矩阵)。</p>
 <ul>
@@ -599,5 +598,22 @@ MathJax.Hub.Queue(function() {
 
 </div>
   </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
 </body>
 </html>

@@ -6,20 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
-  <title>PageRank and RWR | Little&#39;s Blogs</title>
+  <title>Tag: LeetCode | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="a. 一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. RWR以及PageRank的简单理解">
-<meta name="keywords" content="基础算法">
-<meta property="og:type" content="article">
-<meta property="og:title" content="PageRank and RWR">
-<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2018/12/29/PageRank-and-RWR/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Little&#39;s Blogs">
+<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/tags/LeetCode/index.html">
 <meta property="og:site_name" content="Little&#39;s Blogs">
-<meta property="og:description" content="a. 一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. RWR以及PageRank的简单理解">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-10T11:07:49.910Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PageRank and RWR">
-<meta name="twitter:description" content="a. 一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。b. RWR以及PageRank的简单理解">
+<meta name="twitter:title" content="Little&#39;s Blogs">
   
     <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
   
@@ -157,191 +152,60 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-PageRank-and-RWR" class="article article-type-post " itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      PageRank and RWR
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/afcheng.github.io/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/afcheng.github.io/2019/09/09/LeetCode-104-Maximum-Depth-of-Binary-Tree/" class="archive-article-date">
+  	<time datetime="2019-09-09T02:59:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-09</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/afcheng.github.io/2019/09/09/LeetCode-104-Maximum-Depth-of-Binary-Tree/">LeetCode 104. Maximum Depth of Binary Tree</a>
     </h1>
   
 
-        
-        <a href="/afcheng.github.io/2018/12/29/PageRank-and-RWR/" class="archive-article-date">
-  	<time datetime="2018-12-29T07:11:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><br></p>
-<p><em>a. 一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。<br>b. RWR以及PageRank的简单理解</em></p>
-<hr>
-<a id="more"></a>
-<ul>
-<li><h4 id="符号化表示"><a href="#符号化表示" class="headerlink" title="符号化表示"></a>符号化表示</h4><p>1, <script type="math/tex">N</script> 个网页（Network中<script type="math/tex">N</script>个节点），<br>2, 归一化的网页间链接关系（节点间的邻接关系）<script type="math/tex">A\in R^{N*N}</script>(可以类似马氏链的状态转移矩阵)。</p>
-<ul>
-<li><p><strong>PageRank</strong> </p>
-<p>最原始PageRank要得到网页的重要性(被用户访问到的可能性) 用向量 <script type="math/tex">B=(b_{1},b_{2},...,{b_{N}})^{T}</script> 表示。<script type="math/tex">B</script> 可根据如下公式计算:</p>
-<script type="math/tex; mode=display">B_{t}=B_{t-1}\ A \ \ \ 公式(1)</script><p><script type="math/tex">t</script> 时刻的网页重要性<script type="math/tex">B_{t}</script> 取决于<script type="math/tex">t-1</script> 时刻的 <script type="math/tex">B_{t-1}</script> 以及链接关系<script type="math/tex">A</script> 。如果<script type="math/tex">B_{t}=B_{t-1}A=B_{t-1}</script> ,则此时的 <script type="math/tex">B_{t+1}=B_{t}=B_{t-1}</script> 称为马尔科夫链的平稳分布(stationary distribution)，PageRank需要的网页被用户看到的概率就是这个平稳分布。</p>
-</li>
-<li><p><strong>Personalized PageRank</strong></p>
-<p>考虑到将用户个人偏好(用户肯定是想访问啥访问啥)，所以在公式(1)基础上除了考虑链接关系得再加一项考虑以一定概率随机访问其它所有页面，公式化描述如下：</p>
-<script type="math/tex; mode=display">B_{t} = c\ B_{t-1}\ A+(1-c)\ p\ \ \ 公式(2)</script><p>其中，<script type="math/tex">1-c</script> 表示用户不按照链接关系随机访问其它页面的概率，<script type="math/tex">p=(\frac{1}{N},\frac{1}{N},...)^{T}</script> 表示均匀的访问其它页面。</p>
-</li>
-<li><p><strong>Random Walk with Restart</strong> </p>
-<p>Random Walk的游走规则公式(1)</p>
-</li>
-</ul>
-</li>
-</ul>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">基础算法</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">LeetCode</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://chengaf.github.io/afcheng.github.io/2018/12/29/PageRank-and-RWR/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/afcheng.github.io/2019/03/04/GCN/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          GCN
-        
-      </div>
-    </a>
   
   
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -364,9 +228,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,

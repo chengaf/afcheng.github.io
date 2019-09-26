@@ -17,7 +17,7 @@
 <meta property="og:description" content="何为欠拟合以及过拟合。 欠拟合以及过拟合的判断。 当发生欠拟合和过拟合时如何优化模型。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/加正则防止模型过拟合.jpg">
-<meta property="og:updated_time" content="2019-09-26T15:46:42.719Z">
+<meta property="og:updated_time" content="2019-09-26T16:03:25.956Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="过拟合与欠拟合">
 <meta name="twitter:description" content="何为欠拟合以及过拟合。 欠拟合以及过拟合的判断。 当发生欠拟合和过拟合时如何优化模型。">
@@ -43,55 +43,39 @@
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
     <div class="left-col" q-class="show:isShow">
-      
-<div class="overlay" style="background: #4d4d4d"></div>
+      <% var defaultBg = '#4d4d4d'; %>
+<div class="overlay" style="background: <%= theme.style && theme.style.header ? theme.style.header : defaultBg %>"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/afcheng.github.io/" class="profilepic">
-			<img src="https://chengaf.github.io/afcheng.github.io/assets/img/pika.png" class="js-avatar show">
+		<a href="<%=theme.root%>" class="profilepic">
+			<img src="<%=theme.avatar%>" class="js-avatar show">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/afcheng.github.io/">Little</a></h1>
+		  <h1 class="header-author"><a href="<%=theme.root%>"><%=theme.author%></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">人生里有些事情，不能蹉跎。</p>
-		
+		<% if (theme.subtitle){ %>
+		<p class="header-subtitle"><%=theme.subtitle%></p>
+		<%}%>
 
 		<nav class="header-menu">
 			<ul>
-			
-				<li><a href="https://chengaf.github.io/afcheng.github.io/">主页</a></li>
-	        
-				<li><a href="/afcheng.github.io/tags/随笔/">随笔</a></li>
-	        
+			<% for (var i in theme.menu){ %>
+				<li><a href="<%- url_for(theme.menu[i]) %>"><%= i %></a></li>
+	        <%}%>
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
-    		
-    			
-    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
-    			
-            
-    			
-    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
-    			
-            
-    			
-    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
-    			
-            
+    		<% for (var i in theme.smart_menu){ %>
+    			<% if(theme.smart_menu[i]){ %>
+    			<a q-on="click: openSlider(e, '<%-i%>')" href="javascript:void(0)"><%= theme.smart_menu[i] %></a>
+    			<% } %>
+            <%}%>
 		</nav>
 		<nav class="header-nav">
 			<div class="social">
-				
-					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
-		        
-					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
-		        
-					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
-		        
-					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
-		        
+				<% for (var i in theme.subnav){ %>
+					<a class="<%= i %>" target="_blank" href="<%- url_for(theme.subnav[i]) %>" title="<%= i %>"><i class="icon-<%= i %>"></i></a>
+		        <%}%>
 			</div>
 		</nav>
 	</header>		
@@ -193,22 +177,13 @@
 <p><em>模型过拟合</em>：高方差（high variance），模型训练出包含早点在内的所有特征，表现为模型在训练数据的效果非常好，但是应用到新的数据集时。精度很低。</p>
 </li>
 <li><p>欠拟合以及过拟合的判断。</p>
-<p>观察训练误差和测试误差</p>
-<p>交叉验证</p>
+<p>a. 观察训练误差和测试误差<br>b. 交叉验证</p>
 </li>
 <li><p>当发生欠拟合和过拟合时如何优化模型。</p>
 <p><em>模型欠拟合</em>：</p>
-<p>​    添加新特征</p>
-<p>​    提升模型复杂度</p>
-<p>​    减少正则项权重</p>
+<p>​        a. 添加新特征<br>​        b. 提升模型复杂度<br>​        c. 减少正则项权重</p>
 <p><em>模型过拟合</em>：</p>
-<p>​    获取更多的训练数据</p>
-<p>​    减少特征数目</p>
-<p>​        特征共线性检查，计算变量之间的线性相关性，如果自变量中属于中度以上线性相关的多个变量，只保留一个就可以；</p>
-<p>​        特征筛选，决策树筛选出重要特征；</p>
-<p>​        数据降维，主成分分析，保留特征变量重要差异。</p>
-<p>​    增加正则项权重</p>
-<p>​    dropout、early stopping</p>
+<p>​        a. 获取更多的训练数据<br>​        b. 减少特征数目<br>​        c. 特征共线性检查，计算变量之间的线性相关性，如果自变量中属于中度以上线性相关的多个变量，只保留一个就可以；<br>​        d. 特征筛选，决策树筛选出重要特征；<br>​        e. 数据降维，主成分分析，保留特征变量重要差异。<br>​        f. 增加正则项权重<br>​        g. dropout、early stopping</p>
 </li>
 </ul>
 <hr>
@@ -472,10 +447,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
@@ -484,11 +455,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
+                <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -501,6 +472,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
               </li>
             
             <div class="clearfix"></div>

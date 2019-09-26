@@ -6,20 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
-  <title>GMNN: Graph Markov Neural Networks | Little&#39;s Blogs</title>
+  <title>过拟合与欠拟合 | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="​        传统的针对节点分类问题（semi-suprivised object classification in relational data）的研究可分为两类方法：统计关系学习和图神经网络。前者通过条件随机场有效建模object之间的依赖关系实现分类，后者通过端对端的训练学习object的表示进而实现分类。本文融合这两类方法即结合条件随机场与图神经网络，条件随机场建模object/n">
-<meta name="keywords" content="图神经网络">
+  <meta name="description" content="何为欠拟合以及过拟合。 欠拟合以及过拟合的判断。 当发生欠拟合和过拟合时如何优化模型。">
+<meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="GMNN: Graph Markov Neural Networks">
-<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/09/12/GMNN-Graph-Markov-Neural-Networks/index.html">
+<meta property="og:title" content="过拟合与欠拟合">
+<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/09/26/过拟合与欠拟合/index.html">
 <meta property="og:site_name" content="Little&#39;s Blogs">
-<meta property="og:description" content="​        传统的针对节点分类问题（semi-suprivised object classification in relational data）的研究可分为两类方法：统计关系学习和图神经网络。前者通过条件随机场有效建模object之间的依赖关系实现分类，后者通过端对端的训练学习object的表示进而实现分类。本文融合这两类方法即结合条件随机场与图神经网络，条件随机场建模object/n">
+<meta property="og:description" content="何为欠拟合以及过拟合。 欠拟合以及过拟合的判断。 当发生欠拟合和过拟合时如何优化模型。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-09-18T01:45:00.980Z">
+<meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/2019/09/26/过拟合与欠拟合/加正则防止模型过拟合.jpg">
+<meta property="og:updated_time" content="2019-09-26T14:25:04.551Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="GMNN: Graph Markov Neural Networks">
-<meta name="twitter:description" content="​        传统的针对节点分类问题（semi-suprivised object classification in relational data）的研究可分为两类方法：统计关系学习和图神经网络。前者通过条件随机场有效建模object之间的依赖关系实现分类，后者通过端对端的训练学习object的表示进而实现分类。本文融合这两类方法即结合条件随机场与图神经网络，条件随机场建模object/n">
+<meta name="twitter:title" content="过拟合与欠拟合">
+<meta name="twitter:description" content="何为欠拟合以及过拟合。 欠拟合以及过拟合的判断。 当发生欠拟合和过拟合时如何优化模型。">
+<meta name="twitter:image" content="https://chengaf.github.io/afcheng.github.io/2019/09/26/过拟合与欠拟合/加正则防止模型过拟合.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
   
@@ -157,35 +159,62 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-GMNN-Graph-Markov-Neural-Networks" class="article article-type-post " itemscope="" itemprop="blogPost">
+            <article id="post-过拟合与欠拟合" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      GMNN: Graph Markov Neural Networks
+      过拟合与欠拟合
     </h1>
   
 
         
-        <a href="/afcheng.github.io/2019/09/12/GMNN-Graph-Markov-Neural-Networks/" class="archive-article-date">
-  	<time datetime="2019-09-11T22:53:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-12</time>
+        <a href="/afcheng.github.io/2019/09/26/过拟合与欠拟合/" class="archive-article-date">
+  	<time datetime="2019-09-26T08:39:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>​        传统的针对节点分类问题（semi-suprivised object classification in relational data）的研究可分为两类方法：统计关系学习和图神经网络。前者通过条件随机场有效建模object之间的依赖关系实现分类，后者通过端对端的训练学习object的表示进而实现分类。本文融合这两类方法即结合条件随机场与图神经网络，条件随机场建模object/node标签联合分布(此篇文章中与node同义，都表示graph中的一个实体，因为在统计关系学习中常用object但是在图神经网络中习惯用node)，利用变分EM算法进行训练。</p>
+        <blockquote>
+<ol>
+<li>何为欠拟合以及过拟合。</li>
+<li>欠拟合以及过拟合的判断。</li>
+<li>当发生欠拟合和过拟合时如何优化模型。</li>
+</ol>
+</blockquote>
 <a id="more"></a>
-<p><strong>Introduction</strong><br>        现实世界中实体通过各种各样的关系相连，比如网页通过超链接相连、社交媒体用户通过朋友关系相连。Relational data 广泛存在，此类数据的研究有许多应用：实体分类、链接预测、链接分类等。</p>
-<p>​        许多应用可以归纳为半监督节点分类这一基础问题，而针对半监督节点分类问题，统计关系学习（statistical relational leaning）是一类典型的方法。有代表性的工作包括关系马尔科夫网络RMN（relational markov network）以及马尔科夫逻辑网络MLN（markov logic network）。通常这些方法利用条件随机场建模object labels的依赖关系，也正是因为能够有效建模标签的依赖关系此类方法往往能够获得令人信服的半监督obeject分类效果。<strong>但是，也存在不足：（1）此类方法通常将条件随机场中的potential functions定义为一些手工特征的线性组合，这是十分启发式的方法而且也不够高效。（2）因为object之间的复杂依赖关系，所以推断未标记object标签的后验分布仍是一个极具挑战性的问题。</strong></p>
-<p>​        另一类方法是基于目前兴起的图神经网络。此类方法通过非线性的神经网络框架学习object的表示，可由端到端的训练方式完成框架的学习。比如，GCN [1] 利用结合自身和周围节点迭代更新节点的表示。依赖relational data的有效表示，这些方法已经被证明能够获得state-of-the-art的效果。<strong>但是，根据节点表示进行object标签预测的过程中object之间的标签是独立的，这忽略了object之间的依赖关系。</strong></p>
-<p>​        在本文中，提出了Graph Markov Neural Network(GMNN)，结合统计关系学习与图神经网络。GMNN不仅能够有效地学习object的表示而且还能建模object之间的依赖关系。与SRL相似，GMNN利用一个条件随机场根据object的attributes建模object标签的联合分布。模型通过变分EM框架优化，包括推断过程（E步）和学习过程（M步）。</p>
-<p>待续……</p>
-<p>Reference</p>
-<p>[1] Kipf, T. N. and Welling, M. Semi-supervised classiﬁcation with graph convolutional networks. In ICLR, 2017.</p>
+<ul>
+<li><p>何为欠拟合以及过拟合。</p>
+<p><em>模型欠拟合</em>：高偏差（high bias），模型未能训练出数据集的特征，直接表现就是模型在训练集和测试集上效果都很低。</p>
+<p><em>模型过拟合</em>：高方差（high variance），模型训练出包含早点在内的所有特征，表现为模型在训练数据的效果非常好，但是应用到新的数据集时。精度很低。</p>
+</li>
+<li><p>欠拟合以及过拟合的判断。</p>
+<p>观察训练误差和测试误差</p>
+<p>交叉验证</p>
+</li>
+<li><p>当发生欠拟合和过拟合时如何优化模型。</p>
+<p><em>模型欠拟合</em>：</p>
+<p>​    添加新特征</p>
+<p>​    提升模型复杂度</p>
+<p>​    减少正则项权重</p>
+<p><em>模型过拟合</em>：</p>
+<p>​    获取更多的训练数据</p>
+<p>​    减少特征数目</p>
+<p>​        特征共线性检查，计算变量之间的线性相关性，如果自变量中属于中度以上线性相关的多个变量，只保留一个就可以；</p>
+<p>​        特征筛选，决策树筛选出重要特征；</p>
+<p>​        数据降维，主成分分析，保留特征变量重要差异。</p>
+<p>​    增加正则项权重</p>
+<p>​    dropout、early stopping</p>
+</li>
+</ul>
+<hr>
+<p>为什么增加正则项能够防止过拟合？</p>
+<p>​    weight penality 强制让模型学习到比较小的权值</p>
+<p>​    <img src="加正则防止模型过拟合.jpg" alt="加正则防止模型过拟合"></p>
 
       
 
@@ -220,7 +249,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">图神经网络</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
         		</li>
       		
 		</ul>
@@ -276,7 +305,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://chengaf.github.io/afcheng.github.io/2019/09/12/GMNN-Graph-Markov-Neural-Networks/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://chengaf.github.io/afcheng.github.io/2019/09/26/过拟合与欠拟合/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -290,18 +319,9 @@
   
 <nav id="article-nav">
   
-    <a href="/afcheng.github.io/2019/09/18/doraemon/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          doraemon
-        
-      </div>
-    </a>
   
-  
-    <a href="/afcheng.github.io/2019/09/10/快速排序/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">快速排序</div>
+    <a href="/afcheng.github.io/2019/09/18/doraemon/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">doraemon</div>
       <i class="icon-circle-right"></i>
     </a>
   

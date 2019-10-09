@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
   <title>Graph Convolutional Network 原理解释 | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="写在前面 &amp;gt; 1. 思路：为什么提出 GCN &amp;ensp;--》 如何从传统意义的 CNN 到 GCN（谱角度解释） &amp;gt; &amp;ensp;-- 》GCN 的代表性工作(方法的发展) &amp;ensp;--》GNN &amp;gt; 2. 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。  --- ## 1. 为什么要研究GCN  ### 1.1 传统CNN的认识 #### 1.1.1 卷积定义  &amp;ems">
+  <meta name="description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—》 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— 》GCN 的代表性工作(方法的发展) &amp;ensp;—》GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
 <meta name="keywords" content="图神经网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Graph Convolutional Network 原理解释">
 <meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/10/09/Graph-Convolutional-Network-原理解释/index.html">
 <meta property="og:site_name" content="Little&#39;s Blogs">
-<meta property="og:description" content="写在前面 &amp;gt; 1. 思路：为什么提出 GCN &amp;ensp;--》 如何从传统意义的 CNN 到 GCN（谱角度解释） &amp;gt; &amp;ensp;-- 》GCN 的代表性工作(方法的发展) &amp;ensp;--》GNN &amp;gt; 2. 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。  --- ## 1. 为什么要研究GCN  ### 1.1 传统CNN的认识 #### 1.1.1 卷积定义  &amp;ems">
+<meta property="og:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—》 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— 》GCN 的代表性工作(方法的发展) &amp;ensp;—》GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/图卷积傅立叶变换.jpg">
-<meta property="og:updated_time" content="2019-10-09T01:43:39.293Z">
+<meta property="og:updated_time" content="2019-10-09T01:46:45.266Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Graph Convolutional Network 原理解释">
-<meta name="twitter:description" content="写在前面 &amp;gt; 1. 思路：为什么提出 GCN &amp;ensp;--》 如何从传统意义的 CNN 到 GCN（谱角度解释） &amp;gt; &amp;ensp;-- 》GCN 的代表性工作(方法的发展) &amp;ensp;--》GNN &amp;gt; 2. 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。  --- ## 1. 为什么要研究GCN  ### 1.1 传统CNN的认识 #### 1.1.1 卷积定义  &amp;ems">
+<meta name="twitter:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—》 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— 》GCN 的代表性工作(方法的发展) &amp;ensp;—》GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
 <meta name="twitter:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
@@ -44,39 +44,55 @@
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
     <div class="left-col" q-class="show:isShow">
-      <% var defaultBg = '#4d4d4d'; %>
-<div class="overlay" style="background: <%= theme.style && theme.style.header ? theme.style.header : defaultBg %>"></div>
+      
+<div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="<%=theme.root%>" class="profilepic">
-			<img src="<%=theme.avatar%>" class="js-avatar show">
+		<a href="/afcheng.github.io/" class="profilepic">
+			<img src="https://chengaf.github.io/afcheng.github.io/assets/img/pika.png" class="js-avatar show">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="<%=theme.root%>"><%=theme.author%></a></h1>
+		  <h1 class="header-author"><a href="/afcheng.github.io/">Little</a></h1>
 		</hgroup>
-		<% if (theme.subtitle){ %>
-		<p class="header-subtitle"><%=theme.subtitle%></p>
-		<%}%>
+		
+		<p class="header-subtitle">人生里有些事情，不能蹉跎。</p>
+		
 
 		<nav class="header-menu">
 			<ul>
-			<% for (var i in theme.menu){ %>
-				<li><a href="<%- url_for(theme.menu[i]) %>"><%= i %></a></li>
-	        <%}%>
+			
+				<li><a href="https://chengaf.github.io/afcheng.github.io/">主页</a></li>
+	        
+				<li><a href="/afcheng.github.io/tags/随笔/">随笔</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
-    		<% for (var i in theme.smart_menu){ %>
-    			<% if(theme.smart_menu[i]){ %>
-    			<a q-on="click: openSlider(e, '<%-i%>')" href="javascript:void(0)"><%= theme.smart_menu[i] %></a>
-    			<% } %>
-            <%}%>
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
 		</nav>
 		<nav class="header-nav">
 			<div class="social">
-				<% for (var i in theme.subnav){ %>
-					<a class="<%= i %>" target="_blank" href="<%- url_for(theme.subnav[i]) %>" title="<%= i %>"><i class="icon-<%= i %>"></i></a>
-		        <%}%>
+				
+					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
 			</div>
 		</nav>
 	</header>		
@@ -164,126 +180,73 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <font face="宋体">
-
-写在前面
-> 1. 思路：为什么提出 GCN &ensp;--》 如何从传统意义的 CNN 到 GCN（谱角度解释）
-> &ensp;-- 》GCN 的代表性工作(方法的发展) &ensp;--》GNN
-> 2. 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。
-
----
-## 1. 为什么要研究GCN
-
-### 1.1 传统CNN的认识
-#### 1.1.1 卷积定义
-
-&emsp;**卷积本质上就是一种加权求和**。参见资源君-3
-&emsp;卷积的定义, 称 $(f*g)(n)$ 为 $f,g$ 的卷积，
-&emsp;（1）连续定义为： $(f*g)(n)=\int_{\tau=-\infty}^{\tau=+\infty}f(\tau)g(n-\tau)d\tau$ &emsp;&emsp;公式（1）
-&emsp;（2）离散定义为： $(f*g)(n)=\sum_{\tau=-\infty}^{\tau=+\infty}f(\tau)g(n-\tau)$ &emsp;&emsp;公式（2）
-&emsp;卷积的理解：“卷”：翻转，施加一种约束，限制“积”；“积”：加权求和，考虑对所有输入的效果累积。卷积本质上就是一种加权求和：最终的效果受所有输入的影响不同，以卷（滑动）控制加权求和。
-&emsp;例子1：掷两个骰子，和为 $n=4$ 的概率。
-&emsp;&emsp; $f,g$ 都为掷一个骰，按照卷积的定义即公式（2）可以定义 $(f*g)(n)$ 为： $(f*g)(4)=\sum_{\tau=1}^{3}f(\tau)g(4-\tau)$ ，两个骰子点数之和为4为约束 $g(4-\tau)$，函数 $f,g$ 都为[1,2,3,4,5,6]，翻转函数 $g$ [6,5,4,3,2,1]，滑动函数 $g$ ，图解：
-&emsp;&emsp; <img src="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg" class="js-avatar show">
-&emsp;例子2：工厂排放化学物质的残留。工厂不断排放化学物质， $t$ 时刻排放量是 $f(t)$ ，被排放的化学物质在排放 $\Delta t$ 时间后，即 $t+\Delta t=u$ 时刻的残留比率是 $g(\Delta t)$ ，于是 $t$ 时刻排放的化学物质在 $t+\Delta t=u$ 时刻还剩余 $g(\Delta t)$ ，而 $u$ 时刻的化学物质总量等于 $u$ 时刻之前所有时刻的总和，由公式（1）可以得出 $u$ 时刻的化学物质总量为： $\int_{-\infty}^{+\infty}f(t)g(u-t)dt$ ，这就是卷积。化学物质残留比率作为限制，对所有输入（排放的化学物质）对最终总残留值贡献量做出限制。
-
-#### 1.1.2 Image 上的 CNN
-&emsp;利用参数共享的过滤器（kernel），通过计算中心像素点以及相邻像素点与 kernel 的加权和来构成 Feature Map 实现空间特征提取，加权系数就是卷积核的权重系数。
-&emsp;卷积核权重系数通过随机初始化初值，再通过误差函数反向传播梯度下降进行迭代优化。**卷积核的参数通过优化求出才能实现特征提取的作用，GCN 也想像这样引入可优化的卷积核，针对不同的任务，优化对应的卷积核。**
-
-### 1.2 为什么非得用 CNN 处理 Graph 数据
-&emsp;1. CNN 处理 Euclidean Structure 数据十分有效，能够有效地提取特征。
-&emsp;2. Graph 都快能建模万物了，那 CNN 在 Graph 数据上的使用？Graph 是Non-Euclidean Structure 数据。
-&emsp; 总结为什么要研究 GCN 的理由（应用范围广泛，效果又好，现有方法又没法儿弄。）：
-
-> 1. 传统的 CNN 无法直接处理 Graph 这种 Non-Euclidean Structure 数据，传统的离散卷积无法在这种数据上保持平移不变性。也就是拓扑图中每个节点的邻居数目不相等，因此也无法用一个同样尺寸的卷积核来进行卷积。
-> 2. CNN 已经被证明能够有效地提取特征，又不能直接拿来用，因此 GCN 称为研究重点，以期通过卷积操作在 Graph 上有效地提取特征。
-> 3. Graph 数据形式的广泛性，广义上来讲任何数据范畴空间都可以简历拓扑关联，谱聚类（Spectral Clustering）即用了这种思想。因此，拓扑连接是一种广义的数据结构，GCN 具有非常广泛的应用空间。
-
-## 2. CNN怎么处理Graph
-&emsp;从空域（spatial space）和谱域（spectral space）两种研究思路。
-
-### 2.1 空域（spatial space）
-&emsp;根据拓扑图上的空间特征进行研究。研究点集中两点：
-&emsp;&emsp; a. 给定一个节点怎么找它的 neighbors，即如何确定接收域（receptive field）。
-&emsp;&emsp; b. 如何处理包含不同数目的 neighbor的节点特征。
-&emsp; 缺点：计算处理必须要针对每个节点，因为要找每个节点的 neighbor。AND SO ON ...
-#### 2.1.1 相关论文
-> 1. 2016 ICML Learning Convolutional Neural Networks for Graphs.
-
-### 2.2 谱域（spectral space）
-&emsp; 借助图谱理论实现拓扑图上的卷积操作。
-&emsp; 研究进程：首先研究 Graph Single Processing 定义 Graph 上的 Fourier Transformation，进而结合深度学习提出 Graph Convolutional Network
-&emsp; 会出现的几个关键词：拉普拉斯矩阵的特征值特征向量、傅立叶变换、逆傅里叶变换。**<font face="宋体" color="0099ff">利用傅立叶变换将时域复杂的卷积操作变为频域简单的乘积运算，这其中傅立叶变换的频谱和基对应于 Graph 拉普拉斯矩阵的特征值和特征向量。</font>**
-
-#### 2.2.1 Spectral Graph Theory
-&emsp;借助图的拉普拉斯矩阵的特征值和特征向量来研究图的性质。如何在 Graph 上做傅立叶变换的理论基础，找到 Graph 上傅立叶变换的基和频谱。
-- 图相关的基本定义
-图 Graph: $G=(V,E)$， 
-邻接矩阵 adjacency matrix: $A$， 
-定点度的对角矩阵：$D$， 
-拉普拉斯矩阵 laplacian matrix：$L=D-A$。
-两种正则化的拉普拉斯矩阵：
-  - symmetric normalized laplacian $L_{sym}=I-D^{-\frac{1}{2}}AD^{-\frac{1}{2}}=D^{-\frac{1}{2}}DD^{-\frac{1}{2}}-D^{-\frac{1}{2}}AD^{-\frac{1}{2}}=D^{-\frac{1}{2}}LD^{-\frac{1}{2}}$
-  - random walk normalized laplacian $L_{rw}=I-D^{-1}A=D^{-1}L$
-- 拉普拉斯矩阵的特征分解（谱分解）
-将矩阵分解为由其特征值和特征向量表示的矩阵之积的方法，**只有可对角矩阵才能进行特征分解**。相关概念：
-  > *&emsp;1. 可对角化矩阵：如果对于一个方阵 $A$， 存在一个可逆矩阵 $P$ 使得 $P^{-1}AP$ 是对角矩阵阵，则称 $A$ 是可对角化。
-> &emsp;2. 可对角化、特征分解、谱分解是同一个概念。
-> &emsp;3. 对称矩阵一定有n个线性无关的特征向量。
-> &emsp;4. 半正定矩阵的特征值一定非负。
-> &emsp;5. 对称矩阵的特征向量相互正交，即所有特征向量构成的矩阵为正交矩阵。* 
-
-  矩阵特征值分解：
-  > *假设 $L$ 是一个 $N\times N$ 的方阵，且有 $N$ 个线性无关的特征向量 $u_{i}(i=1,2,...N)$ ，这样 $L$ 可以被分解为 $L=U\Lambda U^{-1}$。其中 $U$ 是$N\times N$ 的方阵， $U$ 的第 $i$  列为的第 $i$ 个特征向量。$\Lambda$ 是对角矩阵，对角线上的元素为对应的特征值，即 $\Lambda_{ii}=\lambda_{i}$。*
-
-  **拉普拉斯矩阵是半正定矩阵（本身就是对称矩阵）**，因此可以进行谱分解一定有n个线性无关的特征向量，特征向量两两正交，特征值一定非负。
-
-  拉普拉斯矩阵特征值分解：
-
-  $L=U\Lambda U^{-1}$， 其中，$U\in R^{N\times N}$ 是特征向量矩阵，$U=\{\vec{u_{1}}, \vec{u_{2}}, ..., \vec{u_{n}}\}$，向量 $\vec{u_{i}}$ 是列向量，$\Lambda$ 是与特征向量对应特征值构成的对角矩阵。由于特征向量矩 $U$ 正交，因此 $UU^{-1}=E$，即 $U^{T}=U^{-1}$ ，因此特征分解可表示为 **$L=U\Lambda U^{T}$ 拉普拉斯矩阵分解的特殊形式，就不用求矩阵的逆了，直接用转置矩阵就好**。
-  $\Lambda=\left( \begin{matrix} \lambda_{1} &  & \\  & \ddots &  \\  &  & \lambda_{n}\end{matrix}
-  \right)$
-
-
-#### 2.2.2 从传统的傅立叶变换到 Graph 上的傅立叶变换
-将传统拉普拉斯算子的特征函数 $e^{-iwt}$ 变为 Graph 拉普拉斯矩阵分解的特征向量。
-> 1. 傅立叶变换：找到一组基表示任何连续的函数；拉普拉斯矩阵分解：找到特征值和特征向量去唯一表示每个节点。
-> 2. 矩阵的谱就是矩阵特征值是矩阵所固有的特性，所有的特征值形成了一个频谱，每个特征值是矩阵的一个“谐振频点”。
-> 3. 矩阵的谱是其所有特征值的集合，所有特征值构成了矩阵的频谱。矩阵所有特征向量组成了矩阵的基，可以理解为坐标系的轴。
-> 4. 信号与基函数（拉普拉斯算子的特征方程）的积分，到 Graph 上就是输入节点的 Feature（输入信号） 与特征向量（ Graph 的基）的内积。
-
-
-- 传统的傅立叶变换
-傅立叶变换 $F(w)$, 定义：信号 $f(t)$ 与基函数 $e^{-iwt}$ 的积分。即： $F(w)=\int_{-\infty}^{+\infty}f(t) e^{-iwt}dt$。为什么找 $e^{-iwt}$ 做为基函数？数学上看，$e^{-iwt}$ 是拉普拉斯算子的特征函数（满足特征方程），$w$就和特征值相关。
-- 传统的逆傅立叶变换
-是对频率 $w$ 求积分：$F^{-1}[F(w)]=\frac{1}{2\pi}\int F(w)e^{iwt}dw$
-- 广义特征方程
-$AV=\lambda V$ ，其中 $A$ 是一种变换， $V$ 是一种特征向量或者特征函数（无穷维特征向量），$\lambda$ 是特征值。特征向量在变换 $A$ 的作用下，进行了比率为特征值的伸缩。
-- Graph 上的傅立叶变换
-Graph节点对应传统傅立叶变换的时刻 $t$ ，节点离散，离散积分定义为内积形式：$F(\lambda_{l})=\hat{f}(\lambda_{l})=\sum_{i=1}^{N}f(i)u_{l}(i)$ 。Graph节点对时刻 $t$，因此 $f(i)$ 对应节点，特征函数 $e^{-iwt}$ 与拉普拉斯矩阵的特征向量对应。$u_{l}(i)$ 表示第 $l$ 个特征向量的第 $i$ 个分量。所有节点的输入表示为 $f=[f(1),f(2),...f(N)]^{T}$ ，$f(i)$ 表示一个节点，求和中的一项 $f(i)u_{l}(i)$ 针对每个节点，共 $N$ 个节点（时刻），每个特征向量（基）有 $N$维，与 $N$ 个节点对应相乘，写成矩阵形式，如下：
-$\left( \begin{matrix} 
-u_{1}(1)& u_{1}(2)& \cdots&u_{1}(N)\\  
-u_{2}(1)& u_{2}(2)& \cdots&u_{2}(N)\\
-\vdots & \vdots & \ddots &\vdots\\  
-u_{N}(1) & u_{N}(2) & \cdots &u_{N}(N)
-\end{matrix}\right)
-\left( \begin{matrix}
-f(1)\\
-f(2)\\
-\vdots\\
-f(N)
-\end{matrix}\right)=\hat{f}(\lambda_{l})=\left( \begin{matrix}
-\hat f(\lambda_{1})\\
-\hat f(\lambda_{2})\\
-\vdots\\
-\hat f(\lambda_{N})
-\end{matrix}\right)$
-即： <$f$ 在="" graph="" 上的傅立叶变换为="" $\hat{f}="U^{T}f$。" -="" 上的逆傅立叶变换="" 对特征值="" $\lambda_{l}$="" 求和：$f(i)="\sum_{i=1}^{N}\hat{f}(\lambda_{i})" u_{l}(i)$，同样利用矩阵乘法将其推广到矩阵形式：="" $\left(="" \begin{matrix}="" f(1)\\="" f(2)\\="" \vdots\\="" f(n)="" \end{matrix}\right)="\left(" u_{1}(1)&="" u_{1}(2)&="" \cdots&u_{1}(n)\\="" u_{2}(1)&="" u_{2}(2)&="" \cdots&u_{2}(n)\\="" \vdots="" &="" \ddots="" &\vdots\\="" u_{n}(1)="" u_{n}(2)="" \cdots="" &u_{n}(n)="" \end{matrix}\right)\left(="" \hat="" f(\lambda_{1})\\="" f(\lambda_{2})\\="" f(\lambda_{n})="" \end{matrix}\right)$="" 即：$f$="" 上的逆傅立叶变换为="" $f="U" \hat{f}$。<="" font="">
-
-
+        <p>写在前面</p>
+<blockquote>
+<ol>
+<li>思路：为什么提出 GCN &ensp;—》 如何从传统意义的 CNN 到 GCN（谱角度解释）<br>&ensp;— 》GCN 的代表性工作(方法的发展) &ensp;—》GNN</li>
+<li>根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。</li>
+</ol>
+</blockquote>
+<a id="more"></a>
+<h2 id="1-为什么要研究GCN"><a href="#1-为什么要研究GCN" class="headerlink" title="1. 为什么要研究GCN"></a>1. 为什么要研究GCN</h2><h3 id="1-1-传统CNN的认识"><a href="#1-1-传统CNN的认识" class="headerlink" title="1.1 传统CNN的认识"></a>1.1 传统CNN的认识</h3><h4 id="1-1-1-卷积定义"><a href="#1-1-1-卷积定义" class="headerlink" title="1.1.1 卷积定义"></a>1.1.1 卷积定义</h4><p>&emsp;<strong>卷积本质上就是一种加权求和</strong>。参见资源君-3<br>&emsp;卷积的定义, 称 $(f<em>g)(n)$ 为 $f,g$ 的卷积，<br>&emsp;（1）连续定义为： $(f</em>g)(n)=\int_{\tau=-\infty}^{\tau=+\infty}f(\tau)g(n-\tau)d\tau$ &emsp;&emsp;公式（1）<br>&emsp;（2）离散定义为： $(f<em>g)(n)=\sum_{\tau=-\infty}^{\tau=+\infty}f(\tau)g(n-\tau)$ &emsp;&emsp;公式（2）<br>&emsp;卷积的理解：“卷”：翻转，施加一种约束，限制“积”；“积”：加权求和，考虑对所有输入的效果累积。卷积本质上就是一种加权求和：最终的效果受所有输入的影响不同，以卷（滑动）控制加权求和。<br>&emsp;例子1：掷两个骰子，和为 $n=4$ 的概率。<br>&emsp;&emsp; $f,g$ 都为掷一个骰，按照卷积的定义即公式（2）可以定义 $(f</em>g)(n)$ 为： $(f*g)(4)=\sum_{\tau=1}^{3}f(\tau)g(4-\tau)$ ，两个骰子点数之和为4为约束 $g(4-\tau)$，函数 $f,g$ 都为[1,2,3,4,5,6]，翻转函数 $g$ [6,5,4,3,2,1]，滑动函数 $g$ ，图解：</p>
+<p>&emsp;&emsp; <img src="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg" class="js-avatar show"></p>
+<p>&emsp;例子2：工厂排放化学物质的残留。工厂不断排放化学物质， $t$ 时刻排放量是 $f(t)$ ，被排放的化学物质在排放 $\Delta t$ 时间后，即 $t+\Delta t=u$ 时刻的残留比率是 $g(\Delta t)$ ，于是 $t$ 时刻排放的化学物质在 $t+\Delta t=u$ 时刻还剩余 $g(\Delta t)$ ，而 $u$ 时刻的化学物质总量等于 $u$ 时刻之前所有时刻的总和，由公式（1）可以得出 $u$ 时刻的化学物质总量为： $\int_{-\infty}^{+\infty}f(t)g(u-t)dt$ ，这就是卷积。化学物质残留比率作为限制，对所有输入（排放的化学物质）对最终总残留值贡献量做出限制。</p>
+<h4 id="1-1-2-Image-上的-CNN"><a href="#1-1-2-Image-上的-CNN" class="headerlink" title="1.1.2 Image 上的 CNN"></a>1.1.2 Image 上的 CNN</h4><p>&emsp;利用参数共享的过滤器（kernel），通过计算中心像素点以及相邻像素点与 kernel 的加权和来构成 Feature Map 实现空间特征提取，加权系数就是卷积核的权重系数。<br>&emsp;卷积核权重系数通过随机初始化初值，再通过误差函数反向传播梯度下降进行迭代优化。<strong>卷积核的参数通过优化求出才能实现特征提取的作用，GCN 也想像这样引入可优化的卷积核，针对不同的任务，优化对应的卷积核。</strong></p>
+<h3 id="1-2-为什么非得用-CNN-处理-Graph-数据"><a href="#1-2-为什么非得用-CNN-处理-Graph-数据" class="headerlink" title="1.2 为什么非得用 CNN 处理 Graph 数据"></a>1.2 为什么非得用 CNN 处理 Graph 数据</h3><p>&emsp;1. CNN 处理 Euclidean Structure 数据十分有效，能够有效地提取特征。<br>&emsp;2. Graph 都快能建模万物了，那 CNN 在 Graph 数据上的使用？Graph 是Non-Euclidean Structure 数据。<br>&emsp; 总结为什么要研究 GCN 的理由（应用范围广泛，效果又好，现有方法又没法儿弄。）：</p>
+<blockquote>
+<ol>
+<li>传统的 CNN 无法直接处理 Graph 这种 Non-Euclidean Structure 数据，传统的离散卷积无法在这种数据上保持平移不变性。也就是拓扑图中每个节点的邻居数目不相等，因此也无法用一个同样尺寸的卷积核来进行卷积。</li>
+<li>CNN 已经被证明能够有效地提取特征，又不能直接拿来用，因此 GCN 称为研究重点，以期通过卷积操作在 Graph 上有效地提取特征。</li>
+<li>Graph 数据形式的广泛性，广义上来讲任何数据范畴空间都可以简历拓扑关联，谱聚类（Spectral Clustering）即用了这种思想。因此，拓扑连接是一种广义的数据结构，GCN 具有非常广泛的应用空间。</li>
+</ol>
+</blockquote>
+<h2 id="2-CNN怎么处理Graph"><a href="#2-CNN怎么处理Graph" class="headerlink" title="2. CNN怎么处理Graph"></a>2. CNN怎么处理Graph</h2><p>&emsp;从空域（spatial space）和谱域（spectral space）两种研究思路。</p>
+<h3 id="2-1-空域（spatial-space）"><a href="#2-1-空域（spatial-space）" class="headerlink" title="2.1 空域（spatial space）"></a>2.1 空域（spatial space）</h3><p>&emsp;根据拓扑图上的空间特征进行研究。研究点集中两点：<br>&emsp;&emsp; a. 给定一个节点怎么找它的 neighbors，即如何确定接收域（receptive field）。<br>&emsp;&emsp; b. 如何处理包含不同数目的 neighbor的节点特征。<br>&emsp; 缺点：计算处理必须要针对每个节点，因为要找每个节点的 neighbor。AND SO ON …</p>
+<h4 id="2-1-1-相关论文"><a href="#2-1-1-相关论文" class="headerlink" title="2.1.1 相关论文"></a>2.1.1 相关论文</h4><blockquote>
+<ol>
+<li>2016 ICML Learning Convolutional Neural Networks for Graphs.</li>
+</ol>
+</blockquote>
+<h3 id="2-2-谱域（spectral-space）"><a href="#2-2-谱域（spectral-space）" class="headerlink" title="2.2 谱域（spectral space）"></a>2.2 谱域（spectral space）</h3><p>&emsp; 借助图谱理论实现拓扑图上的卷积操作。<br>&emsp; 研究进程：首先研究 Graph Single Processing 定义 Graph 上的 Fourier Transformation，进而结合深度学习提出 Graph Convolutional Network<br>&emsp; 会出现的几个关键词：拉普拉斯矩阵的特征值特征向量、傅立叶变换、逆傅里叶变换。<strong><font face="宋体" color="0099ff">利用傅立叶变换将时域复杂的卷积操作变为频域简单的乘积运算，这其中傅立叶变换的频谱和基对应于 Graph 拉普拉斯矩阵的特征值和特征向量。</font></strong></p>
+<h4 id="2-2-1-Spectral-Graph-Theory"><a href="#2-2-1-Spectral-Graph-Theory" class="headerlink" title="2.2.1 Spectral Graph Theory"></a>2.2.1 Spectral Graph Theory</h4><p>&emsp;借助图的拉普拉斯矩阵的特征值和特征向量来研究图的性质。如何在 Graph 上做傅立叶变换的理论基础，找到 Graph 上傅立叶变换的基和频谱。</p>
+<ul>
+<li>图相关的基本定义<br>图 Graph: $G=(V,E)$，<br>邻接矩阵 adjacency matrix: $A$，<br>定点度的对角矩阵：$D$，<br>拉普拉斯矩阵 laplacian matrix：$L=D-A$。<br>两种正则化的拉普拉斯矩阵：<ul>
+<li>symmetric normalized laplacian $L_{sym}=I-D^{-\frac{1}{2}}AD^{-\frac{1}{2}}=D^{-\frac{1}{2}}DD^{-\frac{1}{2}}-D^{-\frac{1}{2}}AD^{-\frac{1}{2}}=D^{-\frac{1}{2}}LD^{-\frac{1}{2}}$</li>
+<li>random walk normalized laplacian $L_{rw}=I-D^{-1}A=D^{-1}L$</li>
+</ul>
+</li>
+<li><p>拉普拉斯矩阵的特征分解（谱分解）<br>将矩阵分解为由其特征值和特征向量表示的矩阵之积的方法，<strong>只有可对角矩阵才能进行特征分解</strong>。相关概念：</p>
+<blockquote>
+<p><em>&emsp;1. 可对角化矩阵：如果对于一个方阵 $A$， 存在一个可逆矩阵 $P$ 使得 $P^{-1}AP$ 是对角矩阵阵，则称 $A$ 是可对角化。<br>&emsp;2. 可对角化、特征分解、谱分解是同一个概念。<br>&emsp;3. 对称矩阵一定有n个线性无关的特征向量。<br>&emsp;4. 半正定矩阵的特征值一定非负。<br>&emsp;5. 对称矩阵的特征向量相互正交，即所有特征向量构成的矩阵为正交矩阵。</em> </p>
+</blockquote>
+<p>矩阵特征值分解：</p>
+<blockquote>
+<p><em>假设 $L$ 是一个 $N\times N$ 的方阵，且有 $N$ 个线性无关的特征向量 $u_{i}(i=1,2,…N)$ ，这样 $L$ 可以被分解为 $L=U\Lambda U^{-1}$。其中 $U$ 是$N\times N$ 的方阵， $U$ 的第 $i$  列为的第 $i$ 个特征向量。$\Lambda$ 是对角矩阵，对角线上的元素为对应的特征值，即 $\Lambda_{ii}=\lambda_{i}$。</em></p>
+</blockquote>
+<p><strong>拉普拉斯矩阵是半正定矩阵（本身就是对称矩阵）</strong>，因此可以进行谱分解一定有n个线性无关的特征向量，特征向量两两正交，特征值一定非负。</p>
+<p>拉普拉斯矩阵特征值分解：</p>
+<p>$L=U\Lambda U^{-1}$， 其中，$U\in R^{N\times N}$ 是特征向量矩阵，$U=\{\vec{u_{1}}, \vec{u_{2}}, …, \vec{u_{n}}\}$，向量 $\vec{u_{i}}$ 是列向量，$\Lambda$ 是与特征向量对应特征值构成的对角矩阵。由于特征向量矩 $U$ 正交，因此 $UU^{-1}=E$，即 $U^{T}=U^{-1}$ ，因此特征分解可表示为 <strong>$L=U\Lambda U^{T}$ 拉普拉斯矩阵分解的特殊形式，就不用求矩阵的逆了，直接用转置矩阵就好</strong>。<br>$\Lambda=\left( \begin{matrix} \lambda_{1} &amp;  &amp; \  &amp; \ddots &amp;  \  &amp;  &amp; \lambda_{n}\end{matrix}<br>\right)$</p>
+</li>
+</ul>
+<h4 id="2-2-2-从传统的傅立叶变换到-Graph-上的傅立叶变换"><a href="#2-2-2-从传统的傅立叶变换到-Graph-上的傅立叶变换" class="headerlink" title="2.2.2 从传统的傅立叶变换到 Graph 上的傅立叶变换"></a>2.2.2 从传统的傅立叶变换到 Graph 上的傅立叶变换</h4><p>将传统拉普拉斯算子的特征函数 $e^{-iwt}$ 变为 Graph 拉普拉斯矩阵分解的特征向量。</p>
+<blockquote>
+<ol>
+<li>傅立叶变换：找到一组基表示任何连续的函数；拉普拉斯矩阵分解：找到特征值和特征向量去唯一表示每个节点。</li>
+<li>矩阵的谱就是矩阵特征值是矩阵所固有的特性，所有的特征值形成了一个频谱，每个特征值是矩阵的一个“谐振频点”。</li>
+<li>矩阵的谱是其所有特征值的集合，所有特征值构成了矩阵的频谱。矩阵所有特征向量组成了矩阵的基，可以理解为坐标系的轴。</li>
+<li>信号与基函数（拉普拉斯算子的特征方程）的积分，到 Graph 上就是输入节点的 Feature（输入信号） 与特征向量（ Graph 的基）的内积。</li>
+</ol>
+</blockquote>
+<ul>
+<li>传统的傅立叶变换<br>傅立叶变换 $F(w)$, 定义：信号 $f(t)$ 与基函数 $e^{-iwt}$ 的积分。即： $F(w)=\int_{-\infty}^{+\infty}f(t) e^{-iwt}dt$。为什么找 $e^{-iwt}$ 做为基函数？数学上看，$e^{-iwt}$ 是拉普拉斯算子的特征函数（满足特征方程），$w$就和特征值相关。</li>
+<li>传统的逆傅立叶变换<br>是对频率 $w$ 求积分：$F^{-1}[F(w)]=\frac{1}{2\pi}\int F(w)e^{iwt}dw$</li>
+<li>广义特征方程<br>$AV=\lambda V$ ，其中 $A$ 是一种变换， $V$ 是一种特征向量或者特征函数（无穷维特征向量），$\lambda$ 是特征值。特征向量在变换 $A$ 的作用下，进行了比率为特征值的伸缩。</li>
+<li>Graph 上的傅立叶变换<br>Graph节点对应传统傅立叶变换的时刻 $t$ ，节点离散，离散积分定义为内积形式：$F(\lambda_{l})=\hat{f}(\lambda_{l})=\sum_{i=1}^{N}f(i)u_{l}(i)$ 。Graph节点对时刻 $t$，因此 $f(i)$ 对应节点，特征函数 $e^{-iwt}$ 与拉普拉斯矩阵的特征向量对应。$u_{l}(i)$ 表示第 $l$ 个特征向量的第 $i$ 个分量。所有节点的输入表示为 $f=[f(1),f(2),…f(N)]^{T}$ ，$f(i)$ 表示一个节点，求和中的一项 $f(i)u_{l}(i)$ 针对每个节点，共 $N$ 个节点（时刻），每个特征向量（基）有 $N$维，与 $N$ 个节点对应相乘，写成矩阵形式，如下：<br>$\left( \begin{matrix}<br>u_{1}(1)&amp; u_{1}(2)&amp; \cdots&amp;u_{1}(N)\ <br>u_{2}(1)&amp; u_{2}(2)&amp; \cdots&amp;u_{2}(N)\\<br>\vdots &amp; \vdots &amp; \ddots &amp;\vdots\ <br>u_{N}(1) &amp; u_{N}(2) &amp; \cdots &amp;u_{N}(N)<br>\end{matrix}\right)<br>\left( \begin{matrix}<br>f(1)\\<br>f(2)\\<br>\vdots\\<br>f(N)<br>\end{matrix}\right)=\hat{f}(\lambda_{l})=\left( \begin{matrix}<br>\hat f(\lambda_{1})\\<br>\hat f(\lambda_{2})\\<br>\vdots\\<br>\hat f(\lambda_{N})<br>\end{matrix}\right)$<br>即： &lt;$f$ 在 Graph 上的傅立叶变换为 $\hat{f}=U^{T}f$。</li>
+<li>Graph 上的逆傅立叶变换<br>对特征值 $\lambda_{l}$ 求和：$f(i)=\sum_{i=1}^{N}\hat{f}(\lambda_{i}) u_{l}(i)$，同样利用矩阵乘法将其推广到矩阵形式：<br>$\left( \begin{matrix}<br>f(1)\\<br>f(2)\\<br>\vdots\\<br>f(N)<br>\end{matrix}\right)=<br>\left( \begin{matrix}<br>u_{1}(1)&amp; u_{1}(2)&amp; \cdots&amp;u_{1}(N)\ <br>u_{2}(1)&amp; u_{2}(2)&amp; \cdots&amp;u_{2}(N)\\<br>\vdots &amp; \vdots &amp; \ddots &amp;\vdots\ <br>u_{N}(1) &amp; u_{N}(2) &amp; \cdots &amp;u_{N}(N)<br>\end{matrix}\right)\left( \begin{matrix}<br>\hat f(\lambda_{1})\\<br>\hat f(\lambda_{2})\\<br>\vdots\\<br>\hat f(\lambda_{N})<br>\end{matrix}\right)$<br>即：$f$ 在 Graph 上的逆傅立叶变换为 $f=U \hat{f}$。&lt;/font&gt;</li>
+</ul>
 <h4 id="2-2-3-Graph卷积从谱域操作的总体的理解图"><a href="#2-2-3-Graph卷积从谱域操作的总体的理解图" class="headerlink" title="2.2.3 Graph卷积从谱域操作的总体的理解图"></a>2.2.3 Graph卷积从谱域操作的总体的理解图</h4><ul>
-<li><p>&emsp;结合2.2.1与2.2.2总结如何从频谱角度进行 Graph 上的卷积操作。<br><img src="https://chengaf.github.io/afcheng.github.io/assets/blog_img/图卷积傅立叶变换.jpg" class="js-avatar show"></p>
+<li><p>&emsp;结合2.2.1与2.2.2总结如何从频谱角度进行 Graph 上的卷积操作。</p>
+<p><img src="https://chengaf.github.io/afcheng.github.io/assets/blog_img/图卷积傅立叶变换.jpg" class="js-avatar show"></p>
 </li>
 <li><p>&emsp;Tips:</p>
 <blockquote>
@@ -292,7 +255,8 @@ f(N)
 </li>
 <li><p>Graph Convolution Network 目的是需要设计共享的（Parameter Sharing）、可学习的（Trainable）卷积核（Convolutional Kernel）。对 Graph Convolution 而言就是 $U\Lambda U^{T}X$ 这个 $\Lambda$。</p>
 </li>
-<li>此外许多地方将图卷积写成 $(f<em>h)_{G}=U((U^{T}h)\bigodot(U^{T}f))$，其中 $\bigodot$ 为哈达玛积，对应元素相乘。把 $\bigodot$ 转为矩阵乘法，因为：<br>$\left( \begin{matrix} x_{1}\ \vdots \\x_{n} \end{matrix}\right)\bigodot \left( \begin{matrix} y_{1}\ \vdots \\y_{n} \end{matrix}\right)=\left( \begin{matrix} x_{1}&amp;\cdots&amp;0 \ \vdots&amp;\ddots&amp;\vdots \\0&amp;\cdots&amp;x_{n} \end{matrix}\right)\left( \begin{matrix} y_{1}\ \vdots \\y_{n} \end{matrix}\right)$ 所以可将 $(U^{T}h)\bigodot$ 这部分写成 $diag(\hat{h}(\lambda_{l}))$，即为另一种形式：$(f</em>h)_{G}=U<br>\left( \begin{matrix} \hat{h}(\lambda_{1}) &amp;  &amp; \  &amp; \ddots &amp;  \  &amp;  &amp; \hat{h}(\lambda_{n})\end{matrix}<br>\right)<br>U^{T}f$，中间 $diag(\hat{h}(\lambda_{l}))$ 这部分就是图卷积的参数。</li>
+<li><p>此外许多地方将图卷积写成 $(f<em>h)_{G}=U((U^{T}h)\bigodot(U^{T}f))$，其中 $\bigodot$ 为哈达玛积，对应元素相乘。把 $\bigodot$ 转为矩阵乘法，因为：<br>$\left( \begin{matrix} x_{1}\ \vdots \\x_{n} \end{matrix}\right)\bigodot \left( \begin{matrix} y_{1}\ \vdots \\y_{n} \end{matrix}\right)=\left( \begin{matrix} x_{1}&amp;\cdots&amp;0 \ \vdots&amp;\ddots&amp;\vdots \\0&amp;\cdots&amp;x_{n} \end{matrix}\right)\left( \begin{matrix} y_{1}\ \vdots \\y_{n} \end{matrix}\right)$ 所以可将 $(U^{T}h)\bigodot$ 这部分写成 $diag(\hat{h}(\lambda_{l}))$，即为另一种形式：$(f</em>h)_{G}=U<br>\left( \begin{matrix} \hat{h}(\lambda_{1}) &amp;  &amp; \  &amp; \ddots &amp;  \  &amp;  &amp; \hat{h}(\lambda_{n})\end{matrix}<br>\right)<br>U^{T}f$，中间 $diag(\hat{h}(\lambda_{l}))$ 这部分就是图卷积的参数。</p>
+</li>
 </ul>
 <h4 id="2-2-4-Graph-Convolutional（谱）的发展"><a href="#2-2-4-Graph-Convolutional（谱）的发展" class="headerlink" title="2.2.4 Graph Convolutional（谱）的发展"></a>2.2.4 Graph Convolutional（谱）的发展</h4><ul>
 <li><p>第一代，SCNN。</p>
@@ -332,8 +296,7 @@ f(N)
 <li>数学院博士生导师周川老师关于 Graph Neural Network 的 Slide：<a href="http://ddl.escience.cn/ff/endL" target="_blank" rel="noopener">http://ddl.escience.cn/ff/endL</a></li>
 </ol>
 </blockquote>
-<p>&lt;/font&gt;</p>
-</$f$></font>
+
       
 
       
@@ -586,6 +549,10 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">图神经网络</a>
               </li>
              
@@ -595,10 +562,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">树</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
               </li>
              
               <li class="article-tag-list-item">

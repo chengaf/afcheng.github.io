@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Little&#39;s Blogs">
 <meta property="og:description" content="&amp;emsp;梯度消失（vanishing gradient）与梯度爆炸（exploding gradient）。根源是深度神经网络和反向传播。  为什么使用梯度更新规则梯度消失和爆炸的原因梯度消失和爆炸的解决方案">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-09T04:07:28.255Z">
+<meta property="og:updated_time" content="2019-10-09T04:10:45.892Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="梯度消失与梯度爆炸">
 <meta name="twitter:description" content="&amp;emsp;梯度消失（vanishing gradient）与梯度爆炸（exploding gradient）。根源是深度神经网络和反向传播。  为什么使用梯度更新规则梯度消失和爆炸的原因梯度消失和爆炸的解决方案">
@@ -168,7 +168,8 @@
 <h3 id="1-为什么使用梯度更新规则"><a href="#1-为什么使用梯度更新规则" class="headerlink" title="1. 为什么使用梯度更新规则"></a>1. 为什么使用梯度更新规则</h3><p>&emsp;目前深度学习方法中，深度神经网络的发展造就了我们可以构造更深层的网络完成更复杂的任务，而且最终结果表明，在处理复杂任务上，深度网络比浅层的网络具有更好的效果。但是，目前优化神经网络的方法都是基于反向传播的思想，即根据损失函数计算的误差通过梯度反向传播的方式，指导深度网络权值的更新优化。这么做原因是因为求最优解是寻找最小值的优化问题，梯度下降再合适不过。</p>
 <h3 id="2-梯度消失和爆炸的原因"><a href="#2-梯度消失和爆炸的原因" class="headerlink" title="2. 梯度消失和爆炸的原因"></a>2. 梯度消失和爆炸的原因</h3><p>&emsp;本质是一中情况。梯度消失一般因为两种原因：在<strong>深层网络</strong>中、<strong>采用了不合适的损失函数</strong>如sigmoid。梯度爆炸一般出现在在<strong>深层网络</strong>中、<strong>权值初始化值太大</strong>的情况。</p>
 <ul>
-<li><p>深层网络角度<br>&emsp;以一个深层全连接网络(四层)为例，假设每一层激活函数的输出为 $f_{i}(x)$ , 其中 $i$ 为第 $i$ 层，$x$ 为第 $i$ 层的输入即第 $i-1$ 层的输出，$f$ 是激活函数。那么得出  $f_{i+1}=f(w_{i+1}\cdot f_{i}+b_{i+1})$ ,简单记为 $f_{i+1}=f(w_{i+1}\cdot f_{i})$<br>&emsp;Back Propagation算法基于梯度下降策略，以目标的负梯度方向进行更新 $w\gets w+\Delta w$ ，给定学习率 $\alpha$ 得出 $\Delta w=-\alpha \frac{\partial Loss}{\partial w}$ 。如果需要更新第二层隐层的权值信息，根据链式法则，更新梯度信息：<br>&emsp;&emsp;$\Delta w_{2}=\frac{\partial Loss}{\partial w_{2}}=\frac{\partial Loss}{\partial f_{4}}\frac{\partial f_{4}}{\partial f_{3}}\frac{\partial f_{3}}{\partial f_{2}}\frac{\partial f_{2}}{\partial w_{2}}$</p>
+<li><p>深层网络角度<br>&emsp;以一个深层全连接网络(四层)为例，假设每一层激活函数的输出为 <script type="math/tex">f_{i}(x)</script> , 其中 <script type="math/tex">i</script> 为第 <script type="math/tex">i</script> 层，<script type="math/tex">x</script> 为第 <script type="math/tex">i</script> 层的输入即第 <script type="math/tex">i-1</script> 层的输出，<script type="math/tex">f</script> 是激活函数。那么得出 $ $f_{i+1}=f(w_{i+1}\cdot f_{i}+b_{i+1})<script type="math/tex">,简单记为</script>f_{i+1}=f(w_{i+1}\cdot f_{i})<script type="math/tex">&emsp;Back Propagation算法基于梯度下降策略，以目标的负梯度方向进行更新</script>w\gets w+\Delta w<script type="math/tex">，给定学习率</script>\alpha<script type="math/tex">得出</script>\Delta w=-\alpha \frac{\partial Loss}{\partial w}<script type="math/tex">。如果需要更新第二层隐层的权值信息，根据链式法则，更新梯度信息：
+&emsp;&emsp;</script>\Delta w_{2}=\frac{\partial Loss}{\partial w_{2}}=\frac{\partial Loss}{\partial f_{4}}\frac{\partial f_{4}}{\partial f_{3}}\frac{\partial f_{3}}{\partial f_{2}}\frac{\partial f_{2}}{\partial w_{2}}$$</p>
 </li>
 <li><p>激活函数角度<br>……</p>
 </li>
@@ -447,15 +448,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
               </li>
              
               <li class="article-tag-list-item">

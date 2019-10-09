@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
   <title>Graph Convolutional Network 原理解释 | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—》 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— 》GCN 的代表性工作(方法的发展) &amp;ensp;—》GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
+  <meta name="description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—&amp;gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— &amp;gt;GCN 的代表性工作(方法的发展) &amp;ensp;—&amp;gt;GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
 <meta name="keywords" content="图神经网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Graph Convolutional Network 原理解释">
 <meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/10/09/Graph-Convolutional-Network-原理解释/index.html">
 <meta property="og:site_name" content="Little&#39;s Blogs">
-<meta property="og:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—》 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— 》GCN 的代表性工作(方法的发展) &amp;ensp;—》GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
+<meta property="og:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—&amp;gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— &amp;gt;GCN 的代表性工作(方法的发展) &amp;ensp;—&amp;gt;GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/图卷积傅立叶变换.jpg">
-<meta property="og:updated_time" content="2019-10-09T02:25:05.746Z">
+<meta property="og:updated_time" content="2019-10-09T02:55:13.462Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Graph Convolutional Network 原理解释">
-<meta name="twitter:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—》 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— 》GCN 的代表性工作(方法的发展) &amp;ensp;—》GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
+<meta name="twitter:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—&amp;gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— &amp;gt;GCN 的代表性工作(方法的发展) &amp;ensp;—&amp;gt;GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
 <meta name="twitter:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
@@ -167,7 +167,7 @@
         <p>写在前面</p>
 <blockquote>
 <ol>
-<li>思路：为什么提出 GCN &ensp;—》 如何从传统意义的 CNN 到 GCN（谱角度解释）<br>&ensp;— 》GCN 的代表性工作(方法的发展) &ensp;—》GNN</li>
+<li>思路：为什么提出 GCN &ensp;—&gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）<br>&ensp;— &gt;GCN 的代表性工作(方法的发展) &ensp;—&gt;GNN</li>
 <li>根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。</li>
 </ol>
 </blockquote>
@@ -178,7 +178,7 @@
 <p>&emsp;卷积的理解：“卷”：翻转，施加一种约束，限制“积”；“积”：加权求和，考虑对所有输入的效果累积。卷积本质上就是一种加权求和：最终的效果受所有输入的影响不同，以卷（滑动）控制加权求和。<br>&emsp;例子1：掷两个骰子，和为 <script type="math/tex">n=4</script> 的概率。<br>&emsp;&emsp; <script type="math/tex">f,g</script>  都为掷一个骰，按照卷积的定义即公式（2）可以定义  <script type="math/tex">(f*g)(n)</script> 为： <script type="math/tex">(f*g)(4)=\sum_{\tau=1}^{3}f(\tau)g(4-\tau)</script></p>
 <p>，两个骰子点数之和为4为约束<script type="math/tex">g(4-\tau)</script>，函数 <script type="math/tex">f,g</script> 都为[1,2,3,4,5,6]，翻转函数 <script type="math/tex">g</script> [6,5,4,3,2,1]，滑动函数 <script type="math/tex">g</script> ，图解：</p>
 <p>&emsp;&emsp; <img src="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg" class="js-avatar show"></p>
-<p>&emsp;例子2：工厂排放化学物质的残留。工厂不断排放化学物质， $t$ 时刻排放量是 $f(t)$ ，被排放的化学物质在排放 $\Delta t$ 时间后，即 $t+\Delta t=u$ 时刻的残留比率是 $g(\Delta t)$ ，于是 $t$ 时刻排放的化学物质在 $t+\Delta t=u$ 时刻还剩余 $g(\Delta t)$ ，而 $u$ 时刻的化学物质总量等于 $u$ 时刻之前所有时刻的总和，由公式（1）可以得出 $u$ 时刻的化学物质总量为： $\int_{-\infty}^{+\infty}f(t)g(u-t)dt$ ，这就是卷积。化学物质残留比率作为限制，对所有输入（排放的化学物质）对最终总残留值贡献量做出限制。</p>
+<p>&emsp;例子2：工厂排放化学物质的残留。工厂不断排放化学物质， <script type="math/tex">t</script> 时刻排放量是 <script type="math/tex">f(t)</script> ，被排放的化学物质在排放 <script type="math/tex">\Delta t</script> 时间后，即 <script type="math/tex">t+\Delta t=u</script> 时刻的残留比率是 <script type="math/tex">g(\Delta t)</script> ，于是 <script type="math/tex">t</script> 时刻排放的化学物质在 <script type="math/tex">t+\Delta t=u</script> 时刻还剩余 <script type="math/tex">g(\Delta t)</script> ，而 <script type="math/tex">u</script> 时刻的化学物质总量等于 <script type="math/tex">u</script> 时刻之前所有时刻的总和，由公式（1）可以得出 <script type="math/tex">u</script> 时刻的化学物质总量为： <script type="math/tex">\int_{-\infty}^{+\infty}f(t)g(u-t)dt</script> ，这就是卷积。化学物质残留比率作为限制，对所有输入（排放的化学物质）对最终总残留值贡献量做出限制。</p>
 <h4 id="1-1-2-Image-上的-CNN"><a href="#1-1-2-Image-上的-CNN" class="headerlink" title="1.1.2 Image 上的 CNN"></a>1.1.2 Image 上的 CNN</h4><p>&emsp;利用参数共享的过滤器（kernel），通过计算中心像素点以及相邻像素点与 kernel 的加权和来构成 Feature Map 实现空间特征提取，加权系数就是卷积核的权重系数。<br>&emsp;卷积核权重系数通过随机初始化初值，再通过误差函数反向传播梯度下降进行迭代优化。<strong>卷积核的参数通过优化求出才能实现特征提取的作用，GCN 也想像这样引入可优化的卷积核，针对不同的任务，优化对应的卷积核。</strong></p>
 <h3 id="1-2-为什么非得用-CNN-处理-Graph-数据"><a href="#1-2-为什么非得用-CNN-处理-Graph-数据" class="headerlink" title="1.2 为什么非得用 CNN 处理 Graph 数据"></a>1.2 为什么非得用 CNN 处理 Graph 数据</h3><p>&emsp;1. CNN 处理 Euclidean Structure 数据十分有效，能够有效地提取特征。<br>&emsp;2. Graph 都快能建模万物了，那 CNN 在 Graph 数据上的使用？Graph 是Non-Euclidean Structure 数据。<br>&emsp; 总结为什么要研究 GCN 的理由（应用范围广泛，效果又好，现有方法又没法儿弄。）：</p>
 <blockquote>
@@ -198,25 +198,25 @@
 <h3 id="2-2-谱域（spectral-space）"><a href="#2-2-谱域（spectral-space）" class="headerlink" title="2.2 谱域（spectral space）"></a>2.2 谱域（spectral space）</h3><p>&emsp; 借助图谱理论实现拓扑图上的卷积操作。<br>&emsp; 研究进程：首先研究 Graph Single Processing 定义 Graph 上的 Fourier Transformation，进而结合深度学习提出 Graph Convolutional Network<br>&emsp; 会出现的几个关键词：拉普拉斯矩阵的特征值特征向量、傅立叶变换、逆傅里叶变换。<strong><font face="宋体" color="0099ff">利用傅立叶变换将时域复杂的卷积操作变为频域简单的乘积运算，这其中傅立叶变换的频谱和基对应于 Graph 拉普拉斯矩阵的特征值和特征向量。</font></strong></p>
 <h4 id="2-2-1-Spectral-Graph-Theory"><a href="#2-2-1-Spectral-Graph-Theory" class="headerlink" title="2.2.1 Spectral Graph Theory"></a>2.2.1 Spectral Graph Theory</h4><p>&emsp;借助图的拉普拉斯矩阵的特征值和特征向量来研究图的性质。如何在 Graph 上做傅立叶变换的理论基础，找到 Graph 上傅立叶变换的基和频谱。</p>
 <ul>
-<li>图相关的基本定义<br>图 Graph: $G=(V,E)$，<br>邻接矩阵 adjacency matrix: $A$，<br>定点度的对角矩阵：$D$，<br>拉普拉斯矩阵 laplacian matrix：$L=D-A$。<br>两种正则化的拉普拉斯矩阵：<ul>
-<li>symmetric normalized laplacian $L_{sym}=I-D^{-\frac{1}{2}}AD^{-\frac{1}{2}}=D^{-\frac{1}{2}}DD^{-\frac{1}{2}}-D^{-\frac{1}{2}}AD^{-\frac{1}{2}}=D^{-\frac{1}{2}}LD^{-\frac{1}{2}}$</li>
-<li>random walk normalized laplacian $L_{rw}=I-D^{-1}A=D^{-1}L$</li>
+<li>图相关的基本定义<br>图 Graph: <script type="math/tex">G=(V,E)</script>，<br>邻接矩阵 adjacency matrix: <script type="math/tex">A</script>，<br>定点度的对角矩阵：<script type="math/tex">D</script>，<br>拉普拉斯矩阵 laplacian matrix：<script type="math/tex">L=D-A</script>。<br>两种正则化的拉普拉斯矩阵：<ul>
+<li>symmetric normalized laplacian <script type="math/tex">L_{sym}=I-D^{-\frac{1}{2}}AD^{-\frac{1}{2}}=D^{-\frac{1}{2}}DD^{-\frac{1}{2}}-D^{-\frac{1}{2}}AD^{-\frac{1}{2}}=D^{-\frac{1}{2}}LD^{-\frac{1}{2}}</script></li>
+<li>random walk normalized laplacian <script type="math/tex">L_{rw}=I-D^{-1}A=D^{-1}L</script></li>
 </ul>
 </li>
-<li><p>拉普拉斯矩阵的特征分解（谱分解）<br>将矩阵分解为由其特征值和特征向量表示的矩阵之积的方法，<strong>只有可对角矩阵才能进行特征分解</strong>。相关概念：</p>
-<blockquote>
-<p><em>&emsp;1. 可对角化矩阵：如果对于一个方阵 $A$， 存在一个可逆矩阵 $P$ 使得 $P^{-1}AP$ 是对角矩阵阵，则称 $A$ 是可对角化。<br>&emsp;2. 可对角化、特征分解、谱分解是同一个概念。<br>&emsp;3. 对称矩阵一定有n个线性无关的特征向量。<br>&emsp;4. 半正定矩阵的特征值一定非负。<br>&emsp;5. 对称矩阵的特征向量相互正交，即所有特征向量构成的矩阵为正交矩阵。</em> </p>
-</blockquote>
-<p>矩阵特征值分解：</p>
-<blockquote>
-<p><em>假设 $L$ 是一个 $N\times N$ 的方阵，且有 $N$ 个线性无关的特征向量 $u_{i}(i=1,2,…N)$ ，这样 $L$ 可以被分解为 $L=U\Lambda U^{-1}$。其中 $U$ 是$N\times N$ 的方阵， $U$ 的第 $i$  列为的第 $i$ 个特征向量。$\Lambda$ 是对角矩阵，对角线上的元素为对应的特征值，即 $\Lambda_{ii}=\lambda_{i}$。</em></p>
-</blockquote>
-<p><strong>拉普拉斯矩阵是半正定矩阵（本身就是对称矩阵）</strong>，因此可以进行谱分解一定有n个线性无关的特征向量，特征向量两两正交，特征值一定非负。</p>
-<p>拉普拉斯矩阵特征值分解：</p>
-<p>$L=U\Lambda U^{-1}$， 其中，$U\in R^{N\times N}$ 是特征向量矩阵，$U=\{\vec{u_{1}}, \vec{u_{2}}, …, \vec{u_{n}}\}$，向量 $\vec{u_{i}}$ 是列向量，$\Lambda$ 是与特征向量对应特征值构成的对角矩阵。由于特征向量矩 $U$ 正交，因此 $UU^{-1}=E$，即 $U^{T}=U^{-1}$ ，因此特征分解可表示为 <strong>$L=U\Lambda U^{T}$ 拉普拉斯矩阵分解的特殊形式，就不用求矩阵的逆了，直接用转置矩阵就好</strong>。  </p>
-</li>
+<li>拉普拉斯矩阵的特征分解（谱分解）<br>将矩阵分解为由其特征值和特征向量表示的矩阵之积的方法，<strong>只有可对角矩阵才能进行特征分解</strong>。相关概念：</li>
 </ul>
-<script type="math/tex; mode=display">\Lambda=\left( \begin{matrix} \lambda_{1} &  & \\ & \ddots &  \\  &  & \lambda_{n}\end{matrix} \right)</script><h4 id="2-2-2-从传统的傅立叶变换到-Graph-上的傅立叶变换"><a href="#2-2-2-从传统的傅立叶变换到-Graph-上的傅立叶变换" class="headerlink" title="2.2.2 从传统的傅立叶变换到 Graph 上的傅立叶变换"></a>2.2.2 从传统的傅立叶变换到 Graph 上的傅立叶变换</h4><p>将传统拉普拉斯算子的特征函数 $e^{-iwt}$ 变为 Graph 拉普拉斯矩阵分解的特征向量。</p>
+<blockquote>
+<p>&emsp;1. 可对角化矩阵：如果对于一个方阵 $A$， 存在一个可逆矩阵 $P$ 使得 $P^{-1}AP$ 是对角矩阵阵，则称 $A$ 是可对角化。<br>&emsp;2. 可对角化、特征分解、谱分解是同一个概念。<br>&emsp;3. 对称矩阵一定有n个线性无关的特征向量。<br>&emsp;4. 半正定矩阵的特征值一定非负。<br>&emsp;5. 对称矩阵的特征向量相互正交，即所有特征向量构成的矩阵为正交矩阵。* </p>
+</blockquote>
+<p>  矩阵特征值分解：</p>
+<blockquote>
+<p><em>假设 <script type="math/tex">L</script> 是一个 <script type="math/tex">N\times N</script> 的方阵，且有 <script type="math/tex">N</script> 个线性无关的特征向量 <script type="math/tex">u_{i}(i=1,2,...N)</script> ，这样 <script type="math/tex">L</script> 可以被分解为 <script type="math/tex">L=U\Lambda U^{-1}</script>。其中 <script type="math/tex">U</script> 是<script type="math/tex">N\times N</script> 的方阵， <script type="math/tex">U</script> 的第 <script type="math/tex">i</script>  列为的第 <script type="math/tex">i</script> 个特征向量。<script type="math/tex">\Lambda</script> 是对角矩阵，对角线上的元素为对应的特征值，即 <script type="math/tex">\Lambda_{ii}=\lambda_{i}</script>。</em></p>
+</blockquote>
+<p>  <strong>拉普拉斯矩阵是半正定矩阵（本身就是对称矩阵）</strong>，因此可以进行谱分解一定有n个线性无关的特征向量，特征向量两两正交，特征值一定非负。</p>
+<p>  拉普拉斯矩阵特征值分解：</p>
+<script type="math/tex; mode=display">L=U\Lambda U^{-1}$$， 其中，$$U\in R^{N\times N}$$ 是特征向量矩阵，$$U=\{\vec{u_{1}}, \vec{u_{2}}, ..., \vec{u_{n}}\}$$，向量 $$\vec{u_{i}}$$ 是列向量，$$\Lambda$$ 是与特征向量对应特征值构成的对角矩阵。由于特征向量矩 $$U$$ 正交，因此 $$UU^{-1}=E$$，即 $$U^{T}=U^{-1}$$ ，因此特征分解可表示为 **$$L=U\Lambda U^{T}$$ 拉普拉斯矩阵分解的特殊形式，就不用求矩阵的逆了，直接用转置矩阵就好**。  
+
+$$\Lambda=\left( \begin{matrix} \lambda_{1} &  & \\ & \ddots &  \\  &  & \lambda_{n}\end{matrix} \right)</script><h4 id="2-2-2-从传统的傅立叶变换到-Graph-上的傅立叶变换"><a href="#2-2-2-从传统的傅立叶变换到-Graph-上的傅立叶变换" class="headerlink" title="2.2.2 从传统的傅立叶变换到 Graph 上的傅立叶变换"></a>2.2.2 从传统的傅立叶变换到 Graph 上的傅立叶变换</h4><p>将传统拉普拉斯算子的特征函数 <script type="math/tex">e^{-iwt}</script> 变为 Graph 拉普拉斯矩阵分解的特征向量。</p>
 <blockquote>
 <ol>
 <li>傅立叶变换：找到一组基表示任何连续的函数；拉普拉斯矩阵分解：找到特征值和特征向量去唯一表示每个节点。</li>
@@ -226,10 +226,10 @@
 </ol>
 </blockquote>
 <ul>
-<li>传统的傅立叶变换<br>傅立叶变换 $F(w)$, 定义：信号 $f(t)$ 与基函数 $e^{-iwt}$ 的积分。即： $F(w)=\int_{-\infty}^{+\infty}f(t) e^{-iwt}dt$。为什么找 $e^{-iwt}$ 做为基函数？数学上看，$e^{-iwt}$ 是拉普拉斯算子的特征函数（满足特征方程），$w$就和特征值相关。</li>
-<li>传统的逆傅立叶变换<br>是对频率 $w$ 求积分：$F^{-1}[F(w)]=\frac{1}{2\pi}\int F(w)e^{iwt}dw$</li>
-<li>广义特征方程<br>$AV=\lambda V$ ，其中 $A$ 是一种变换， $V$ 是一种特征向量或者特征函数（无穷维特征向量），$\lambda$ 是特征值。特征向量在变换 $A$ 的作用下，进行了比率为特征值的伸缩。</li>
-<li>Graph 上的傅立叶变换<br>Graph节点对应传统傅立叶变换的时刻 $t$ ，节点离散，离散积分定义为内积形式：$F(\lambda_{l})=\hat{f}(\lambda_{l})=\sum_{i=1}^{N}f(i)u_{l}(i)$ 。Graph节点对时刻 $t$，因此 $f(i)$ 对应节点，特征函数 $e^{-iwt}$ 与拉普拉斯矩阵的特征向量对应。$u_{l}(i)$ 表示第 $l$ 个特征向量的第 $i$ 个分量。所有节点的输入表示为 $f=[f(1),f(2),…f(N)]^{T}$ ，$f(i)$ 表示一个节点，求和中的一项 $f(i)u_{l}(i)$ 针对每个节点，共 $N$ 个节点（时刻），每个特征向量（基）有 $N$维，与 $N$ 个节点对应相乘，写成矩阵形式，如下：<script type="math/tex; mode=display">\left( \begin{matrix} 
+<li>传统的傅立叶变换<br>傅立叶变换 <script type="math/tex">F(w)</script>, 定义：信号 <script type="math/tex">f(t)</script> 与基函数 <script type="math/tex">e^{-iwt}</script> 的积分。即： <script type="math/tex">F(w)=\int_{-\infty}^{+\infty}f(t) e^{-iwt}dt</script>。为什么找 <script type="math/tex">e^{-iwt}</script> 做为基函数？数学上看，<script type="math/tex">e^{-iwt}</script> 是拉普拉斯算子的特征函数（满足特征方程），<script type="math/tex">w</script>就和特征值相关。</li>
+<li>传统的逆傅立叶变换<br>是对频率 <script type="math/tex">w</script> 求积分：<script type="math/tex">F^{-1}[F(w)]=\frac{1}{2\pi}\int F(w)e^{iwt}dw</script></li>
+<li>广义特征方程<br><script type="math/tex">AV=\lambda V</script> ，其中 <script type="math/tex">A</script> 是一种变换， <script type="math/tex">V</script> 是一种特征向量或者特征函数（无穷维特征向量），<script type="math/tex">\lambda</script> 是特征值。特征向量在变换 <script type="math/tex">A</script> 的作用下，进行了比率为特征值的伸缩。</li>
+<li>Graph 上的傅立叶变换<br>Graph节点对应传统傅立叶变换的时刻 <script type="math/tex">t</script> ，节点离散，离散积分定义为内积形式：<script type="math/tex">F(\lambda_{l})=\hat{f}(\lambda_{l})=\sum_{i=1}^{N}f(i)u_{l}(i)</script> 。Graph节点对时刻 <script type="math/tex">t</script>，因此 <script type="math/tex">f(i)</script> 对应节点，特征函数 <script type="math/tex">e^{-iwt}</script> 与拉普拉斯矩阵的特征向量对应。<script type="math/tex">u_{l}(i)</script> 表示第 <script type="math/tex">l</script> 个特征向量的第 <script type="math/tex">i</script> 个分量。所有节点的输入表示为 <script type="math/tex">f=[f(1),f(2),...f(N)]^{T}</script> ，<script type="math/tex">f(i)</script> 表示一个节点，求和中的一项 <script type="math/tex">f(i)u_{l}(i)</script> 针对每个节点，共 <script type="math/tex">N</script> 个节点（时刻），每个特征向量（基）有 <script type="math/tex">N</script>维，与 <script type="math/tex">N</script> 个节点对应相乘，写成矩阵形式，如下：<script type="math/tex; mode=display">\left( \begin{matrix} 
 u_{1}(1)& u_{1}(2)& \cdots&u_{1}(N)\\
 u_{2}(1)& u_{2}(2)& \cdots&u_{2}(N)\\
 \vdots & \vdots & \ddots &\vdots\\  
@@ -245,8 +245,8 @@ f(N)
 \hat f(\lambda_{2})\\
 \vdots\\
 \hat f(\lambda_{N})
-\end{matrix}\right)</script>即： $f$ 在 Graph 上的傅立叶变换为 $\hat{f}=U^{T}f$。</li>
-<li>Graph 上的逆傅立叶变换<br>对特征值 $\lambda_{l}$ 求和：$f(i)=\sum_{i=1}^{N}\hat{f}(\lambda_{i}) u_{l}(i)$，同样利用矩阵乘法将其推广到矩阵形式：<script type="math/tex; mode=display">\left( \begin{matrix}
+\end{matrix}\right)</script>即： $f$ 在 Graph 上的傅立叶变换为 <script type="math/tex">\hat{f}=U^{T}f</script>。</li>
+<li>Graph 上的逆傅立叶变换<br>对特征值 <script type="math/tex">\lambda_{l}</script> 求和：<script type="math/tex">f(i)=\sum_{i=1}^{N}\hat{f}(\lambda_{i}) u_{l}(i)</script>，同样利用矩阵乘法将其推广到矩阵形式：<script type="math/tex; mode=display">\left( \begin{matrix}
 f(1)\\
 f(2)\\
 \vdots\\
@@ -262,7 +262,7 @@ u_{N}(1) & u_{N}(2) & \cdots &u_{N}(N)
 \hat f(\lambda_{2})\\
 \vdots\\
 \hat f(\lambda_{N})
-\end{matrix}\right)</script>即：$f$ 在 Graph 上的逆傅立叶变换为 $f=U \hat{f}$。</li>
+\end{matrix}\right)</script>即：$f$ 在 Graph 上的逆傅立叶变换为 <script type="math/tex">f=U \hat{f}</script>。</li>
 </ul>
 <h4 id="2-2-3-Graph卷积从谱域操作的总体的理解图"><a href="#2-2-3-Graph卷积从谱域操作的总体的理解图" class="headerlink" title="2.2.3 Graph卷积从谱域操作的总体的理解图"></a>2.2.3 Graph卷积从谱域操作的总体的理解图</h4><ul>
 <li><p>&emsp;结合2.2.1与2.2.2总结如何从频谱角度进行 Graph 上的卷积操作。</p>
@@ -273,25 +273,25 @@ u_{N}(1) & u_{N}(2) & \cdots &u_{N}(N)
 <p>卷积：一种运算方式。<br>傅立叶变换：让函数在时域和频域相互转换。<br>卷积定理：时域卷积等于频域乘积，时域乘积等于频域卷积。</p>
 </blockquote>
 </li>
-<li><p>Graph Convolution Network 目的是需要设计共享的（Parameter Sharing）、可学习的（Trainable）卷积核（Convolutional Kernel）。对 Graph Convolution 而言就是 $U\Lambda U^{T}X$ 这个 $\Lambda$。</p>
+<li><p>Graph Convolution Network 目的是需要设计共享的（Parameter Sharing）、可学习的（Trainable）卷积核（Convolutional Kernel）。对 Graph Convolution 而言就是 <script type="math/tex">U\Lambda U^{T}X</script> 这个 <script type="math/tex">\Lambda</script>。</p>
 </li>
-<li><p>此外许多地方将图卷积写成 <script type="math/tex">(f*h)_{G}=U((U^{T}h)\bigodot(U^{T}f))</script>，其中 $\bigodot$ 为哈达玛积，对应元素相乘。</p>
-<p>把 $\bigodot$ 转为矩阵乘法，因为：</p>
-<script type="math/tex; mode=display">\left( \begin{matrix} x_{1}\\ \vdots \\x_{n} \end{matrix}\right)\bigodot \left( \begin{matrix} y_{1}\\ \vdots \\y_{n} \end{matrix}\right)=\left( \begin{matrix} x_{1}&\cdots&0 \\ \vdots&\ddots&\vdots \\0&\cdots&x_{n} \end{matrix}\right)\left( \begin{matrix} y_{1}\\ \vdots \\y_{n} \end{matrix}\right)</script><p>所以可将 $(U^{T}h)\bigodot$ 这部分写成 $diag(\hat{h}(\lambda_{l}))$，</p>
+<li><p>此外许多地方将图卷积写成 <script type="math/tex">(f*h)_{G}=U((U^{T}h)\bigodot(U^{T}f))</script>，其中$ $\bigodot$$ 为哈达玛积，对应元素相乘。</p>
+<p>把 <script type="math/tex">\bigodot</script> 转为矩阵乘法，因为：</p>
+<script type="math/tex; mode=display">\left( \begin{matrix} x_{1}\\ \vdots \\x_{n} \end{matrix}\right)\bigodot \left( \begin{matrix} y_{1}\\ \vdots \\y_{n} \end{matrix}\right)=\left( \begin{matrix} x_{1}&\cdots&0 \\ \vdots&\ddots&\vdots \\0&\cdots&x_{n} \end{matrix}\right)\left( \begin{matrix} y_{1}\\ \vdots \\y_{n} \end{matrix}\right)</script><p>所以可将 <script type="math/tex">(U^{T}h)\bigodot</script> 这部分写成 <script type="math/tex">diag(\hat{h}(\lambda_{l}))</script>，</p>
 <p>即为另一种形式：<script type="math/tex">(f*h)_{G}=U
 \left( \begin{matrix} \hat{h}(\lambda_{1}) &  & \\  & \ddots &  \\  &  & \hat{h}(\lambda_{n})\end{matrix}
 \right)
-U^{T}f</script>，中间 $diag(\hat{h}(\lambda_{l}))$ 这部分就是图卷积的参数。</p>
+U^{T}f</script>，中间 <script type="math/tex">diag(\hat{h}(\lambda_{l}))</script> 这部分就是图卷积的参数。</p>
 </li>
 </ul>
 <h4 id="2-2-4-Graph-Convolutional（谱）的发展"><a href="#2-2-4-Graph-Convolutional（谱）的发展" class="headerlink" title="2.2.4 Graph Convolutional（谱）的发展"></a>2.2.4 Graph Convolutional（谱）的发展</h4><ul>
 <li><p>第一代，SCNN。</p>
 <ul>
-<li>直接把 $diag(\hat{h}(\lambda_{l}))$ 变为  $diag(\theta_{l})$ ，通过初始化赋值、误差反向传播进行学习参数 $\Theta=(\theta_{1},\theta_{2},…,\theta_{n})$。加上激活函数 $\sigma(\cdot)$，给定输入 $x$ 经过图卷积输出为：<script type="math/tex">y_{output}=\sigma\left(U
+<li>直接把 <script type="math/tex">diag(\hat{h}(\lambda_{l}))</script> 变为  <script type="math/tex">diag(\theta_{l})</script> ，通过初始化赋值、误差反向传播进行学习参数 <script type="math/tex">\Theta=(\theta_{1},\theta_{2},...,\theta_{n})</script>。加上激活函数 <script type="math/tex">\sigma(\cdot)</script>，给定输入 <script type="math/tex">x</script> 经过图卷积输出为：<script type="math/tex">y_{output}=\sigma\left(U
 \left( \begin{matrix} \theta_{1} &  & \\  & \ddots &  \\  &  & \theta_{n}\end{matrix}
 \right)
 U^{T}x\right)</script></li>
-<li><p>从 $y_{output}$ 的计算可以看出，每次前向传播都需要计算 $U$、$diag(\theta_{l})$ 以及 $U^{T}$ 的乘积，计算复杂度是 $O(n^{2})$，对大规模图而言，复杂度比较高。另外，卷积核参数需要 $n$ 个。</p>
+<li><p>从 <script type="math/tex">y_{output}</script> 的计算可以看出，每次前向传播都需要计算 <script type="math/tex">U</script>、<script type="math/tex">diag(\theta_{l})</script> 以及 <script type="math/tex">U^{T}</script> 的乘积，计算复杂度是 <script type="math/tex">O(n^{2})</script>，对大规模图而言，复杂度比较高。另外，卷积核参数需要 <script type="math/tex">n</script> 个。</p>
 <blockquote>
 <p>Bruna, Joan, et al. “Spectral Networks and Locally Connected Networks on Graphs.” Computer Science (2013).</p>
 </blockquote>
@@ -300,10 +300,10 @@ U^{T}x\right)</script></li>
 </li>
 <li><p>第二代，ChebNet。</p>
 <ul>
-<li>把 $diag(\hat{h}(\lambda_{l}))$ 变为 $diag(\sum_{j=0}^{K}\alpha_{j}\lambda_{l}^{j})$。其中，$(\alpha_{1}, \alpha_{2}, …, \alpha_{K})$ 为需要学习的参数，同样需要初始化赋值通过误差反向传播进行学习。具体的，<script type="math/tex">diag(\sum_{j=0}^{K}\alpha_{j}\lambda_{l}^{j})=\left( \begin{matrix} \sum_{j=0}^{K}\alpha_{j}\lambda_{1}^{j} &  & \\  & \ddots &  \\  &  & \sum_{j=0}^{K}\alpha_{j}\lambda_{n}^{j}\end{matrix}
+<li>把 <script type="math/tex">diag(\hat{h}(\lambda_{l}))</script> 变为 <script type="math/tex">diag(\sum_{j=0}^{K}\alpha_{j}\lambda_{l}^{j})</script>。其中，<script type="math/tex">(\alpha_{1}, \alpha_{2}, ..., \alpha_{K})</script> 为需要学习的参数，同样需要初始化赋值通过误差反向传播进行学习。具体的，<script type="math/tex">diag(\sum_{j=0}^{K}\alpha_{j}\lambda_{l}^{j})=\left( \begin{matrix} \sum_{j=0}^{K}\alpha_{j}\lambda_{1}^{j} &  & \\  & \ddots &  \\  &  & \sum_{j=0}^{K}\alpha_{j}\lambda_{n}^{j}\end{matrix}
 \right)</script> ，假设 <script type="math/tex">\Lambda = diag(\lambda_{1},...,\lambda_{n})</script>，那么<script type="math/tex">diag(\sum_{j=0}^{K}\alpha_{j}\lambda_{l}^{j})=\left( \begin{matrix} \sum_{j=0}^{K}\alpha_{j}\lambda_{1}^{j} &  & \\  & \ddots &  \\  &  & \sum_{j=0}^{K}\alpha_{j}\lambda_{n}^{j}\end{matrix}
-\right)=\sum_{j=0}^{K}\alpha_{j}\Lambda^{j}</script> ，又因为 <script type="math/tex">U\sum_{j=0}^{K}\alpha_{j}\Lambda^{j}U^{T}=\sum_{j=0}^{K}\alpha_{j}U\Lambda^{j}U^{T}=\sum_{j=0}^{K}\alpha_{j}L^{j}</script>，<br>所以对于输入 $x$ ，经过图卷积操作得到输出 $y_{output}$ 可公式化描述为：<br>$y_{output}=\sigma(\sum_{j=0}^{K}\alpha_{j}L^{j} x)$</li>
-<li><p>卷积核参数为 $K+1$ 个，远小于 $n$ 。矩阵变换之后不需要做特征分解，直接用拉普拉斯矩阵进行变换，计算复杂度变为 $O(n)$。</p>
+\right)=\sum_{j=0}^{K}\alpha_{j}\Lambda^{j}</script> ，又因为 <script type="math/tex">U\sum_{j=0}^{K}\alpha_{j}\Lambda^{j}U^{T}=\sum_{j=0}^{K}\alpha_{j}U\Lambda^{j}U^{T}=\sum_{j=0}^{K}\alpha_{j}L^{j}</script>，<br>所以对于输入 <script type="math/tex">x</script> ，经过图卷积操作得到输出 <script type="math/tex">y_{output}</script> 可公式化描述为：<script type="math/tex; mode=display">y_{output}=\sigma(\sum_{j=0}^{K}\alpha_{j}L^{j} x)</script></li>
+<li><p>卷积核参数为 <script type="math/tex">K+1</script> 个，远小于 <script type="math/tex">n</script> 。矩阵变换之后不需要做特征分解，直接用拉普拉斯矩阵进行变换，计算复杂度变为 <script type="math/tex">O(n)</script>。</p>
 <blockquote>
 <p>Defferrard, Michaël, X. Bresson, and P. Vandergheynst. “Convolutional Neural Networks on Graphs with Fast Localized Spectral Filtering.” in NIPS (2016).</p>
 </blockquote>
@@ -311,7 +311,7 @@ U^{T}x\right)</script></li>
 </ul>
 </li>
 <li>第三代，简化版的 ChebNet 。<ul>
-<li>在原始 ChebNet 中，令 $K=1$， $\sum_{j=0}^{K}\alpha_{j}L^{j}$=$\alpha_{1}L^{0}+\alpha_{1}L^{1}$，令 $w:=\alpha_{0}=-\alpha_{1}$，因此对于输入 $x$ ，经过图卷积操作得到输出 $y_{output}$ 可公式化描述为：<br>$y_{output}=\sigma(w(I_{N}-L) x)$，其中 $L=I_{N}-D^{-\frac{1}{2}}AD^{-\frac{1}{2}}$，因此<br>$y_{output}=\sigma(w(\hat{D}^{-\frac{1}{2}}\hat{A}\hat{D}^{-\frac{1}{2}} x)$。其中， $\hat{A}=I_{N}+A$，$\hat{D}_{ii}=\sum_{j}A_{ij}$。<blockquote>
+<li>在原始 ChebNet 中，令 <script type="math/tex">K=1</script>， <script type="math/tex">\sum_{j=0}^{K}\alpha_{j}L^{j}$=$\alpha_{1}L^{0}+\alpha_{1}L^{1}</script>，令 <script type="math/tex">w:=\alpha_{0}=-\alpha_{1}</script>，因此对于输入 <script type="math/tex">x</script> ，经过图卷积操作得到输出 <script type="math/tex">y_{output}</script> 可公式化描述为：<br><script type="math/tex">y_{output}=\sigma(w(I_{N}-L) x)</script>，其中 <script type="math/tex">L=I_{N}-D^{-\frac{1}{2}}AD^{-\frac{1}{2}}</script>，因此<br><script type="math/tex">y_{output}=\sigma(w(\hat{D}^{-\frac{1}{2}}\hat{A}\hat{D}^{-\frac{1}{2}} x)</script>。其中， <script type="math/tex">\hat{A}=I_{N}+A</script>，<script type="math/tex">\hat{D}_{ii}=\sum_{j}A_{ij}</script>。<blockquote>
 <p>切比雪夫多项式这里需要参照原文[]，这里可能是有点问题的。<br>Kipf,Thomas N,and M.Welling. “Semi-Supervised Classification with Graph Convolutional Networks.”inICLR(2017).</p>
 </blockquote>
 </li>
@@ -607,15 +607,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
               </li>
              
               <li class="article-tag-list-item">

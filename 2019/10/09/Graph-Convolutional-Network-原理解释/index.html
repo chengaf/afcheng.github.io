@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/图卷积傅立叶变换.jpg">
-<meta property="og:updated_time" content="2019-10-09T02:22:48.630Z">
+<meta property="og:updated_time" content="2019-10-09T02:25:05.746Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Graph Convolutional Network 原理解释">
 <meta name="twitter:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—》 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— 》GCN 的代表性工作(方法的发展) &amp;ensp;—》GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
@@ -44,39 +44,55 @@
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
     <div class="left-col" q-class="show:isShow">
-      <% var defaultBg = '#4d4d4d'; %>
-<div class="overlay" style="background: <%= theme.style && theme.style.header ? theme.style.header : defaultBg %>"></div>
+      
+<div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="<%=theme.root%>" class="profilepic">
-			<img src="<%=theme.avatar%>" class="js-avatar show">
+		<a href="/afcheng.github.io/" class="profilepic">
+			<img src="https://chengaf.github.io/afcheng.github.io/assets/img/pika.png" class="js-avatar show">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="<%=theme.root%>"><%=theme.author%></a></h1>
+		  <h1 class="header-author"><a href="/afcheng.github.io/">Little</a></h1>
 		</hgroup>
-		<% if (theme.subtitle){ %>
-		<p class="header-subtitle"><%=theme.subtitle%></p>
-		<%}%>
+		
+		<p class="header-subtitle">人生里有些事情，不能蹉跎。</p>
+		
 
 		<nav class="header-menu">
 			<ul>
-			<% for (var i in theme.menu){ %>
-				<li><a href="<%- url_for(theme.menu[i]) %>"><%= i %></a></li>
-	        <%}%>
+			
+				<li><a href="https://chengaf.github.io/afcheng.github.io/">主页</a></li>
+	        
+				<li><a href="/afcheng.github.io/tags/随笔/">随笔</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
-    		<% for (var i in theme.smart_menu){ %>
-    			<% if(theme.smart_menu[i]){ %>
-    			<a q-on="click: openSlider(e, '<%-i%>')" href="javascript:void(0)"><%= theme.smart_menu[i] %></a>
-    			<% } %>
-            <%}%>
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
 		</nav>
 		<nav class="header-nav">
 			<div class="social">
-				<% for (var i in theme.subnav){ %>
-					<a class="<%= i %>" target="_blank" href="<%- url_for(theme.subnav[i]) %>" title="<%= i %>"><i class="icon-<%= i %>"></i></a>
-		        <%}%>
+				
+					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
 			</div>
 		</nav>
 	</header>		
@@ -213,11 +229,10 @@
 </blockquote>
 <p><strong>拉普拉斯矩阵是半正定矩阵（本身就是对称矩阵）</strong>，因此可以进行谱分解一定有n个线性无关的特征向量，特征向量两两正交，特征值一定非负。</p>
 <p>拉普拉斯矩阵特征值分解：</p>
-<p>$L=U\Lambda U^{-1}$， 其中，$U\in R^{N\times N}$ 是特征向量矩阵，$U=\{\vec{u_{1}}, \vec{u_{2}}, …, \vec{u_{n}}\}$，向量 $\vec{u_{i}}$ 是列向量，$\Lambda$ 是与特征向量对应特征值构成的对角矩阵。由于特征向量矩 $U$ 正交，因此 $UU^{-1}=E$，即 $U^{T}=U^{-1}$ ，因此特征分解可表示为 <strong>$L=U\Lambda U^{T}$ 拉普拉斯矩阵分解的特殊形式，就不用求矩阵的逆了，直接用转置矩阵就好</strong>。  <script type="math/tex">\Lambda=\left( \begin{matrix} \lambda_{1} &  & \\  & \ddots &  \\  &  & \lambda_{n}\end{matrix}
-\right)</script></p>
+<p>$L=U\Lambda U^{-1}$， 其中，$U\in R^{N\times N}$ 是特征向量矩阵，$U=\{\vec{u_{1}}, \vec{u_{2}}, …, \vec{u_{n}}\}$，向量 $\vec{u_{i}}$ 是列向量，$\Lambda$ 是与特征向量对应特征值构成的对角矩阵。由于特征向量矩 $U$ 正交，因此 $UU^{-1}=E$，即 $U^{T}=U^{-1}$ ，因此特征分解可表示为 <strong>$L=U\Lambda U^{T}$ 拉普拉斯矩阵分解的特殊形式，就不用求矩阵的逆了，直接用转置矩阵就好</strong>。  </p>
 </li>
 </ul>
-<h4 id="2-2-2-从传统的傅立叶变换到-Graph-上的傅立叶变换"><a href="#2-2-2-从传统的傅立叶变换到-Graph-上的傅立叶变换" class="headerlink" title="2.2.2 从传统的傅立叶变换到 Graph 上的傅立叶变换"></a>2.2.2 从传统的傅立叶变换到 Graph 上的傅立叶变换</h4><p>将传统拉普拉斯算子的特征函数 $e^{-iwt}$ 变为 Graph 拉普拉斯矩阵分解的特征向量。</p>
+<script type="math/tex; mode=display">\Lambda=\left( \begin{matrix} \lambda_{1} &  & \\ & \ddots &  \\  &  & \lambda_{n}\end{matrix} \right)</script><h4 id="2-2-2-从传统的傅立叶变换到-Graph-上的傅立叶变换"><a href="#2-2-2-从传统的傅立叶变换到-Graph-上的傅立叶变换" class="headerlink" title="2.2.2 从传统的傅立叶变换到 Graph 上的傅立叶变换"></a>2.2.2 从传统的傅立叶变换到 Graph 上的傅立叶变换</h4><p>将传统拉普拉斯算子的特征函数 $e^{-iwt}$ 变为 Graph 拉普拉斯矩阵分解的特征向量。</p>
 <blockquote>
 <ol>
 <li>傅立叶变换：找到一组基表示任何连续的函数；拉普拉斯矩阵分解：找到特征值和特征向量去唯一表示每个节点。</li>
@@ -231,7 +246,7 @@
 <li>传统的逆傅立叶变换<br>是对频率 $w$ 求积分：$F^{-1}[F(w)]=\frac{1}{2\pi}\int F(w)e^{iwt}dw$</li>
 <li>广义特征方程<br>$AV=\lambda V$ ，其中 $A$ 是一种变换， $V$ 是一种特征向量或者特征函数（无穷维特征向量），$\lambda$ 是特征值。特征向量在变换 $A$ 的作用下，进行了比率为特征值的伸缩。</li>
 <li>Graph 上的傅立叶变换<br>Graph节点对应传统傅立叶变换的时刻 $t$ ，节点离散，离散积分定义为内积形式：$F(\lambda_{l})=\hat{f}(\lambda_{l})=\sum_{i=1}^{N}f(i)u_{l}(i)$ 。Graph节点对时刻 $t$，因此 $f(i)$ 对应节点，特征函数 $e^{-iwt}$ 与拉普拉斯矩阵的特征向量对应。$u_{l}(i)$ 表示第 $l$ 个特征向量的第 $i$ 个分量。所有节点的输入表示为 $f=[f(1),f(2),…f(N)]^{T}$ ，$f(i)$ 表示一个节点，求和中的一项 $f(i)u_{l}(i)$ 针对每个节点，共 $N$ 个节点（时刻），每个特征向量（基）有 $N$维，与 $N$ 个节点对应相乘，写成矩阵形式，如下：<script type="math/tex; mode=display">\left( \begin{matrix} 
-u_{1}(1)& u_{1}(2)& \cdots&u_{1}(N)\\  
+u_{1}(1)& u_{1}(2)& \cdots&u_{1}(N)\\
 u_{2}(1)& u_{2}(2)& \cdots&u_{2}(N)\\
 \vdots & \vdots & \ddots &\vdots\\  
 u_{N}(1) & u_{N}(2) & \cdots &u_{N}(N)
@@ -583,6 +598,14 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">图神经网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
@@ -591,19 +614,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">图神经网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -756,5 +771,22 @@ MathJax.Hub.Queue(function() {
 
 </div>
   </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
 </body>
 </html>

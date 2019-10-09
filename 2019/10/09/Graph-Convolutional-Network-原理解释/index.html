@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/图卷积傅立叶变换.jpg">
-<meta property="og:updated_time" content="2019-10-09T02:01:48.533Z">
+<meta property="og:updated_time" content="2019-10-09T02:04:31.311Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Graph Convolutional Network 原理解释">
 <meta name="twitter:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—》 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— 》GCN 的代表性工作(方法的发展) &amp;ensp;—》GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
@@ -44,55 +44,39 @@
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
     <div class="left-col" q-class="show:isShow">
-      
-<div class="overlay" style="background: #4d4d4d"></div>
+      <% var defaultBg = '#4d4d4d'; %>
+<div class="overlay" style="background: <%= theme.style && theme.style.header ? theme.style.header : defaultBg %>"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/afcheng.github.io/" class="profilepic">
-			<img src="https://chengaf.github.io/afcheng.github.io/assets/img/pika.png" class="js-avatar show">
+		<a href="<%=theme.root%>" class="profilepic">
+			<img src="<%=theme.avatar%>" class="js-avatar show">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/afcheng.github.io/">Little</a></h1>
+		  <h1 class="header-author"><a href="<%=theme.root%>"><%=theme.author%></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">人生里有些事情，不能蹉跎。</p>
-		
+		<% if (theme.subtitle){ %>
+		<p class="header-subtitle"><%=theme.subtitle%></p>
+		<%}%>
 
 		<nav class="header-menu">
 			<ul>
-			
-				<li><a href="https://chengaf.github.io/afcheng.github.io/">主页</a></li>
-	        
-				<li><a href="/afcheng.github.io/tags/随笔/">随笔</a></li>
-	        
+			<% for (var i in theme.menu){ %>
+				<li><a href="<%- url_for(theme.menu[i]) %>"><%= i %></a></li>
+	        <%}%>
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
-    		
-    			
-    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
-    			
-            
-    			
-    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
-    			
-            
-    			
-    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
-    			
-            
+    		<% for (var i in theme.smart_menu){ %>
+    			<% if(theme.smart_menu[i]){ %>
+    			<a q-on="click: openSlider(e, '<%-i%>')" href="javascript:void(0)"><%= theme.smart_menu[i] %></a>
+    			<% } %>
+            <%}%>
 		</nav>
 		<nav class="header-nav">
 			<div class="social">
-				
-					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
-		        
-					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
-		        
-					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
-		        
-					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
-		        
+				<% for (var i in theme.subnav){ %>
+					<a class="<%= i %>" target="_blank" href="<%- url_for(theme.subnav[i]) %>" title="<%= i %>"><i class="icon-<%= i %>"></i></a>
+		        <%}%>
 			</div>
 		</nav>
 	</header>		
@@ -188,10 +172,10 @@
 </ol>
 </blockquote>
 <a id="more"></a>
-<h2 id="1-为什么要研究GCN"><a href="#1-为什么要研究GCN" class="headerlink" title="1. 为什么要研究GCN"></a>1. 为什么要研究GCN</h2><h3 id="1-1-传统CNN的认识"><a href="#1-1-传统CNN的认识" class="headerlink" title="1.1 传统CNN的认识"></a>1.1 传统CNN的认识</h3><h4 id="1-1-1-卷积定义"><a href="#1-1-1-卷积定义" class="headerlink" title="1.1.1 卷积定义"></a>1.1.1 卷积定义</h4><p><strong>卷积本质上就是一种加权求和</strong>。参见资源君-3<br>&emsp;卷积的定义, 称 $(f*g)(n)$ 为 $f,g$ 的卷积，</p>
-<p>​    （1）连续定义为： $(f*g)(n)=\int_{\tau=-\infty}^{\tau=+\infty}f(\tau)g(n-\tau)d\tau$ &emsp;&emsp;公式（1）</p>
-<p>​    （2）离散定义为： $(f*g)(n)=\sum_{\tau=-\infty}^{\tau=+\infty}f(\tau)g(n-\tau)$ &emsp;&emsp;公式（2）</p>
-<p>&emsp;卷积的理解：“卷”：翻转，施加一种约束，限制“积”；“积”：加权求和，考虑对所有输入的效果累积。卷积本质上就是一种加权求和：最终的效果受所有输入的影响不同，以卷（滑动）控制加权求和。<br>&emsp;例子1：掷两个骰子，和为 $n=4$ 的概率。<br>&emsp;&emsp; $f,g$ 都为掷一个骰，按照卷积的定义即公式（2）可以定义  $(f<em>g)(n)$ 为： $(f</em>g)(4)=\sum_{\tau=1}^{3}f(\tau)g(4-\tau)$ </p>
+<h2 id="1-为什么要研究GCN"><a href="#1-为什么要研究GCN" class="headerlink" title="1. 为什么要研究GCN"></a>1. 为什么要研究GCN</h2><h3 id="1-1-传统CNN的认识"><a href="#1-1-传统CNN的认识" class="headerlink" title="1.1 传统CNN的认识"></a>1.1 传统CNN的认识</h3><h4 id="1-1-1-卷积定义"><a href="#1-1-1-卷积定义" class="headerlink" title="1.1.1 卷积定义"></a>1.1.1 卷积定义</h4><p><strong>卷积本质上就是一种加权求和</strong>。参见资源君-3<br>&emsp;卷积的定义, 称 <script type="math/tex">(f*g)(n)</script> 为 <script type="math/tex">f,g</script> 的卷积，</p>
+<p>​    （1）连续定义为： <script type="math/tex">(f*g)(n)=\int_{\tau=-\infty}^{\tau=+\infty}f(\tau)g(n-\tau)d\tau</script> &emsp;&emsp;公式（1）</p>
+<p>​    （2）离散定义为： <script type="math/tex">(f*g)(n)=\sum_{\tau=-\infty}^{\tau=+\infty}f(\tau)g(n-\tau)</script> &emsp;&emsp;公式（2）</p>
+<p>&emsp;卷积的理解：“卷”：翻转，施加一种约束，限制“积”；“积”：加权求和，考虑对所有输入的效果累积。卷积本质上就是一种加权求和：最终的效果受所有输入的影响不同，以卷（滑动）控制加权求和。<br>&emsp;例子1：掷两个骰子，和为 <script type="math/tex">n=4</script> 的概率。<br>&emsp;&emsp; <script type="math/tex">f,g</script> 都为掷一个骰，按照卷积的定义即公式（2）可以定义  $(f<em>g)(n)$ 为： $(f</em>g)(4)=\sum_{\tau=1}^{3}f(\tau)g(4-\tau)$ </p>
 <p>，两个骰子点数之和为4为约束 $g(4-\tau)$，函数 $f,g$ 都为[1,2,3,4,5,6]，翻转函数 $g$ [6,5,4,3,2,1]，滑动函数 $g$ ，图解：</p>
 <p>&emsp;&emsp; <img src="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg" class="js-avatar show"></p>
 <p>&emsp;例子2：工厂排放化学物质的残留。工厂不断排放化学物质， $t$ 时刻排放量是 $f(t)$ ，被排放的化学物质在排放 $\Delta t$ 时间后，即 $t+\Delta t=u$ 时刻的残留比率是 $g(\Delta t)$ ，于是 $t$ 时刻排放的化学物质在 $t+\Delta t=u$ 时刻还剩余 $g(\Delta t)$ ，而 $u$ 时刻的化学物质总量等于 $u$ 时刻之前所有时刻的总和，由公式（1）可以得出 $u$ 时刻的化学物质总量为： $\int_{-\infty}^{+\infty}f(t)g(u-t)dt$ ，这就是卷积。化学物质残留比率作为限制，对所有输入（排放的化学物质）对最终总残留值贡献量做出限制。</p>

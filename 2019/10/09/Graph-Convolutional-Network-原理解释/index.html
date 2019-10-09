@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/图卷积傅立叶变换.jpg">
-<meta property="og:updated_time" content="2019-10-09T02:18:36.744Z">
+<meta property="og:updated_time" content="2019-10-09T02:22:48.630Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Graph Convolutional Network 原理解释">
 <meta name="twitter:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—》 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— 》GCN 的代表性工作(方法的发展) &amp;ensp;—》GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
@@ -213,7 +213,8 @@
 </blockquote>
 <p><strong>拉普拉斯矩阵是半正定矩阵（本身就是对称矩阵）</strong>，因此可以进行谱分解一定有n个线性无关的特征向量，特征向量两两正交，特征值一定非负。</p>
 <p>拉普拉斯矩阵特征值分解：</p>
-<p>$L=U\Lambda U^{-1}$， 其中，$U\in R^{N\times N}$ 是特征向量矩阵，$U=\{\vec{u_{1}}, \vec{u_{2}}, …, \vec{u_{n}}\}$，向量 $\vec{u_{i}}$ 是列向量，$\Lambda$ 是与特征向量对应特征值构成的对角矩阵。由于特征向量矩 $U$ 正交，因此 $UU^{-1}=E$，即 $U^{T}=U^{-1}$ ，因此特征分解可表示为 <strong>$L=U\Lambda U^{T}$ 拉普拉斯矩阵分解的特殊形式，就不用求矩阵的逆了，直接用转置矩阵就好</strong>。<br>$\Lambda=\left( \begin{matrix} \lambda_{1} &amp;  &amp; \  &amp; \ddots &amp;  \  &amp;  &amp; \lambda_{n}\end{matrix}<br>\right)$</p>
+<p>$L=U\Lambda U^{-1}$， 其中，$U\in R^{N\times N}$ 是特征向量矩阵，$U=\{\vec{u_{1}}, \vec{u_{2}}, …, \vec{u_{n}}\}$，向量 $\vec{u_{i}}$ 是列向量，$\Lambda$ 是与特征向量对应特征值构成的对角矩阵。由于特征向量矩 $U$ 正交，因此 $UU^{-1}=E$，即 $U^{T}=U^{-1}$ ，因此特征分解可表示为 <strong>$L=U\Lambda U^{T}$ 拉普拉斯矩阵分解的特殊形式，就不用求矩阵的逆了，直接用转置矩阵就好</strong>。  <script type="math/tex">\Lambda=\left( \begin{matrix} \lambda_{1} &  & \\  & \ddots &  \\  &  & \lambda_{n}\end{matrix}
+\right)</script></p>
 </li>
 </ul>
 <h4 id="2-2-2-从传统的傅立叶变换到-Graph-上的傅立叶变换"><a href="#2-2-2-从传统的傅立叶变换到-Graph-上的傅立叶变换" class="headerlink" title="2.2.2 从传统的傅立叶变换到 Graph 上的傅立叶变换"></a>2.2.2 从传统的傅立叶变换到 Graph 上的傅立叶变换</h4><p>将传统拉普拉斯算子的特征函数 $e^{-iwt}$ 变为 Graph 拉普拉斯矩阵分解的特征向量。</p>
@@ -229,8 +230,40 @@
 <li>传统的傅立叶变换<br>傅立叶变换 $F(w)$, 定义：信号 $f(t)$ 与基函数 $e^{-iwt}$ 的积分。即： $F(w)=\int_{-\infty}^{+\infty}f(t) e^{-iwt}dt$。为什么找 $e^{-iwt}$ 做为基函数？数学上看，$e^{-iwt}$ 是拉普拉斯算子的特征函数（满足特征方程），$w$就和特征值相关。</li>
 <li>传统的逆傅立叶变换<br>是对频率 $w$ 求积分：$F^{-1}[F(w)]=\frac{1}{2\pi}\int F(w)e^{iwt}dw$</li>
 <li>广义特征方程<br>$AV=\lambda V$ ，其中 $A$ 是一种变换， $V$ 是一种特征向量或者特征函数（无穷维特征向量），$\lambda$ 是特征值。特征向量在变换 $A$ 的作用下，进行了比率为特征值的伸缩。</li>
-<li>Graph 上的傅立叶变换<br>Graph节点对应传统傅立叶变换的时刻 $t$ ，节点离散，离散积分定义为内积形式：$F(\lambda_{l})=\hat{f}(\lambda_{l})=\sum_{i=1}^{N}f(i)u_{l}(i)$ 。Graph节点对时刻 $t$，因此 $f(i)$ 对应节点，特征函数 $e^{-iwt}$ 与拉普拉斯矩阵的特征向量对应。$u_{l}(i)$ 表示第 $l$ 个特征向量的第 $i$ 个分量。所有节点的输入表示为 $f=[f(1),f(2),…f(N)]^{T}$ ，$f(i)$ 表示一个节点，求和中的一项 $f(i)u_{l}(i)$ 针对每个节点，共 $N$ 个节点（时刻），每个特征向量（基）有 $N$维，与 $N$ 个节点对应相乘，写成矩阵形式，如下：<br>$\left( \begin{matrix}<br>u_{1}(1)&amp; u_{1}(2)&amp; \cdots&amp;u_{1}(N)\ <br>u_{2}(1)&amp; u_{2}(2)&amp; \cdots&amp;u_{2}(N)\\<br>\vdots &amp; \vdots &amp; \ddots &amp;\vdots\ <br>u_{N}(1) &amp; u_{N}(2) &amp; \cdots &amp;u_{N}(N)<br>\end{matrix}\right)<br>\left( \begin{matrix}<br>f(1)\\<br>f(2)\\<br>\vdots\\<br>f(N)<br>\end{matrix}\right)=\hat{f}(\lambda_{l})=\left( \begin{matrix}<br>\hat f(\lambda_{1})\\<br>\hat f(\lambda_{2})\\<br>\vdots\\<br>\hat f(\lambda_{N})<br>\end{matrix}\right)$<br>即： &lt;$f$ 在 Graph 上的傅立叶变换为 $\hat{f}=U^{T}f$。</li>
-<li>Graph 上的逆傅立叶变换<br>对特征值 $\lambda_{l}$ 求和：$f(i)=\sum_{i=1}^{N}\hat{f}(\lambda_{i}) u_{l}(i)$，同样利用矩阵乘法将其推广到矩阵形式：<br>$\left( \begin{matrix}<br>f(1)\\<br>f(2)\\<br>\vdots\\<br>f(N)<br>\end{matrix}\right)=<br>\left( \begin{matrix}<br>u_{1}(1)&amp; u_{1}(2)&amp; \cdots&amp;u_{1}(N)\ <br>u_{2}(1)&amp; u_{2}(2)&amp; \cdots&amp;u_{2}(N)\\<br>\vdots &amp; \vdots &amp; \ddots &amp;\vdots\ <br>u_{N}(1) &amp; u_{N}(2) &amp; \cdots &amp;u_{N}(N)<br>\end{matrix}\right)\left( \begin{matrix}<br>\hat f(\lambda_{1})\\<br>\hat f(\lambda_{2})\\<br>\vdots\\<br>\hat f(\lambda_{N})<br>\end{matrix}\right)$<br>即：$f$ 在 Graph 上的逆傅立叶变换为 $f=U \hat{f}$。</li>
+<li>Graph 上的傅立叶变换<br>Graph节点对应传统傅立叶变换的时刻 $t$ ，节点离散，离散积分定义为内积形式：$F(\lambda_{l})=\hat{f}(\lambda_{l})=\sum_{i=1}^{N}f(i)u_{l}(i)$ 。Graph节点对时刻 $t$，因此 $f(i)$ 对应节点，特征函数 $e^{-iwt}$ 与拉普拉斯矩阵的特征向量对应。$u_{l}(i)$ 表示第 $l$ 个特征向量的第 $i$ 个分量。所有节点的输入表示为 $f=[f(1),f(2),…f(N)]^{T}$ ，$f(i)$ 表示一个节点，求和中的一项 $f(i)u_{l}(i)$ 针对每个节点，共 $N$ 个节点（时刻），每个特征向量（基）有 $N$维，与 $N$ 个节点对应相乘，写成矩阵形式，如下：<script type="math/tex; mode=display">\left( \begin{matrix} 
+u_{1}(1)& u_{1}(2)& \cdots&u_{1}(N)\\  
+u_{2}(1)& u_{2}(2)& \cdots&u_{2}(N)\\
+\vdots & \vdots & \ddots &\vdots\\  
+u_{N}(1) & u_{N}(2) & \cdots &u_{N}(N)
+\end{matrix}\right)
+\left( \begin{matrix}
+f(1)\\
+f(2)\\
+\vdots\\
+f(N)
+\end{matrix}\right)=\hat{f}(\lambda_{l})=\left( \begin{matrix}
+\hat f(\lambda_{1})\\
+\hat f(\lambda_{2})\\
+\vdots\\
+\hat f(\lambda_{N})
+\end{matrix}\right)</script>即： $f$ 在 Graph 上的傅立叶变换为 $\hat{f}=U^{T}f$。</li>
+<li>Graph 上的逆傅立叶变换<br>对特征值 $\lambda_{l}$ 求和：$f(i)=\sum_{i=1}^{N}\hat{f}(\lambda_{i}) u_{l}(i)$，同样利用矩阵乘法将其推广到矩阵形式：<script type="math/tex; mode=display">\left( \begin{matrix}
+f(1)\\
+f(2)\\
+\vdots\\
+f(N)
+\end{matrix}\right)=
+\left( \begin{matrix} 
+u_{1}(1)& u_{1}(2)& \cdots&u_{1}(N)\\  
+u_{2}(1)& u_{2}(2)& \cdots&u_{2}(N)\\
+\vdots & \vdots & \ddots &\vdots\\  
+u_{N}(1) & u_{N}(2) & \cdots &u_{N}(N)
+\end{matrix}\right)\left( \begin{matrix}
+\hat f(\lambda_{1})\\
+\hat f(\lambda_{2})\\
+\vdots\\
+\hat f(\lambda_{N})
+\end{matrix}\right)</script>即：$f$ 在 Graph 上的逆傅立叶变换为 $f=U \hat{f}$。</li>
 </ul>
 <h4 id="2-2-3-Graph卷积从谱域操作的总体的理解图"><a href="#2-2-3-Graph卷积从谱域操作的总体的理解图" class="headerlink" title="2.2.3 Graph卷积从谱域操作的总体的理解图"></a>2.2.3 Graph卷积从谱域操作的总体的理解图</h4><ul>
 <li><p>&emsp;结合2.2.1与2.2.2总结如何从频谱角度进行 Graph 上的卷积操作。</p>
@@ -244,15 +277,21 @@
 <li><p>Graph Convolution Network 目的是需要设计共享的（Parameter Sharing）、可学习的（Trainable）卷积核（Convolutional Kernel）。对 Graph Convolution 而言就是 $U\Lambda U^{T}X$ 这个 $\Lambda$。</p>
 </li>
 <li><p>此外许多地方将图卷积写成 <script type="math/tex">(f*h)_{G}=U((U^{T}h)\bigodot(U^{T}f))</script>，其中 $\bigodot$ 为哈达玛积，对应元素相乘。</p>
-<p>把 $\bigodot$ 转为矩阵乘法，因为：<br>$\left( \begin{matrix} x_{1}\ \vdots \\x_{n} \end{matrix}\right)\bigodot \left( \begin{matrix} y_{1}\ \vdots \\y_{n} \end{matrix}\right)=\left( \begin{matrix} x_{1}&amp;\cdots&amp;0 \ \vdots&amp;\ddots&amp;\vdots \\0&amp;\cdots&amp;x_{n} \end{matrix}\right)\left( \begin{matrix} y_{1}\ \vdots \\y_{n} \end{matrix}\right)$ </p>
-<p>所以可将 $(U^{T}h)\bigodot$ 这部分写成 $diag(\hat{h}(\lambda_{l}))$，</p>
-<p>即为另一种形式：$(f*h)_{G}=U<br>\left( \begin{matrix} \hat{h}(\lambda_{1}) &amp;  &amp; \  &amp; \ddots &amp;  \  &amp;  &amp; \hat{h}(\lambda_{n})\end{matrix}<br>\right)<br>U^{T}f$，中间 $diag(\hat{h}(\lambda_{l}))$ 这部分就是图卷积的参数。</p>
+<p>把 $\bigodot$ 转为矩阵乘法，因为：</p>
+<script type="math/tex; mode=display">\left( \begin{matrix} x_{1}\\ \vdots \\x_{n} \end{matrix}\right)\bigodot \left( \begin{matrix} y_{1}\\ \vdots \\y_{n} \end{matrix}\right)=\left( \begin{matrix} x_{1}&\cdots&0 \\ \vdots&\ddots&\vdots \\0&\cdots&x_{n} \end{matrix}\right)\left( \begin{matrix} y_{1}\\ \vdots \\y_{n} \end{matrix}\right)</script><p>所以可将 $(U^{T}h)\bigodot$ 这部分写成 $diag(\hat{h}(\lambda_{l}))$，</p>
+<p>即为另一种形式：<script type="math/tex">(f*h)_{G}=U
+\left( \begin{matrix} \hat{h}(\lambda_{1}) &  & \\  & \ddots &  \\  &  & \hat{h}(\lambda_{n})\end{matrix}
+\right)
+U^{T}f</script>，中间 $diag(\hat{h}(\lambda_{l}))$ 这部分就是图卷积的参数。</p>
 </li>
 </ul>
 <h4 id="2-2-4-Graph-Convolutional（谱）的发展"><a href="#2-2-4-Graph-Convolutional（谱）的发展" class="headerlink" title="2.2.4 Graph Convolutional（谱）的发展"></a>2.2.4 Graph Convolutional（谱）的发展</h4><ul>
 <li><p>第一代，SCNN。</p>
 <ul>
-<li>直接把 $diag(\hat{h}(\lambda_{l}))$ 变为  $diag(\theta_{l})$ ，通过初始化赋值、误差反向传播进行学习参数 $\Theta=(\theta_{1},\theta_{2},…,\theta_{n})$。加上激活函数 $\sigma(\cdot)$，给定输入 $x$ 经过图卷积输出为：$y_{output}=\sigma\left(U<br>\left( \begin{matrix} \theta_{1} &amp;  &amp; \  &amp; \ddots &amp;  \  &amp;  &amp; \theta_{n}\end{matrix}<br>\right)<br>U^{T}x\right)$</li>
+<li>直接把 $diag(\hat{h}(\lambda_{l}))$ 变为  $diag(\theta_{l})$ ，通过初始化赋值、误差反向传播进行学习参数 $\Theta=(\theta_{1},\theta_{2},…,\theta_{n})$。加上激活函数 $\sigma(\cdot)$，给定输入 $x$ 经过图卷积输出为：<script type="math/tex">y_{output}=\sigma\left(U
+\left( \begin{matrix} \theta_{1} &  & \\  & \ddots &  \\  &  & \theta_{n}\end{matrix}
+\right)
+U^{T}x\right)</script></li>
 <li><p>从 $y_{output}$ 的计算可以看出，每次前向传播都需要计算 $U$、$diag(\theta_{l})$ 以及 $U^{T}$ 的乘积，计算复杂度是 $O(n^{2})$，对大规模图而言，复杂度比较高。另外，卷积核参数需要 $n$ 个。</p>
 <blockquote>
 <p>Bruna, Joan, et al. “Spectral Networks and Locally Connected Networks on Graphs.” Computer Science (2013).</p>
@@ -262,7 +301,9 @@
 </li>
 <li><p>第二代，ChebNet。</p>
 <ul>
-<li>把 $diag(\hat{h}(\lambda_{l}))$ 变为 $diag(\sum_{j=0}^{K}\alpha_{j}\lambda_{l}^{j})$。其中，$(\alpha_{1}, \alpha_{2}, …, \alpha_{K})$ 为需要学习的参数，同样需要初始化赋值通过误差反向传播进行学习。具体的，$diag(\sum_{j=0}^{K}\alpha_{j}\lambda_{l}^{j})=\left( \begin{matrix} \sum_{j=0}^{K}\alpha_{j}\lambda_{1}^{j} &amp;  &amp; \  &amp; \ddots &amp;  \  &amp;  &amp; \sum_{j=0}^{K}\alpha_{j}\lambda_{n}^{j}\end{matrix}<br>\right)$ ，假设 $\Lambda = diag(\lambda_{1},…,\lambda_{n})$，那么$diag(\sum_{j=0}^{K}\alpha_{j}\lambda_{l}^{j})=\left( \begin{matrix} \sum_{j=0}^{K}\alpha_{j}\lambda_{1}^{j} &amp;  &amp; \  &amp; \ddots &amp;  \  &amp;  &amp; \sum_{j=0}^{K}\alpha_{j}\lambda_{n}^{j}\end{matrix}<br>\right)=\sum_{j=0}^{K}\alpha_{j}\Lambda^{j}$ ，又因为 $U\sum_{j=0}^{K}\alpha_{j}\Lambda^{j}U^{T}=\sum_{j=0}^{K}\alpha_{j}U\Lambda^{j}U^{T}=\sum_{j=0}^{K}\alpha_{j}L^{j}$，<br>所以对于输入 $x$ ，经过图卷积操作得到输出 $y_{output}$ 可公式化描述为：<br>$y_{output}=\sigma(\sum_{j=0}^{K}\alpha_{j}L^{j} x)$</li>
+<li>把 $diag(\hat{h}(\lambda_{l}))$ 变为 $diag(\sum_{j=0}^{K}\alpha_{j}\lambda_{l}^{j})$。其中，$(\alpha_{1}, \alpha_{2}, …, \alpha_{K})$ 为需要学习的参数，同样需要初始化赋值通过误差反向传播进行学习。具体的，<script type="math/tex">diag(\sum_{j=0}^{K}\alpha_{j}\lambda_{l}^{j})=\left( \begin{matrix} \sum_{j=0}^{K}\alpha_{j}\lambda_{1}^{j} &  & \\  & \ddots &  \\  &  & \sum_{j=0}^{K}\alpha_{j}\lambda_{n}^{j}\end{matrix}
+\right)</script> ，假设 <script type="math/tex">\Lambda = diag(\lambda_{1},...,\lambda_{n})</script>，那么<script type="math/tex">diag(\sum_{j=0}^{K}\alpha_{j}\lambda_{l}^{j})=\left( \begin{matrix} \sum_{j=0}^{K}\alpha_{j}\lambda_{1}^{j} &  & \\  & \ddots &  \\  &  & \sum_{j=0}^{K}\alpha_{j}\lambda_{n}^{j}\end{matrix}
+\right)=\sum_{j=0}^{K}\alpha_{j}\Lambda^{j}</script> ，又因为 <script type="math/tex">U\sum_{j=0}^{K}\alpha_{j}\Lambda^{j}U^{T}=\sum_{j=0}^{K}\alpha_{j}U\Lambda^{j}U^{T}=\sum_{j=0}^{K}\alpha_{j}L^{j}</script>，<br>所以对于输入 $x$ ，经过图卷积操作得到输出 $y_{output}$ 可公式化描述为：<br>$y_{output}=\sigma(\sum_{j=0}^{K}\alpha_{j}L^{j} x)$</li>
 <li><p>卷积核参数为 $K+1$ 个，远小于 $n$ 。矩阵变换之后不需要做特征分解，直接用拉普拉斯矩阵进行变换，计算复杂度变为 $O(n)$。</p>
 <blockquote>
 <p>Defferrard, Michaël, X. Bresson, and P. Vandergheynst. “Convolutional Neural Networks on Graphs with Fast Localized Spectral Filtering.” in NIPS (2016).</p>
@@ -550,11 +591,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
+                <a href="javascript:void(0)" class="js-tag color1">图神经网络</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -563,14 +612,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">图神经网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -715,22 +756,5 @@ MathJax.Hub.Queue(function() {
 
 </div>
   </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
 </body>
 </html>

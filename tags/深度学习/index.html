@@ -6,20 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
-  <title>Classifying Names With a Character-level RNN | Little&#39;s Blogs</title>
+  <title>Tag: 深度学习 | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Pytorch Tutorial:  CLASSIFYING NAMES WITH A CHARACTER-LEVEL RNN 利用RNN对姓名所属的语言进行分类。 Tutorial 地址: https://pytorch.org/tutorials/intermediate/char_rnn_classification_tutorial.html 分为几个步骤：   读取数据name。 根据数">
-<meta name="keywords" content="自然语言处理,RNN">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Classifying Names With a Character-level RNN">
-<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/10/09/Classifying-Names-With-a-Character-level-RNN/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Little&#39;s Blogs">
+<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/tags/深度学习/index.html">
 <meta property="og:site_name" content="Little&#39;s Blogs">
-<meta property="og:description" content="Pytorch Tutorial:  CLASSIFYING NAMES WITH A CHARACTER-LEVEL RNN 利用RNN对姓名所属的语言进行分类。 Tutorial 地址: https://pytorch.org/tutorials/intermediate/char_rnn_classification_tutorial.html 分为几个步骤：   读取数据name。 根据数">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-09T01:28:34.691Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Classifying Names With a Character-level RNN">
-<meta name="twitter:description" content="Pytorch Tutorial:  CLASSIFYING NAMES WITH A CHARACTER-LEVEL RNN 利用RNN对姓名所属的语言进行分类。 Tutorial 地址: https://pytorch.org/tutorials/intermediate/char_rnn_classification_tutorial.html 分为几个步骤：   读取数据name。 根据数">
+<meta name="twitter:title" content="Little&#39;s Blogs">
   
     <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
   
@@ -141,209 +136,106 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Classifying-Names-With-a-Character-level-RNN" class="article article-type-post " itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      Classifying Names With a Character-level RNN
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/afcheng.github.io/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/afcheng.github.io/2019/10/09/梯度消失与梯度爆炸/" class="archive-article-date">
+  	<time datetime="2019-10-09T03:44:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-09</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/afcheng.github.io/2019/10/09/梯度消失与梯度爆炸/">梯度消失与梯度爆炸</a>
     </h1>
   
 
-        
-        <a href="/afcheng.github.io/2019/10/09/Classifying-Names-With-a-Character-level-RNN/" class="archive-article-date">
-  	<time datetime="2019-10-09T01:04:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Pytorch Tutorial:  CLASSIFYING NAMES WITH A CHARACTER-LEVEL RNN 利用RNN对姓名所属的语言进行分类。</p>
-<p>Tutorial 地址: <a href="https://pytorch.org/tutorials/intermediate/char_rnn_classification_tutorial.html" target="_blank" rel="noopener">https://pytorch.org/tutorials/intermediate/char_rnn_classification_tutorial.html</a></p>
-<p>分为几个步骤：</p>
-<blockquote>
-<ol>
-<li>读取数据name。</li>
-<li>根据数据构造输入，将原始数据name转为模型输入tensor。</li>
-<li>构建神经网络。</li>
-<li>训练（自己写的random sample和梯度下降没用封装好的batch选取和优化器）。</li>
-<li>预测。</li>
-</ol>
-</blockquote>
-<a id="more"></a>
-<h4 id="第一部分-读取数据"><a href="#第一部分-读取数据" class="headerlink" title="第一部分 读取数据"></a>第一部分 读取数据</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用glob.glob(path)获取path下所有符合条件的文件名，返回的是个list，存储所有满足条件的</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">findFiles</span><span class="params">(path)</span>:</span> <span class="keyword">return</span> glob.glob(path)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(findFiles(<span class="string">'data/names/*.txt'</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> unicodedata</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line"><span class="comment"># all_letters='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.,;'</span></span><br><span class="line">all_letters = string.ascii_letters + <span class="string">" .,;'"</span></span><br><span class="line">n_letters = len(all_letters)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 Unicode 编码转为 ASCII （统一编码）</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">unicodeToAscii</span><span class="params">(s)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">''</span>.join(</span><br><span class="line">        c <span class="keyword">for</span> c <span class="keyword">in</span> unicodedata.normalize(<span class="string">'NFD'</span>, s)</span><br><span class="line">        <span class="keyword">if</span> unicodedata.category(c) != <span class="string">'Mn'</span></span><br><span class="line">        <span class="keyword">and</span> c <span class="keyword">in</span> all_letters</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(unicodeToAscii(<span class="string">'Ślusàrski'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Build the category_lines dictionary, a list of names per language</span></span><br><span class="line">category_lines = &#123;&#125;</span><br><span class="line">all_categories = []</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Read a file and split into lines</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readLines</span><span class="params">(filename)</span>:</span></span><br><span class="line">    lines = open(filename, encoding=<span class="string">'utf-8'</span>).read().strip().split(<span class="string">'\n'</span>)  <span class="comment"># 一下子全部读取？</span></span><br><span class="line">    <span class="keyword">return</span> [unicodeToAscii(line) <span class="keyword">for</span> line <span class="keyword">in</span> lines]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个函数和原教程里的readLines输出一样</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">readLiness</span><span class="params">(filename)</span>:</span></span><br><span class="line">    lines = []</span><br><span class="line">    <span class="keyword">with</span> open(filename, <span class="string">'r'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> data:  <span class="comment"># 获取文件对象</span></span><br><span class="line">        <span class="keyword">for</span> d <span class="keyword">in</span> data:  <span class="comment"># 逐行读取</span></span><br><span class="line">            line = d.strip()</span><br><span class="line">            lines.append(unicodeToAscii(line))</span><br><span class="line">    <span class="keyword">return</span> lines</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将不同语言的数据转为dictionary，key值为语言类别，value为list，存储所有name。</span></span><br><span class="line"><span class="keyword">for</span> filename <span class="keyword">in</span> findFiles(<span class="string">'data/names/*.txt'</span>):</span><br><span class="line">    caf0 = os.path.basename(filename)</span><br><span class="line">    caf1 = os.path.splitext(caf0)</span><br><span class="line">    category = caf1[<span class="number">0</span>]</span><br><span class="line">    all_categories.append(category)</span><br><span class="line">    lines = readLines(filename)</span><br><span class="line">    category_lines[category] = lines</span><br><span class="line"></span><br><span class="line">n_categories = len(all_categories)</span><br></pre></td></tr></table></figure>
-<h4 id="根据数据构建模型的输入（将name转为tensor）"><a href="#根据数据构建模型的输入（将name转为tensor）" class="headerlink" title="根据数据构建模型的输入（将name转为tensor）"></a>根据数据构建模型的输入（将name转为tensor）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Find letter index from all_letters, e.g. "a" = 0 找某一个字符在字符串 all_letters 中的index</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">letterToIndex</span><span class="params">(letter)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> all_letters.find(letter)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Just for demonstration, turn a letter into a &lt;1 x n_letters&gt; Tensor</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">letterToTensor</span><span class="params">(letter)</span>:</span></span><br><span class="line">    tensor = torch.zeros(<span class="number">1</span>, n_letters) <span class="comment"># 每个字符是一个 1*len(all_letters) 的 tensor（one-hot）</span></span><br><span class="line">    tensor[<span class="number">0</span>][letterToIndex(letter)] = <span class="number">1</span> <span class="comment"># 字符对应位置为1</span></span><br><span class="line">    <span class="keyword">return</span> tensor</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Turn a line into a &lt;line_length x 1 x n_letters&gt;,</span></span><br><span class="line"><span class="comment"># or an array of one-hot letter vectors</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lineToTensor</span><span class="params">(line)</span>:</span> <span class="comment"># 每个name是一个len(name)*1*len(all_letters)的tensor</span></span><br><span class="line">    tensor = torch.zeros(len(line), <span class="number">1</span>, n_letters)</span><br><span class="line">    <span class="keyword">for</span> li, letter <span class="keyword">in</span> enumerate(line):</span><br><span class="line">        tensor[li][<span class="number">0</span>][letterToIndex(letter)] = <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> tensor</span><br><span class="line"></span><br><span class="line">print(letterToTensor(<span class="string">'J'</span>))</span><br><span class="line">print(lineToTensor(<span class="string">'Jones'</span>).size())</span><br></pre></td></tr></table></figure>
-<h4 id="第三部分-构建神经网络"><a href="#第三部分-构建神经网络" class="headerlink" title="第三部分 构建神经网络"></a>第三部分 构建神经网络</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RNN</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, input_size, hidden_size, output_size)</span>:</span></span><br><span class="line">        super(RNN, self).__init__()</span><br><span class="line"></span><br><span class="line">        self.hidden_size = hidden_size</span><br><span class="line"></span><br><span class="line">        self.i2h = nn.Linear(input_size + hidden_size, hidden_size) <span class="comment"># input to hidden</span></span><br><span class="line">        self.i2o = nn.Linear(input_size + hidden_size, output_size) <span class="comment"># input to output</span></span><br><span class="line">        self.softmax = nn.LogSoftmax(dim=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, input, hidden)</span>:</span></span><br><span class="line">        combined = torch.cat((input, hidden), <span class="number">1</span>) <span class="comment"># 拼接输入和隐藏层输出</span></span><br><span class="line">        hidden = self.i2h(combined)</span><br><span class="line">        output = self.i2o(combined)</span><br><span class="line">        output = self.softmax(output)</span><br><span class="line">        <span class="keyword">return</span> output, hidden</span><br><span class="line">    <span class="comment"># 初始化隐藏层单元</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initHidden</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> torch.zeros(<span class="number">1</span>, self.hidden_size)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化网络</span></span><br><span class="line"><span class="comment"># RNN 的输入大小input_size为len(all_letters)，因为每个cell每次处理一个字符，每个name是一个字符序列。</span></span><br><span class="line"><span class="comment"># RNN 的输出大小output_size为类别个数，最后预测某一个name属于哪一种语言。</span></span><br><span class="line">n_hidden = <span class="number">128</span> <span class="comment"># 隐藏层size</span></span><br><span class="line">rnn = RNN(n_letters, n_hidden, n_categories)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输入例子</span></span><br><span class="line">input = letterToTensor(<span class="string">'A'</span>)</span><br><span class="line">hidden =torch.zeros(<span class="number">1</span>, n_hidden) <span class="comment"># 初始化隐藏单元值为全0</span></span><br><span class="line">output, next_hidden = rnn(input, hidden)</span><br><span class="line">print(output, next_hidden)</span><br><span class="line"></span><br><span class="line">input = lineToTensor(<span class="string">'Albert'</span>)</span><br><span class="line">hidden = torch.zeros(<span class="number">1</span>, n_hidden)</span><br><span class="line">output, next_hidden = rnn(input[<span class="number">0</span>], hidden) <span class="comment"># input[0]：name-'Albert'的第一个字符</span></span><br><span class="line">print(output, next_hidden)</span><br></pre></td></tr></table></figure>
-<h4 id="第四部分-训练网络"><a href="#第四部分-训练网络" class="headerlink" title="第四部分 训练网络"></a>第四部分 训练网络</h4><h5 id="训练准备"><a href="#训练准备" class="headerlink" title="训练准备"></a>训练准备</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 返回 最大值 top_n 及其位置 top_i ，在类别列表 all_categories 中查询所属类别，在返回所属类别及其id</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">categoryFromOutput</span><span class="params">(output)</span>:</span></span><br><span class="line">    top_n, top_i = output.topk(<span class="number">1</span>)</span><br><span class="line">    category_i = top_i[<span class="number">0</span>].item()</span><br><span class="line">    <span class="keyword">return</span> all_categories[category_i], category_i</span><br><span class="line">print(categoryFromOutput(output))</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">randomChoice</span><span class="params">(l)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> l[random.randint(<span class="number">0</span>, len(l) - <span class="number">1</span>)] <span class="comment"># 随机取l中的一个元素</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">randomTrainingExample</span><span class="params">()</span>:</span></span><br><span class="line">    category = randomChoice(all_categories) <span class="comment"># 随机取一个类</span></span><br><span class="line">    line = randomChoice(category_lines[category])<span class="comment"># 随机取类category中的一个name</span></span><br><span class="line">    category_id = all_categories.index(category)</span><br><span class="line">    category_tensor = torch.tensor([category_id], dtype=torch.long)</span><br><span class="line">    line_tensor = lineToTensor(line)</span><br><span class="line">    <span class="keyword">return</span> category, line, category_tensor, line_tensor</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    category, line, category_tensor, line_tensor = randomTrainingExample()</span><br><span class="line">    print(<span class="string">'category ='</span>, category, <span class="string">'/ line ='</span>, line)</span><br></pre></td></tr></table></figure>
-<h5 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义损失函数</span></span><br><span class="line">criterion = nn.NLLLoss()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># train函数</span></span><br><span class="line">learning_rate = <span class="number">0.005</span> <span class="comment"># If you set this too high, it might explode. If too low, it might not learn</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(category_tensor, line_tensor)</span>:</span></span><br><span class="line">    hidden = rnn.initHidden()</span><br><span class="line"></span><br><span class="line">    rnn.zero_grad()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(line_tensor.size()[<span class="number">0</span>]):</span><br><span class="line">        output, hidden = rnn(line_tensor[i], hidden)</span><br><span class="line"></span><br><span class="line">    loss = criterion(output, category_tensor)</span><br><span class="line"></span><br><span class="line">    loss.backward()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Add parameters' gradients to their values, multiplied by learning rate</span></span><br><span class="line">    <span class="comment"># 没用优化器直接梯度下降</span></span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> rnn.parameters():</span><br><span class="line">        p.data.add_(-learning_rate, p.grad.data)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> output, loss.item()</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line">n_iters = <span class="number">100000</span></span><br><span class="line">print_every = <span class="number">5000</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Keep track of losses for plotting</span></span><br><span class="line">current_loss = <span class="number">0</span></span><br><span class="line">all_losses = []</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">timeSince</span><span class="params">(since)</span>:</span></span><br><span class="line">    now = time.time()</span><br><span class="line">    s = now - since</span><br><span class="line">    m = math.floor(s / <span class="number">60</span>)</span><br><span class="line">    s -= m * <span class="number">60</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'%dm %ds'</span> % (m, s)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">start = time.time()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> iter <span class="keyword">in</span> range(<span class="number">1</span>, n_iters + <span class="number">1</span>):</span><br><span class="line">    category, line, category_tensor, line_tensor = randomTrainingExample() <span class="comment"># 一个name一个name的训练？！</span></span><br><span class="line">    output, loss = train(category_tensor, line_tensor)</span><br><span class="line">    current_loss += loss</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Print iter number, loss, name and guess</span></span><br><span class="line">    <span class="keyword">if</span> iter % print_every == <span class="number">0</span>:</span><br><span class="line">        guess, guess_i = categoryFromOutput(output)</span><br><span class="line">        correct = <span class="string">'✓'</span> <span class="keyword">if</span> guess == category <span class="keyword">else</span> <span class="string">'✗ (%s)'</span> % category</span><br><span class="line">        print(<span class="string">'%d %d%% (%s) %.4f %s / %s %s'</span> % (iter, iter / n_iters * <span class="number">100</span>, timeSince(start), loss, line, guess, correct))</span><br></pre></td></tr></table></figure>
-<h4 id="第五部分-预测"><a href="#第五部分-预测" class="headerlink" title="第五部分 预测"></a>第五部分 预测</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">evaluate</span><span class="params">(line_tensor)</span>:</span></span><br><span class="line">    hidden = rnn.initHidden()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(line_tensor.size()[<span class="number">0</span>]):</span><br><span class="line">        output, hidden = rnn(line_tensor[i], hidden)</span><br><span class="line">    <span class="keyword">return</span> output</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(input_line, n_predictions=<span class="number">3</span>)</span>:</span></span><br><span class="line">    print(<span class="string">'\n&gt; %s'</span> % input_line)</span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        output = evaluate(lineToTensor(input_line))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Get top N categories</span></span><br><span class="line">        topv, topi = output.topk(n_predictions, <span class="number">1</span>, <span class="keyword">True</span>)</span><br><span class="line">        predictions = []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n_predictions):</span><br><span class="line">            value = topv[<span class="number">0</span>][i].item()</span><br><span class="line">            category_index = topi[<span class="number">0</span>][i].item()</span><br><span class="line">            print(<span class="string">'(%.2f) %s'</span> % (value, all_categories[category_index]))</span><br><span class="line">            predictions.append([value, all_categories[category_index]])</span><br><span class="line"></span><br><span class="line">predict(<span class="string">'Dovesky'</span>)</span><br><span class="line">predict(<span class="string">'Jackson'</span>)</span><br><span class="line">predict(<span class="string">'Satoshi'</span>)</span><br></pre></td></tr></table></figure>
-<p>总结：</p>
-<ol>
-<li>模型输入的构建：name的每个字符是一个one-hot，name表示为一系列的字符one-hot。</li>
-<li>利用RNN做的分类，也就是多对一的结构。</li>
-<li>Tutorial的代码还是很实在的：读取数据一下读全部、一个样本一个的训练（自己采样的没有用内部封装的batch data选取）、优化直接用的 ’p.data.add_(-learning_rate, p.grad.data)‘（没有用封装的优化器）。</li>
-<li>预测时用的 “with torch.no_grad()”，没有用“model.eval()”。区别：<ul>
-<li>model.eval() will notify all your layers that you are in eval mode, that way, batchnorm or dropout layers will work in eval mode instead of training mode.</li>
-<li>torch.no_grad() impacts the autograd engine and deactivate it. It will reduce memory usage and speed up computations but you won’t be able to backprop (which you don’t want in an eval script).</li>
-</ul>
-</li>
-</ol>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">自然语言处理</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">RNN</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://chengaf.github.io/afcheng.github.io/2019/10/09/Classifying-Names-With-a-Character-level-RNN/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
   
-<nav id="article-nav">
-  
-    <a href="/afcheng.github.io/2019/10/09/Graph-Convolutional-Network-原理解释/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Graph Convolutional Network 原理解释
-        
-      </div>
-    </a>
-  
-  
-    <a href="/afcheng.github.io/2019/09/27/过拟合与欠拟合/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">过拟合与欠拟合</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/afcheng.github.io/2019/09/27/过拟合与欠拟合/" class="archive-article-date">
+  	<time datetime="2019-09-26T16:12:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-27</time>
+</a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
+    	 
   
-  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/afcheng.github.io/2019/09/27/过拟合与欠拟合/">过拟合与欠拟合</a>
+    </h1>
   
 
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+  
+    </div></section>
   
 
-  
-
-  
+    
 
 
           </div>
@@ -366,9 +258,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,

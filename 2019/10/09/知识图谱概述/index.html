@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Little&#39;s Blogs">
 <meta property="og:description" content="知识图谱概述-基础概念   概念 基本单元 图数据结构 知识图谱符号化的表示">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-09T05:41:55.684Z">
+<meta property="og:updated_time" content="2019-10-09T06:11:04.214Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="知识图谱概述">
 <meta name="twitter:description" content="知识图谱概述-基础概念   概念 基本单元 图数据结构 知识图谱符号化的表示">
@@ -41,39 +41,55 @@
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
     <div class="left-col" q-class="show:isShow">
-      <% var defaultBg = '#4d4d4d'; %>
-<div class="overlay" style="background: <%= theme.style && theme.style.header ? theme.style.header : defaultBg %>"></div>
+      
+<div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="<%=theme.root%>" class="profilepic">
-			<img src="<%=theme.avatar%>" class="js-avatar show">
+		<a href="/afcheng.github.io/" class="profilepic">
+			<img src="https://chengaf.github.io/afcheng.github.io/assets/img/pika.png" class="js-avatar show">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="<%=theme.root%>"><%=theme.author%></a></h1>
+		  <h1 class="header-author"><a href="/afcheng.github.io/">Little</a></h1>
 		</hgroup>
-		<% if (theme.subtitle){ %>
-		<p class="header-subtitle"><%=theme.subtitle%></p>
-		<%}%>
+		
+		<p class="header-subtitle">人生里有些事情，不能蹉跎。</p>
+		
 
 		<nav class="header-menu">
 			<ul>
-			<% for (var i in theme.menu){ %>
-				<li><a href="<%- url_for(theme.menu[i]) %>"><%= i %></a></li>
-	        <%}%>
+			
+				<li><a href="https://chengaf.github.io/afcheng.github.io/">主页</a></li>
+	        
+				<li><a href="/afcheng.github.io/tags/随笔/">随笔</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
-    		<% for (var i in theme.smart_menu){ %>
-    			<% if(theme.smart_menu[i]){ %>
-    			<a q-on="click: openSlider(e, '<%-i%>')" href="javascript:void(0)"><%= theme.smart_menu[i] %></a>
-    			<% } %>
-            <%}%>
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
 		</nav>
 		<nav class="header-nav">
 			<div class="social">
-				<% for (var i in theme.subnav){ %>
-					<a class="<%= i %>" target="_blank" href="<%- url_for(theme.subnav[i]) %>" title="<%= i %>"><i class="icon-<%= i %>"></i></a>
-		        <%}%>
+				
+					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
 			</div>
 		</nav>
 	</header>		
@@ -175,7 +191,7 @@
 <h3 id="2-基本单元"><a href="#2-基本单元" class="headerlink" title="2. 基本单元"></a>2. 基本单元</h3><p>&emsp; 实体（事务）、概念、属性（命题）。<br>&emsp; <strong>实体</strong> 是具有可区别性且独立存在的事务。如一个人、某个城市某种植物、某一件商品等。世界万物有具体事务组成，此指实体。实体是知识图谱中最基本的元素，不同实体存在不同的关系。<br>&emsp; <strong>概念</strong> 指的是拥有同种特性实体构成的集合，如国家、民族、书籍和电脑等。<br>&emsp; <strong>属性</strong> 是对一类事务本质特性的反应，用于区分概念的特征，不同的概念具有有不同的属性。不同的属性值类型对应于不同类型属性的边。如果属性值对应的是概念或实体，则属性值描述两个实体之间的关系，称为对象属性；如果属性值是具体的数值，则称为数据属性。</p>
 <h3 id="3-图数据结构"><a href="#3-图数据结构" class="headerlink" title="3. 图数据结构"></a>3. 图数据结构</h3><p>&emsp; 图是一种能够有效表示数据之间结构的表达形式，数据之间蕴含的知识可用图的结构进行形式化表示。</p>
 <h3 id="4-知识图谱表示形式"><a href="#4-知识图谱表示形式" class="headerlink" title="4. 知识图谱表示形式"></a>4. 知识图谱表示形式</h3><p>&emsp; 知识图谱以结构化三元组的形式存储现实世界中的实体以及实体之间的关系，表示为 <script type="math/tex">G=(E,R,S)</script> 其中 <script type="math/tex">E=\{e_{1},e_{2},...,e_{|e|}\}</script> 表示实体集合，<script type="math/tex">R=\{r_{1},r_{2},...,r_{|R|}\}</script> 表示关系集合，<script type="math/tex">S=R\times E\times E</script> 表示知识图谱中三元组的结合。<br>&emsp; 三元组通常描述了一个特定邻域中的事实，由实体、尾实体和描述这两个实体之间的关系组成。</p>
-
+<font face="宋体" color="0099ff">《知识图谱》 -- 赵军</font>
       
 
       
@@ -449,15 +465,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
               </li>
              
               <li class="article-tag-list-item">

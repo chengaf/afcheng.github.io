@@ -6,20 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
-  <title>LeetCode 101. Symmetric Tree | Little&#39;s Blogs</title>
+  <title>实体消歧 | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="题目：Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).">
-<meta name="keywords" content="LeetCode,树">
+  <meta name="description" content="&amp;emsp; Name Ambiguation &amp;emsp; 实体识别的结果很难直接存放到知识图谱中，因为实体具有歧义性：同一实体在文本中有不同的指称；相同的实体指称在不同的上下文中可以指不同的实体。&amp;emsp; 任务定义、任务分类">
+<meta name="keywords" content="知识图谱,自然语言处理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode 101. Symmetric Tree">
-<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/09/10/LeetCode-101-Symmetric-Tree/index.html">
+<meta property="og:title" content="实体消歧">
+<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/10/09/实体消歧/index.html">
 <meta property="og:site_name" content="Little&#39;s Blogs">
-<meta property="og:description" content="题目：Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).">
+<meta property="og:description" content="&amp;emsp; Name Ambiguation &amp;emsp; 实体识别的结果很难直接存放到知识图谱中，因为实体具有歧义性：同一实体在文本中有不同的指称；相同的实体指称在不同的上下文中可以指不同的实体。&amp;emsp; 任务定义、任务分类">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-09-18T01:55:10.050Z">
+<meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/实体消歧.jpg">
+<meta property="og:updated_time" content="2019-10-09T06:06:41.931Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LeetCode 101. Symmetric Tree">
-<meta name="twitter:description" content="题目：Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).">
+<meta name="twitter:title" content="实体消歧">
+<meta name="twitter:description" content="&amp;emsp; Name Ambiguation &amp;emsp; 实体识别的结果很难直接存放到知识图谱中，因为实体具有歧义性：同一实体在文本中有不同的指称；相同的实体指称在不同的上下文中可以指不同的实体。&amp;emsp; 任务定义、任务分类">
+<meta name="twitter:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/实体消歧.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
   
@@ -157,30 +159,74 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-LeetCode-101-Symmetric-Tree" class="article article-type-post " itemscope="" itemprop="blogPost">
+            <article id="post-实体消歧" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      LeetCode 101. Symmetric Tree
+      实体消歧
     </h1>
   
 
         
-        <a href="/afcheng.github.io/2019/09/10/LeetCode-101-Symmetric-Tree/" class="archive-article-date">
-  	<time datetime="2019-09-09T16:59:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-10</time>
+        <a href="/afcheng.github.io/2019/10/09/实体消歧/" class="archive-article-date">
+  	<time datetime="2019-10-09T06:05:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-09</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>题目：Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).</p>
+        <p>&emsp; Name Ambiguation &emsp; 实体识别的结果很难直接存放到知识图谱中，因为实体具有歧义性：同一实体在文本中有不同的指称；相同的实体指称在不同的上下文中可以指不同的实体。<br>&emsp; 任务定义、任务分类</p>
 <a id="more"></a>
-<p>解：深度优先搜索</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"># class TreeNode(object):</span></span><br><span class="line"><span class="comment">#     def __init__(self, x):</span></span><br><span class="line"><span class="comment">#         self.val = x</span></span><br><span class="line"><span class="comment">#         self.left = None</span></span><br><span class="line"><span class="comment">#         self.right = None</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isSymmetric</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type root: TreeNode</span></span><br><span class="line"><span class="string">        :rtype: bool</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> self.bfs(root, root)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bfs</span><span class="params">(self, L, R)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> L <span class="keyword">and</span> <span class="keyword">not</span> R:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">elif</span> <span class="keyword">not</span> L <span class="keyword">or</span> <span class="keyword">not</span> R:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">return</span> L.val == R.val <span class="keyword">and</span> self.bfs(L.left, R.right) <span class="keyword">and</span> self.bfs(L.right, R.left)</span><br></pre></td></tr></table></figure>
+<h3 id="任务定义"><a href="#任务定义" class="headerlink" title="任务定义"></a>任务定义</h3><p>&emsp; 实体消歧（命名实体）任务通过六元组定义：<br>&emsp;&emsp; $M=N,E,D,O,K,\delta$<br>&emsp;其中，<br>&emsp;&emsp; $N=\{n_{1},n_{2},…,n_{l}\}$ 是待消歧的实体名集合，比如“李娜”，“迈克尔乔丹”等；<br>&emsp;&emsp; $E=\{e_{1},e_{2},…,e_{k}\}$ 是待消歧实体名的目标实体列表，包括了所有待消歧实体名可能指向的实体，如“李娜（网球运动员）”、“李娜（跳水运动员）”、“迈克尔乔丹（NBA巨星）”、“迈克尔乔丹（足球运动员）”<br>&emsp;&emsp; $D=\{d_{1},d_{2},…,d_{n}\}$ 是一个包含了所有待消歧实体名的文档集，如“迈克尔乔丹”的钱100个Google搜索结果的网页集合。<br>&emsp;&emsp; $O=\{o_{1},o_{2},…,o_{m}\}$ 是 $D$ 中所有待消歧的实体指称项集合。实体指称项是指实体消歧的基本单位：一个实体指称项是一个在具体上下文中出现的待消歧实体名。例如“迈克尔乔丹是NBA最伟大的球星”中的“迈克尔乔丹”是实体“迈克尔乔丹（NBA巨星）”的一个指称项。实体指称项的上下文可以通过多种方式自由定义，如实体名出现位置的一个指定大小窗口内的文本，或是实体名所在的整篇文本等。<br>&emsp;&emsp; $K$ 是命名实体消歧任务所使用的背景知识。<br>&emsp;&emsp; $\delta: O\times K\to E$ 将待消歧的实体映射到目标实体列表（如果 $E$ 显示的给出）或者按照其指定的目标实体进行聚类（如果 $E$ 没有显示给定，是隐藏变量）。 </p>
+<hr>
+<h3 id="任务分类"><a href="#任务分类" class="headerlink" title="任务分类"></a>任务分类</h3><p>按照目标实体列表是否给定分类</p>
+<ul>
+<li><p>基于聚类的实体消歧系统</p>
+<ul>
+<li>基于表层特征的实体指称项相似度计算<br>Bag of Word 模型的自然延伸</li>
+<li>基于扩展特征的实体指称项相似度计算</li>
+<li>基于社会化网络的实体指称项相似度计算</li>
+</ul>
+</li>
+<li><p>基于实体链接的实体消歧系统<br>&emsp; 一般是指将实体指称项链接到只是苦衷特定的实体，也称为实体链接（entity linking）。通常实体链接是指将一个命名实体的文本指称项链接到知识库中相应实体的过程。<br>&emsp;通常实体链接输入包括两部分：</p>
+<ul>
+<li><ol>
+<li>目标实体库，如Wikipedia或特定领域的知识库：电影IMDB，科学DMLP。</li>
+</ol>
+</li>
+<li><ol>
+<li>待消歧实体指称项及其上下文信息</li>
+</ol>
+</li>
+</ul>
+<p>&emsp;实体链接任务通常需要两个步骤：</p>
+<ul>
+<li><ol>
+<li>链接候选过滤（blocking）</li>
+</ol>
+</li>
+<li><ol>
+<li>实体链接（linking）</li>
+</ol>
+<ul>
+<li>向量空间模型</li>
+<li>主题一致性模型协同实体链接</li>
+<li>基于神经网络的实体消岐方法</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://chengaf.github.io/afcheng.github.io/assets/blog_img/实体消歧.jpg" class="js-avatar show"></p>
+<p>按照实体消歧任务的领域不同</p>
+<ul>
+<li>结构化文本实体消歧系统</li>
+<li>非结构化文本实体消歧系统</li>
+</ul>
 
       
 
@@ -215,11 +261,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">LeetCode</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">知识图谱</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">树</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">自然语言处理</a>
         		</li>
       		
 		</ul>
@@ -275,7 +321,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://chengaf.github.io/afcheng.github.io/2019/09/10/LeetCode-101-Symmetric-Tree/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://chengaf.github.io/afcheng.github.io/2019/10/09/实体消歧/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -289,18 +335,9 @@
   
 <nav id="article-nav">
   
-    <a href="/afcheng.github.io/2019/09/10/快速排序/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          快速排序
-        
-      </div>
-    </a>
   
-  
-    <a href="/afcheng.github.io/2019/09/09/PageRank-and-RWR/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">PageRank and RWR</div>
+    <a href="/afcheng.github.io/2019/10/09/实体识别和扩展/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">实体识别和扩展</div>
       <i class="icon-circle-right"></i>
     </a>
   

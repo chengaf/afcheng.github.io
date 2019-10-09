@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/图卷积傅立叶变换.jpg">
-<meta property="og:updated_time" content="2019-10-09T01:51:44.356Z">
+<meta property="og:updated_time" content="2019-10-09T01:55:47.822Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Graph Convolutional Network 原理解释">
 <meta name="twitter:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—》 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— 》GCN 的代表性工作(方法的发展) &amp;ensp;—》GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
@@ -44,55 +44,39 @@
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
     <div class="left-col" q-class="show:isShow">
-      
-<div class="overlay" style="background: #4d4d4d"></div>
+      <% var defaultBg = '#4d4d4d'; %>
+<div class="overlay" style="background: <%= theme.style && theme.style.header ? theme.style.header : defaultBg %>"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/afcheng.github.io/" class="profilepic">
-			<img src="https://chengaf.github.io/afcheng.github.io/assets/img/pika.png" class="js-avatar show">
+		<a href="<%=theme.root%>" class="profilepic">
+			<img src="<%=theme.avatar%>" class="js-avatar show">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/afcheng.github.io/">Little</a></h1>
+		  <h1 class="header-author"><a href="<%=theme.root%>"><%=theme.author%></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">人生里有些事情，不能蹉跎。</p>
-		
+		<% if (theme.subtitle){ %>
+		<p class="header-subtitle"><%=theme.subtitle%></p>
+		<%}%>
 
 		<nav class="header-menu">
 			<ul>
-			
-				<li><a href="https://chengaf.github.io/afcheng.github.io/">主页</a></li>
-	        
-				<li><a href="/afcheng.github.io/tags/随笔/">随笔</a></li>
-	        
+			<% for (var i in theme.menu){ %>
+				<li><a href="<%- url_for(theme.menu[i]) %>"><%= i %></a></li>
+	        <%}%>
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
-    		
-    			
-    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
-    			
-            
-    			
-    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
-    			
-            
-    			
-    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
-    			
-            
+    		<% for (var i in theme.smart_menu){ %>
+    			<% if(theme.smart_menu[i]){ %>
+    			<a q-on="click: openSlider(e, '<%-i%>')" href="javascript:void(0)"><%= theme.smart_menu[i] %></a>
+    			<% } %>
+            <%}%>
 		</nav>
 		<nav class="header-nav">
 			<div class="social">
-				
-					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
-		        
-					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
-		        
-					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
-		        
-					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
-		        
+				<% for (var i in theme.subnav){ %>
+					<a class="<%= i %>" target="_blank" href="<%- url_for(theme.subnav[i]) %>" title="<%= i %>"><i class="icon-<%= i %>"></i></a>
+		        <%}%>
 			</div>
 		</nav>
 	</header>		
@@ -255,7 +239,7 @@
 </li>
 <li><p>Graph Convolution Network 目的是需要设计共享的（Parameter Sharing）、可学习的（Trainable）卷积核（Convolutional Kernel）。对 Graph Convolution 而言就是 $U\Lambda U^{T}X$ 这个 $\Lambda$。</p>
 </li>
-<li><p>此外许多地方将图卷积写成 $(f<em>h)_{G}=U((U^{T}h)\bigodot(U^{T}f))$，其中 $\bigodot$ 为哈达玛积，对应元素相乘。把 $\bigodot$ 转为矩阵乘法，因为：<br>$\left( \begin{matrix} x_{1}\ \vdots \\x_{n} \end{matrix}\right)\bigodot \left( \begin{matrix} y_{1}\ \vdots \\y_{n} \end{matrix}\right)=\left( \begin{matrix} x_{1}&amp;\cdots&amp;0 \ \vdots&amp;\ddots&amp;\vdots \\0&amp;\cdots&amp;x_{n} \end{matrix}\right)\left( \begin{matrix} y_{1}\ \vdots \\y_{n} \end{matrix}\right)$ 所以可将 $(U^{T}h)\bigodot$ 这部分写成 $diag(\hat{h}(\lambda_{l}))$，即为另一种形式：$(f</em>h)_{G}=U<br>\left( \begin{matrix} \hat{h}(\lambda_{1}) &amp;  &amp; \  &amp; \ddots &amp;  \  &amp;  &amp; \hat{h}(\lambda_{n})\end{matrix}<br>\right)<br>U^{T}f$，中间 $diag(\hat{h}(\lambda_{l}))$ 这部分就是图卷积的参数。</p>
+<li><p>此外许多地方将图卷积写成 <script type="math/tex">(f*h)_{G}=U((U^{T}h)\bigodot(U^{T}f))</script>，其中 $\bigodot$ 为哈达玛积，对应元素相乘。把 $\bigodot$ 转为矩阵乘法，因为：<br>$\left( \begin{matrix} x_{1}\ \vdots \\x_{n} \end{matrix}\right)\bigodot \left( \begin{matrix} y_{1}\ \vdots \\y_{n} \end{matrix}\right)=\left( \begin{matrix} x_{1}&amp;\cdots&amp;0 \ \vdots&amp;\ddots&amp;\vdots \\0&amp;\cdots&amp;x_{n} \end{matrix}\right)\left( \begin{matrix} y_{1}\ \vdots \\y_{n} \end{matrix}\right)$ 所以可将 $(U^{T}h)\bigodot$ 这部分写成 $diag(\hat{h}(\lambda_{l}))$，即为另一种形式：$(f*h)_{G}=U<br>\left( \begin{matrix} \hat{h}(\lambda_{1}) &amp;  &amp; \  &amp; \ddots &amp;  \  &amp;  &amp; \hat{h}(\lambda_{n})\end{matrix}<br>\right)<br>U^{T}f$，中间 $diag(\hat{h}(\lambda_{l}))$ 这部分就是图卷积的参数。</p>
 </li>
 </ul>
 <h4 id="2-2-4-Graph-Convolutional（谱）的发展"><a href="#2-2-4-Graph-Convolutional（谱）的发展" class="headerlink" title="2.2.4 Graph Convolutional（谱）的发展"></a>2.2.4 Graph Convolutional（谱）的发展</h4><ul>
@@ -553,6 +537,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
@@ -562,10 +550,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -722,5 +706,22 @@ MathJax.Hub.Queue(function() {
 
 </div>
   </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
 </body>
 </html>

@@ -6,22 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
-  <title>过拟合与欠拟合 | Little&#39;s Blogs</title>
+  <title>实体识别和扩展 | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="何为欠拟合以及过拟合。 欠拟合以及过拟合的判断。 当发生欠拟合和过拟合时如何优化模型。">
-<meta name="keywords" content="深度学习,机器学习">
+  <meta name="description" content="实体识别与实体扩展的任务概述、方法以及评价指标。">
+<meta name="keywords" content="知识图谱,自然语言处理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="过拟合与欠拟合">
-<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/09/27/过拟合与欠拟合/index.html">
+<meta property="og:title" content="实体识别和扩展">
+<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/10/09/实体识别和扩展/index.html">
 <meta property="og:site_name" content="Little&#39;s Blogs">
-<meta property="og:description" content="何为欠拟合以及过拟合。 欠拟合以及过拟合的判断。 当发生欠拟合和过拟合时如何优化模型。">
+<meta property="og:description" content="实体识别与实体扩展的任务概述、方法以及评价指标。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/加正则防止模型过拟合.jpg">
-<meta property="og:updated_time" content="2019-10-09T03:43:25.852Z">
+<meta property="og:updated_time" content="2019-10-09T05:46:34.961Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="过拟合与欠拟合">
-<meta name="twitter:description" content="何为欠拟合以及过拟合。 欠拟合以及过拟合的判断。 当发生欠拟合和过拟合时如何优化模型。">
-<meta name="twitter:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/加正则防止模型过拟合.jpg">
+<meta name="twitter:title" content="实体识别和扩展">
+<meta name="twitter:description" content="实体识别与实体扩展的任务概述、方法以及评价指标。">
   
     <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
   
@@ -143,54 +141,49 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-过拟合与欠拟合" class="article article-type-post " itemscope="" itemprop="blogPost">
+            <article id="post-实体识别和扩展" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      过拟合与欠拟合
+      实体识别和扩展
     </h1>
   
 
         
-        <a href="/afcheng.github.io/2019/09/27/过拟合与欠拟合/" class="archive-article-date">
-  	<time datetime="2019-09-26T16:12:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-27</time>
+        <a href="/afcheng.github.io/2019/10/09/实体识别和扩展/" class="archive-article-date">
+  	<time datetime="2019-10-09T05:44:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-09</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<ol>
-<li><em>何为欠拟合以及过拟合。</em></li>
-<li><em>欠拟合以及过拟合的判断。</em></li>
-<li><em>当发生欠拟合和过拟合时如何优化模型。</em></li>
-</ol>
-</blockquote>
+        <p>实体识别与实体扩展的任务概述、方法以及评价指标。</p>
 <a id="more"></a>
+<h2 id="实体识别"><a href="#实体识别" class="headerlink" title="实体识别"></a>实体识别</h2><h3 id="任务概述"><a href="#任务概述" class="headerlink" title="任务概述"></a>任务概述</h3><p>&emsp; 识别出文本中实体的命名性指称项，并标明其类别。<br>&emsp; 传统的三大类和七小类识别：</p>
 <ul>
-<li>何为欠拟合以及过拟合。</li>
+<li>三大类：实体、时间和数字</li>
+<li>七小类：人名、机构名、地点、时间、日期、货币和百分比</li>
 </ul>
-<p><em>模型欠拟合</em>：高偏差（high bias），模型未能训练出数据集的特征，直接表现就是模型在训练集和测试集上效果都很低。</p>
-<p><em>模型过拟合</em>：高方差（high variance），模型训练出包含早点在内的所有特征，表现为模型在训练数据的效果非常好，但是应用到新的数据集时。精度很低。</p>
+<p>&emsp; 细粒度实体识别类别多、类别具有层次结构、标注成本高。</p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>&emsp; 基于规则的方法</p>
+<p>&emsp; 基于机器学习-基于特征的方法<br>&emsp; &emsp; i.e., 条件随机场</p>
+<p>&emsp; 基于机器学习-基于神经网络的方法<br>&emsp; &emsp; i.e., LSTM</p>
+<h2 id="—"><a href="#—" class="headerlink" title="—-"></a>—-</h2><h2 id="实体扩展"><a href="#实体扩展" class="headerlink" title="实体扩展"></a>实体扩展</h2><h3 id="任务概述-1"><a href="#任务概述-1" class="headerlink" title="任务概述"></a>任务概述</h3><p>&emsp; 开放域的实体抽取方法。很多时候并不需要一个从文本中标出三大类或者七小类实体的工具，而是更希望的是提供一些种子实体，然后获得同类实体的工具。<br>&emsp; <strong>实体扩展目标是从海量、冗余、异构、不规范的网络数据中大规模地抽取开放类别的命名实体，进而构建开方类别命名实体列表。</strong></p>
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><p>&emsp; 学术界：知识图谱中实体扩展、提高问答系统性能（尤其是处理List类型问题）、提高垂直领域信息抽取的效果。<br>&emsp; 工业界：知识图谱中同类实体的检索与推荐、提高查询分析的准确率、辅助文档分类、辅助用户行为分析与广告精确投放。</p>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>&emsp; 对于某实体类别 $C$，给定该类别的 $M$ 个实体（种子实体），一个实体扩展系统应该找出同样属于类别的其它实体。</p>
+<h3 id="与传统命名实体识别任务区别"><a href="#与传统命名实体识别任务区别" class="headerlink" title="与传统命名实体识别任务区别"></a>与传统命名实体识别任务区别</h3><p>&emsp; 1. 目标实体类别开放：不再局限与传统的三大类而是更多的开放类别。且目标类别未知，仅和种子实体类别有关。<br>&emsp; 2. 目标数据域开放：处理的数据不再限定于指定领域的文本或者规范的新闻文本，而是不限领域的、海量、冗余、不规范、有噪声的多源异构数据。<br>&emsp; 3. 以“抽取”代替“识别”：不在拘泥于从文本中精确的识别目标实体的每次出现，而是充分利用网络数据的海量、冗余的特性，以抽取的方式构建目标类别实体列表。</p>
+<h3 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h3><p>&emsp; Precision、Recall、MAP、P@N、R-PREC.</p>
+<h3 id="方法-1"><a href="#方法-1" class="headerlink" title="方法"></a>方法</h3><p>&emsp; 实体扩展系统主要由三个模块组成：种子处理模块、实体抽取模块和结果处理模块。目前实体扩展方法大致可以分为两种：基于模板的实体抽取、基于统计的实体抽取。</p>
 <ul>
-<li>欠拟合以及过拟合的判断。</li>
+<li><p><strong>基于模板的实体抽取</strong>：如果目标实体与种子实体同属于某个语义类，那么他们的上下文应该应该符合特定的模板。这里的模板可以是预先定义好的也可以是通过语义分析种子上下文得到的模板，如窗口上下文。<br>&emsp;通过语义分析种子上下文得到的模板：如果目标实体与种子实体同属于某个予以类别，则它们的上下文分布应该是相似的，这里的上下文主要是指名词或者名词短语。<br>&emsp;预定义模板的方法中：假设1，好的模板在语料中出现次数频繁；假设2，好的模板总是指示目标类别的实体；假设3，好的模板可以在不需要其他知识的前提下在文本中被识别出来。预定义模板找到新的实体的数量有限，具有代表性的是利用Bootstrapping策略反复迭代得到更多的模板。</p>
+</li>
+<li><p><strong>基于统计的实体抽取</strong>：通常使用相对粗糙的方式来获得候选，比如将语料中所有的名词或者名词短语都作为候选，之后通过分析整个语料的统计信息来得到候选的分布信息，最后计算候选实体与种子实体的分布相似度作为置信度并对候选实体进行排序。<br>&emsp;可分为：基于向下文相似度的方法、融合模板与上下文相似度的方法。</p>
+</li>
 </ul>
-<p>a. 观察训练误差和测试误差<br>b. 交叉验证</p>
-<ul>
-<li>当发生欠拟合和过拟合时如何优化模型。</li>
-</ul>
-<p><em>模型欠拟合</em>：</p>
-<p>a. 添加新特征<br>b. 提升模型复杂度<br>c. 减少正则项权重</p>
-<p><em>模型过拟合</em>：</p>
-<p>a. 获取更多的训练数据<br>b. 减少特征数目<br>c. 特征共线性检查，计算变量之间的线性相关性，如果自变量中属于中度以上线性相关的多个变量，只保留一个就可以；<br>d. 特征筛选，决策树筛选出重要特征；<br>e. 数据降维，主成分分析，保留特征变量重要差异。<br>f. 增加正则项权重<br>g. dropout、early stopping</p>
-<hr>
-<p>为什么增加正则项能够防止过拟合？</p>
-<p>weight penality 强制让模型学习到比较小的权值，举例：</p>
-<p><img src="https://chengaf.github.io/afcheng.github.io/assets/blog_img/加正则防止模型过拟合.jpg" class="js-avatar show"></p>
 
       
 
@@ -225,11 +218,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">知识图谱</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">自然语言处理</a>
         		</li>
       		
 		</ul>
@@ -285,7 +278,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://chengaf.github.io/afcheng.github.io/2019/09/27/过拟合与欠拟合/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://chengaf.github.io/afcheng.github.io/2019/10/09/实体识别和扩展/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -299,18 +292,9 @@
   
 <nav id="article-nav">
   
-    <a href="/afcheng.github.io/2019/10/09/Classifying-Names-With-a-Character-level-RNN/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Classifying Names With a Character-level RNN
-        
-      </div>
-    </a>
   
-  
-    <a href="/afcheng.github.io/2019/09/27/textimg/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">textimg</div>
+    <a href="/afcheng.github.io/2019/10/09/知识图谱概述/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">知识图谱概述</div>
       <i class="icon-circle-right"></i>
     </a>
   

@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
   <title>优化器 | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Batch Gradient Descent (BGD)批梯度下降 Stochastic Gradient Descent (SGD) Mini-Batch Gradient Descent(MBGD)改进措施: 1. 动量Momentum的SGD; 2. 牛顿加速梯度 Nesterov Accelerated Gradient; 3. AdaDelta算法; 4. Adam算法 Adapti">
+  <meta name="description" content="Batch Gradient Descent (BGD)批梯度下降 Stochastic Gradient Descent (SGD) Mini-Batch Gradient Descent(MBGD) 改进措施:  动量Momentum的SGD;  牛顿加速梯度 Nesterov Accelerated Gradient;  AdaDelta算法;  Adam算法 Adaptive Mome">
 <meta name="keywords" content="深度学习,机器学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="优化器">
 <meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/10/09/优化器/index.html">
 <meta property="og:site_name" content="Little&#39;s Blogs">
-<meta property="og:description" content="Batch Gradient Descent (BGD)批梯度下降 Stochastic Gradient Descent (SGD) Mini-Batch Gradient Descent(MBGD)改进措施: 1. 动量Momentum的SGD; 2. 牛顿加速梯度 Nesterov Accelerated Gradient; 3. AdaDelta算法; 4. Adam算法 Adapti">
+<meta property="og:description" content="Batch Gradient Descent (BGD)批梯度下降 Stochastic Gradient Descent (SGD) Mini-Batch Gradient Descent(MBGD) 改进措施:  动量Momentum的SGD;  牛顿加速梯度 Nesterov Accelerated Gradient;  AdaDelta算法;  Adam算法 Adaptive Mome">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-09T05:23:36.345Z">
+<meta property="og:updated_time" content="2019-10-09T05:27:49.816Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="优化器">
-<meta name="twitter:description" content="Batch Gradient Descent (BGD)批梯度下降 Stochastic Gradient Descent (SGD) Mini-Batch Gradient Descent(MBGD)改进措施: 1. 动量Momentum的SGD; 2. 牛顿加速梯度 Nesterov Accelerated Gradient; 3. AdaDelta算法; 4. Adam算法 Adapti">
+<meta name="twitter:description" content="Batch Gradient Descent (BGD)批梯度下降 Stochastic Gradient Descent (SGD) Mini-Batch Gradient Descent(MBGD) 改进措施:  动量Momentum的SGD;  牛顿加速梯度 Nesterov Accelerated Gradient;  AdaDelta算法;  Adam算法 Adaptive Mome">
   
     <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
   
@@ -41,39 +41,55 @@
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
     <div class="left-col" q-class="show:isShow">
-      <% var defaultBg = '#4d4d4d'; %>
-<div class="overlay" style="background: <%= theme.style && theme.style.header ? theme.style.header : defaultBg %>"></div>
+      
+<div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="<%=theme.root%>" class="profilepic">
-			<img src="<%=theme.avatar%>" class="js-avatar show">
+		<a href="/afcheng.github.io/" class="profilepic">
+			<img src="https://chengaf.github.io/afcheng.github.io/assets/img/pika.png" class="js-avatar show">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="<%=theme.root%>"><%=theme.author%></a></h1>
+		  <h1 class="header-author"><a href="/afcheng.github.io/">Little</a></h1>
 		</hgroup>
-		<% if (theme.subtitle){ %>
-		<p class="header-subtitle"><%=theme.subtitle%></p>
-		<%}%>
+		
+		<p class="header-subtitle">人生里有些事情，不能蹉跎。</p>
+		
 
 		<nav class="header-menu">
 			<ul>
-			<% for (var i in theme.menu){ %>
-				<li><a href="<%- url_for(theme.menu[i]) %>"><%= i %></a></li>
-	        <%}%>
+			
+				<li><a href="https://chengaf.github.io/afcheng.github.io/">主页</a></li>
+	        
+				<li><a href="/afcheng.github.io/tags/随笔/">随笔</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
-    		<% for (var i in theme.smart_menu){ %>
-    			<% if(theme.smart_menu[i]){ %>
-    			<a q-on="click: openSlider(e, '<%-i%>')" href="javascript:void(0)"><%= theme.smart_menu[i] %></a>
-    			<% } %>
-            <%}%>
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
 		</nav>
 		<nav class="header-nav">
 			<div class="social">
-				<% for (var i in theme.subnav){ %>
-					<a class="<%= i %>" target="_blank" href="<%- url_for(theme.subnav[i]) %>" title="<%= i %>"><i class="icon-<%= i %>"></i></a>
-		        <%}%>
+				
+					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
 			</div>
 		</nav>
 	</header>		
@@ -165,10 +181,18 @@
 <ol>
 <li>Batch Gradient Descent (BGD)批梯度下降</li>
 <li>Stochastic Gradient Descent (SGD)</li>
-<li>Mini-Batch Gradient Descent(MBGD)<br>改进措施: 1. 动量Momentum的SGD; 2. 牛顿加速梯度 Nesterov Accelerated Gradient; 3. AdaDelta算法; 4. Adam算法 Adaptive Moment Estimate<br>总结<a id="more"></a>
+<li>Mini-Batch Gradient Descent(MBGD)</li>
+<li>改进措施: <ol>
+<li>动量Momentum的SGD; </li>
+<li>牛顿加速梯度 Nesterov Accelerated Gradient; </li>
+<li>AdaDelta算法; </li>
+<li>Adam算法 Adaptive Moment Estimate</li>
+</ol>
 </li>
+<li>总结</li>
 </ol>
 </blockquote>
+<a id="more"></a>
 <p>大概说明：每次更新多少参数、是否能获得最优解（全局最小值）、优缺点说明。</p>
 <h2 id="1-Batch-Gradient-Descent-BGD-批梯度下降"><a href="#1-Batch-Gradient-Descent-BGD-批梯度下降" class="headerlink" title="1. Batch Gradient Descent (BGD)批梯度下降"></a>1. Batch Gradient Descent (BGD)批梯度下降</h2><ul>
 <li>每次更新时，利用整个训练数据计算Loss对参数的梯度:<script type="math/tex; mode=display">\theta = \theta-\eta\nabla_{\theta}J(\theta)</script><ul>
@@ -198,13 +222,9 @@
 </li>
 </ul>
 <p style="background-color:mediumseagreen;"> BGD、SGD以及MBGD都将面临的问题体</p>
+  - <p style="background-color:mediumseagreen;">&#x2003;问题一：对于非凸函数要避免陷入局部极小值或者鞍点处，因为鞍点周围的error是一样的，所有维度的梯度都接近于0，SGD很容易困在这里。（会在局部最小值处和鞍点处震荡跳动，因为在此点处，如果训练集全集带入即BGD则优化会停止不动，如果是mini-batch或者SGD，每次找到的梯度都是不同的，就会发生震荡，来回跳动）</p> 
+  - <p style="background-color:mediumseagreen;">&#x2003;问题二：对所有的参数更新时应用同样的learning rate，如果我们数据是稀疏的，我们更希望对出现频率低的特征进行大一点的更新。learning rate会随着更新的次数逐渐变小。</p> 
 
-<ul>
-<li><p style="background-color:mediumseagreen;">&#x2003;问题一：对于非凸函数要避免陷入局部极小值或者鞍点处，因为鞍点周围的error是一样的，所有维度的梯度都接近于0，SGD很容易困在这里。（会在局部最小值处和鞍点处震荡跳动，因为在此点处，如果训练集全集带入即BGD则优化会停止不动，如果是mini-batch或者SGD，每次找到的梯度都是不同的，就会发生震荡，来回跳动）</p> </li>
-<li><p style="background-color:mediumseagreen;">&#x2003;问题二：对所有的参数更新时应用同样的learning rate，如果我们数据是稀疏的，我们更希望对出现频率低的特征进行大一点的更新。learning rate会随着更新的次数逐渐变小。</p> 
-
-</li>
-</ul>
 <h2 id="改进措施"><a href="#改进措施" class="headerlink" title="改进措施"></a>改进措施</h2><p>  针对问题一（陷入鞍点或者发生震荡），提出Momentum动量，Nesterov Accelerated 加速的 Gradient</p>
 <h3 id="1-动量Momentum的SGD"><a href="#1-动量Momentum的SGD" class="headerlink" title="1. 动量Momentum的SGD"></a>1. 动量Momentum的SGD</h3><ul>
 <li>使用Momentum动量的随机梯度下降法SGD主要思想是：引入一个积攒历史梯度信息来加速SGD。</li>
@@ -266,7 +286,11 @@
 </ul>
 </li>
 </ul>
-<p>参考以下blog进行总结，自适应优化算法需要参考花书《深度学习-8.5-自适应学习率算法》 ，不是参照以下博客的。<br>  <a href="https://www.cnblogs.com/guoyaohua/p/8542554.html" target="_blank" rel="noopener">https://www.cnblogs.com/guoyaohua/p/8542554.html</a><br>  <a href="https://blog.csdn.net/weixin_40170902/article/details/80092628（有动图）" target="_blank" rel="noopener">https://blog.csdn.net/weixin_40170902/article/details/80092628（有动图）</a><br>  <a href="https://blog.csdn.net/weixin_29260031/article/details/82320525" target="_blank" rel="noopener">https://blog.csdn.net/weixin_29260031/article/details/82320525</a></p>
+<p></p><p style="background-color:mediumseagreen;">.</p><p></p>
+<p><font face="宋体" color="0099ff">资源君</font><br>参考以下blog进行总结，自适应优化算法需要参考花书《深度学习-8.5-自适应学习率算法》 ，不是参照以下博客的。</p>
+<blockquote>
+<p><a href="https://www.cnblogs.com/guoyaohua/p/8542554.html" target="_blank" rel="noopener">https://www.cnblogs.com/guoyaohua/p/8542554.html</a><br><a href="https://blog.csdn.net/weixin_40170902/article/details/80092628（有动图）" target="_blank" rel="noopener">https://blog.csdn.net/weixin_40170902/article/details/80092628（有动图）</a><br><a href="https://blog.csdn.net/weixin_29260031/article/details/82320525" target="_blank" rel="noopener">https://blog.csdn.net/weixin_29260031/article/details/82320525</a></p>
+</blockquote>
 
       
 
@@ -524,11 +548,23 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">自然语言处理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">图神经网络</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">论文笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -540,23 +576,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数组</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -568,11 +592,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">自然语言处理</a>
+                <a href="javascript:void(0)" class="js-tag color3">数组</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
               </li>
             
             <div class="clearfix"></div>

@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
-  <title>Tag: 排序 | Little&#39;s Blogs</title>
+  <title>知识图谱概述 | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Little&#39;s Blogs">
-<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/tags/排序/index.html">
+  <meta name="description" content="知识图谱概述-基础概念   概念 基本单元 图数据结构 知识图谱符号化的表示">
+<meta name="keywords" content="知识图谱,自然语言处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="知识图谱概述">
+<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/10/09/知识图谱概述/index.html">
 <meta property="og:site_name" content="Little&#39;s Blogs">
+<meta property="og:description" content="知识图谱概述-基础概念   概念 基本单元 图数据结构 知识图谱符号化的表示">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-10-09T05:40:32.747Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Little&#39;s Blogs">
+<meta name="twitter:title" content="知识图谱概述">
+<meta name="twitter:description" content="知识图谱概述-基础概念   概念 基本单元 图数据结构 知识图谱符号化的表示">
   
     <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
   
@@ -136,68 +141,184 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-知识图谱概述" class="article article-type-post " itemscope="" itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/afcheng.github.io/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/afcheng.github.io/2019/09/10/快速排序/" class="archive-article-date">
-  	<time datetime="2019-09-10T04:17:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-10</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/afcheng.github.io/2019/09/10/快速排序/">快速排序</a>
+    <h1 class="article-title" itemprop="name">
+      知识图谱概述
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/afcheng.github.io/2019/10/09/知识图谱概述/" class="archive-article-date">
+  	<time datetime="2019-10-09T05:38:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>知识图谱概述-基础概念</p>
+<blockquote>
+<ol>
+<li>概念</li>
+<li>基本单元</li>
+<li>图数据结构</li>
+<li>知识图谱符号化的表示</li>
+</ol>
+</blockquote>
+<a id="more"></a>
+<h3 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h3><p>&emsp; 知识图谱 - Konwledge Graph 于2012年由Google提出并成功应用于搜索引擎中。知识图谱用结构化的形式描述客观世界中概念、实体及其之间的关系，将互联网信息表达成更接近人类认知世界的形式，提供了一种更好的组织、理解和管理信息的能力。<br>&emsp; <strong>知识是认知，图谱是载体，数据库是实现。知识图谱就是再数据库系统上利用知识图谱这种抽象载体表示知识这种认知内容。</strong><br>&emsp; 数据的结构化并和已有的结构化数据进行关联，就构成知识图谱。<br>&emsp; 知识图谱对于知识服务有重要的支撑作用，能够将浅层语义分析的信息服务范式提升到基于深层语义的只是服务。</p>
+<h3 id="2-基本单元"><a href="#2-基本单元" class="headerlink" title="2. 基本单元"></a>2. 基本单元</h3><p>&emsp; 实体（事务）、概念、属性（命题）。<br>&emsp; <strong>实体</strong> 是具有可区别性且独立存在的事务。如一个人、某个城市某种植物、某一件商品等。世界万物有具体事务组成，此指实体。实体是知识图谱中最基本的元素，不同实体存在不同的关系。<br>&emsp; <strong>概念</strong> 指的是拥有同种特性实体构成的集合，如国家、民族、书籍和电脑等。<br>&emsp; <strong>属性</strong> 是对一类事务本质特性的反应，用于区分概念的特征，不同的概念具有有不同的属性。不同的属性值类型对应于不同类型属性的边。如果属性值对应的是概念或实体，则属性值描述两个实体之间的关系，称为对象属性；如果属性值是具体的数值，则称为数据属性。</p>
+<h3 id="3-图数据结构"><a href="#3-图数据结构" class="headerlink" title="3. 图数据结构"></a>3. 图数据结构</h3><p>&emsp; 图是一种能够有效表示数据之间结构的表达形式，数据之间蕴含的知识可用图的结构进行形式化表示。</p>
+<h3 id="4-知识图谱表示形式"><a href="#4-知识图谱表示形式" class="headerlink" title="4. 知识图谱表示形式"></a>4. 知识图谱表示形式</h3><p>&emsp; 知识图谱以结构化三元组的形式存储现实世界中的实体以及实体之间的关系，表示为 <script type="math/tex">G=(E,R,S)</script> 其中 <script type="math/tex">E=\{e_{1},e_{2},...,e_{|e|}\}</script> 表示实体集合，<script type="math/tex">R=\{r_{1},r_{2},...,r_{|R|}\}</script> 表示关系集合，<script type="math/tex">S=R\times E\times E</script> 表示知识图谱中三元组的结合。<br>&emsp; 三元组通常描述了一个特定邻域中的事实，由实体、尾实体和描述这两个实体之间的关系组成。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">基础算法</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">知识图谱</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数组</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">排序</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">自然语言处理</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://chengaf.github.io/afcheng.github.io/2019/10/09/知识图谱概述/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/afcheng.github.io/2019/10/09/优化器/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">优化器</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -220,9 +341,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,

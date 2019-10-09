@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/图卷积傅立叶变换.jpg">
-<meta property="og:updated_time" content="2019-10-09T01:55:47.822Z">
+<meta property="og:updated_time" content="2019-10-09T01:58:00.423Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Graph Convolutional Network 原理解释">
 <meta name="twitter:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—》 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— 》GCN 的代表性工作(方法的发展) &amp;ensp;—》GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
@@ -239,27 +239,32 @@
 </li>
 <li><p>Graph Convolution Network 目的是需要设计共享的（Parameter Sharing）、可学习的（Trainable）卷积核（Convolutional Kernel）。对 Graph Convolution 而言就是 $U\Lambda U^{T}X$ 这个 $\Lambda$。</p>
 </li>
-<li><p>此外许多地方将图卷积写成 <script type="math/tex">(f*h)_{G}=U((U^{T}h)\bigodot(U^{T}f))</script>，其中 $\bigodot$ 为哈达玛积，对应元素相乘。把 $\bigodot$ 转为矩阵乘法，因为：<br>$\left( \begin{matrix} x_{1}\ \vdots \\x_{n} \end{matrix}\right)\bigodot \left( \begin{matrix} y_{1}\ \vdots \\y_{n} \end{matrix}\right)=\left( \begin{matrix} x_{1}&amp;\cdots&amp;0 \ \vdots&amp;\ddots&amp;\vdots \\0&amp;\cdots&amp;x_{n} \end{matrix}\right)\left( \begin{matrix} y_{1}\ \vdots \\y_{n} \end{matrix}\right)$ 所以可将 $(U^{T}h)\bigodot$ 这部分写成 $diag(\hat{h}(\lambda_{l}))$，即为另一种形式：$(f*h)_{G}=U<br>\left( \begin{matrix} \hat{h}(\lambda_{1}) &amp;  &amp; \  &amp; \ddots &amp;  \  &amp;  &amp; \hat{h}(\lambda_{n})\end{matrix}<br>\right)<br>U^{T}f$，中间 $diag(\hat{h}(\lambda_{l}))$ 这部分就是图卷积的参数。</p>
+<li><p>此外许多地方将图卷积写成 <script type="math/tex">(f*h)_{G}=U((U^{T}h)\bigodot(U^{T}f))</script>，其中 $\bigodot$ 为哈达玛积，对应元素相乘。</p>
+<p>把 $\bigodot$ 转为矩阵乘法，因为：<br>$\left( \begin{matrix} x_{1}\ \vdots \\x_{n} \end{matrix}\right)\bigodot \left( \begin{matrix} y_{1}\ \vdots \\y_{n} \end{matrix}\right)=\left( \begin{matrix} x_{1}&amp;\cdots&amp;0 \ \vdots&amp;\ddots&amp;\vdots \\0&amp;\cdots&amp;x_{n} \end{matrix}\right)\left( \begin{matrix} y_{1}\ \vdots \\y_{n} \end{matrix}\right)$ </p>
+<p>所以可将 $(U^{T}h)\bigodot$ 这部分写成 $diag(\hat{h}(\lambda_{l}))$，</p>
+<p>即为另一种形式：$(f*h)_{G}=U<br>\left( \begin{matrix} \hat{h}(\lambda_{1}) &amp;  &amp; \  &amp; \ddots &amp;  \  &amp;  &amp; \hat{h}(\lambda_{n})\end{matrix}<br>\right)<br>U^{T}f$，中间 $diag(\hat{h}(\lambda_{l}))$ 这部分就是图卷积的参数。</p>
 </li>
 </ul>
 <h4 id="2-2-4-Graph-Convolutional（谱）的发展"><a href="#2-2-4-Graph-Convolutional（谱）的发展" class="headerlink" title="2.2.4 Graph Convolutional（谱）的发展"></a>2.2.4 Graph Convolutional（谱）的发展</h4><ul>
 <li><p>第一代，SCNN。</p>
 <ul>
 <li>直接把 $diag(\hat{h}(\lambda_{l}))$ 变为  $diag(\theta_{l})$ ，通过初始化赋值、误差反向传播进行学习参数 $\Theta=(\theta_{1},\theta_{2},…,\theta_{n})$。加上激活函数 $\sigma(\cdot)$，给定输入 $x$ 经过图卷积输出为：$y_{output}=\sigma\left(U<br>\left( \begin{matrix} \theta_{1} &amp;  &amp; \  &amp; \ddots &amp;  \  &amp;  &amp; \theta_{n}\end{matrix}<br>\right)<br>U^{T}x\right)$</li>
-<li>从 $y_{output}$ 的计算可以看出，每次前向传播都需要计算 $U$、$diag(\theta_{l})$ 以及 $U^{T}$ 的乘积，计算复杂度是 $O(n^{2})$，对大规模图而言，复杂度比较高。另外，卷积核参数需要 $n$ 个。</li>
-</ul>
+<li><p>从 $y_{output}$ 的计算可以看出，每次前向传播都需要计算 $U$、$diag(\theta_{l})$ 以及 $U^{T}$ 的乘积，计算复杂度是 $O(n^{2})$，对大规模图而言，复杂度比较高。另外，卷积核参数需要 $n$ 个。</p>
 <blockquote>
 <p>Bruna, Joan, et al. “Spectral Networks and Locally Connected Networks on Graphs.” Computer Science (2013).</p>
 </blockquote>
 </li>
+</ul>
+</li>
 <li><p>第二代，ChebNet。</p>
 <ul>
 <li>把 $diag(\hat{h}(\lambda_{l}))$ 变为 $diag(\sum_{j=0}^{K}\alpha_{j}\lambda_{l}^{j})$。其中，$(\alpha_{1}, \alpha_{2}, …, \alpha_{K})$ 为需要学习的参数，同样需要初始化赋值通过误差反向传播进行学习。具体的，$diag(\sum_{j=0}^{K}\alpha_{j}\lambda_{l}^{j})=\left( \begin{matrix} \sum_{j=0}^{K}\alpha_{j}\lambda_{1}^{j} &amp;  &amp; \  &amp; \ddots &amp;  \  &amp;  &amp; \sum_{j=0}^{K}\alpha_{j}\lambda_{n}^{j}\end{matrix}<br>\right)$ ，假设 $\Lambda = diag(\lambda_{1},…,\lambda_{n})$，那么$diag(\sum_{j=0}^{K}\alpha_{j}\lambda_{l}^{j})=\left( \begin{matrix} \sum_{j=0}^{K}\alpha_{j}\lambda_{1}^{j} &amp;  &amp; \  &amp; \ddots &amp;  \  &amp;  &amp; \sum_{j=0}^{K}\alpha_{j}\lambda_{n}^{j}\end{matrix}<br>\right)=\sum_{j=0}^{K}\alpha_{j}\Lambda^{j}$ ，又因为 $U\sum_{j=0}^{K}\alpha_{j}\Lambda^{j}U^{T}=\sum_{j=0}^{K}\alpha_{j}U\Lambda^{j}U^{T}=\sum_{j=0}^{K}\alpha_{j}L^{j}$，<br>所以对于输入 $x$ ，经过图卷积操作得到输出 $y_{output}$ 可公式化描述为：<br>$y_{output}=\sigma(\sum_{j=0}^{K}\alpha_{j}L^{j} x)$</li>
-<li>卷积核参数为 $K+1$ 个，远小于 $n$ 。矩阵变换之后不需要做特征分解，直接用拉普拉斯矩阵进行变换，计算复杂度变为 $O(n)$。</li>
-</ul>
+<li><p>卷积核参数为 $K+1$ 个，远小于 $n$ 。矩阵变换之后不需要做特征分解，直接用拉普拉斯矩阵进行变换，计算复杂度变为 $O(n)$。</p>
 <blockquote>
 <p>Defferrard, Michaël, X. Bresson, and P. Vandergheynst. “Convolutional Neural Networks on Graphs with Fast Localized Spectral Filtering.” in NIPS (2016).</p>
 </blockquote>
+</li>
+</ul>
 </li>
 <li>第三代，简化版的 ChebNet 。<ul>
 <li>在原始 ChebNet 中，令 $K=1$， $\sum_{j=0}^{K}\alpha_{j}L^{j}$=$\alpha_{1}L^{0}+\alpha_{1}L^{1}$，令 $w:=\alpha_{0}=-\alpha_{1}$，因此对于输入 $x$ ，经过图卷积操作得到输出 $y_{output}$ 可公式化描述为：<br>$y_{output}=\sigma(w(I_{N}-L) x)$，其中 $L=I_{N}-D^{-\frac{1}{2}}AD^{-\frac{1}{2}}$，因此<br>$y_{output}=\sigma(w(\hat{D}^{-\frac{1}{2}}\hat{A}\hat{D}^{-\frac{1}{2}} x)$。其中， $\hat{A}=I_{N}+A$，$\hat{D}_{ii}=\sum_{j}A_{ij}$。<blockquote>
@@ -537,10 +542,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
@@ -549,11 +550,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
+                <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -562,6 +563,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
               </li>
              
               <li class="article-tag-list-item">

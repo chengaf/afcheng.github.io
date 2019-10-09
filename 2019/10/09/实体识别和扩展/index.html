@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Little&#39;s Blogs">
 <meta property="og:description" content="实体识别与实体扩展的任务概述、方法以及评价指标。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-09T05:46:34.961Z">
+<meta property="og:updated_time" content="2019-10-09T05:48:42.477Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实体识别和扩展">
 <meta name="twitter:description" content="实体识别与实体扩展的任务概述、方法以及评价指标。">
@@ -41,39 +41,55 @@
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
     <div class="left-col" q-class="show:isShow">
-      <% var defaultBg = '#4d4d4d'; %>
-<div class="overlay" style="background: <%= theme.style && theme.style.header ? theme.style.header : defaultBg %>"></div>
+      
+<div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="<%=theme.root%>" class="profilepic">
-			<img src="<%=theme.avatar%>" class="js-avatar show">
+		<a href="/afcheng.github.io/" class="profilepic">
+			<img src="https://chengaf.github.io/afcheng.github.io/assets/img/pika.png" class="js-avatar show">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="<%=theme.root%>"><%=theme.author%></a></h1>
+		  <h1 class="header-author"><a href="/afcheng.github.io/">Little</a></h1>
 		</hgroup>
-		<% if (theme.subtitle){ %>
-		<p class="header-subtitle"><%=theme.subtitle%></p>
-		<%}%>
+		
+		<p class="header-subtitle">人生里有些事情，不能蹉跎。</p>
+		
 
 		<nav class="header-menu">
 			<ul>
-			<% for (var i in theme.menu){ %>
-				<li><a href="<%- url_for(theme.menu[i]) %>"><%= i %></a></li>
-	        <%}%>
+			
+				<li><a href="https://chengaf.github.io/afcheng.github.io/">主页</a></li>
+	        
+				<li><a href="/afcheng.github.io/tags/随笔/">随笔</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
-    		<% for (var i in theme.smart_menu){ %>
-    			<% if(theme.smart_menu[i]){ %>
-    			<a q-on="click: openSlider(e, '<%-i%>')" href="javascript:void(0)"><%= theme.smart_menu[i] %></a>
-    			<% } %>
-            <%}%>
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
 		</nav>
 		<nav class="header-nav">
 			<div class="social">
-				<% for (var i in theme.subnav){ %>
-					<a class="<%= i %>" target="_blank" href="<%- url_for(theme.subnav[i]) %>" title="<%= i %>"><i class="icon-<%= i %>"></i></a>
-		        <%}%>
+				
+					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
 			</div>
 		</nav>
 	</header>		
@@ -172,7 +188,8 @@
 <h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>&emsp; 基于规则的方法</p>
 <p>&emsp; 基于机器学习-基于特征的方法<br>&emsp; &emsp; i.e., 条件随机场</p>
 <p>&emsp; 基于机器学习-基于神经网络的方法<br>&emsp; &emsp; i.e., LSTM</p>
-<h2 id="—"><a href="#—" class="headerlink" title="—-"></a>—-</h2><h2 id="实体扩展"><a href="#实体扩展" class="headerlink" title="实体扩展"></a>实体扩展</h2><h3 id="任务概述-1"><a href="#任务概述-1" class="headerlink" title="任务概述"></a>任务概述</h3><p>&emsp; 开放域的实体抽取方法。很多时候并不需要一个从文本中标出三大类或者七小类实体的工具，而是更希望的是提供一些种子实体，然后获得同类实体的工具。<br>&emsp; <strong>实体扩展目标是从海量、冗余、异构、不规范的网络数据中大规模地抽取开放类别的命名实体，进而构建开方类别命名实体列表。</strong></p>
+<hr>
+<h2 id="实体扩展"><a href="#实体扩展" class="headerlink" title="实体扩展"></a>实体扩展</h2><h3 id="任务概述-1"><a href="#任务概述-1" class="headerlink" title="任务概述"></a>任务概述</h3><p>&emsp; 开放域的实体抽取方法。很多时候并不需要一个从文本中标出三大类或者七小类实体的工具，而是更希望的是提供一些种子实体，然后获得同类实体的工具。<br>&emsp; <strong>实体扩展目标是从海量、冗余、异构、不规范的网络数据中大规模地抽取开放类别的命名实体，进而构建开方类别命名实体列表。</strong></p>
 <h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><p>&emsp; 学术界：知识图谱中实体扩展、提高问答系统性能（尤其是处理List类型问题）、提高垂直领域信息抽取的效果。<br>&emsp; 工业界：知识图谱中同类实体的检索与推荐、提高查询分析的准确率、辅助文档分类、辅助用户行为分析与广告精确投放。</p>
 <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>&emsp; 对于某实体类别 $C$，给定该类别的 $M$ 个实体（种子实体），一个实体扩展系统应该找出同样属于类别的其它实体。</p>
 <h3 id="与传统命名实体识别任务区别"><a href="#与传统命名实体识别任务区别" class="headerlink" title="与传统命名实体识别任务区别"></a>与传统命名实体识别任务区别</h3><p>&emsp; 1. 目标实体类别开放：不再局限与传统的三大类而是更多的开放类别。且目标类别未知，仅和种子实体类别有关。<br>&emsp; 2. 目标数据域开放：处理的数据不再限定于指定领域的文本或者规范的新闻文本，而是不限领域的、海量、冗余、不规范、有噪声的多源异构数据。<br>&emsp; 3. 以“抽取”代替“识别”：不在拘泥于从文本中精确的识别目标实体的每次出现，而是充分利用网络数据的海量、冗余的特性，以抽取的方式构建目标类别实体列表。</p>

@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/图卷积傅立叶变换.jpg">
-<meta property="og:updated_time" content="2019-10-10T00:51:14.310Z">
+<meta property="og:updated_time" content="2019-10-10T00:53:14.968Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Graph Convolutional Network 原理解释">
 <meta name="twitter:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—&amp;gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— &amp;gt;GCN 的代表性工作(方法的发展) &amp;ensp;—&amp;gt;GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
@@ -325,7 +325,7 @@ U^{T}x\right)</script></li>
 </ul>
 </li>
 <li>第三代，简化版的 ChebNet 。<ul>
-<li>在原始 ChebNet 中，令 <script type="math/tex">K=1</script>， <script type="math/tex">\sum_{j=0}^{K}\alpha_{j}L^{j}$=$\alpha_{1}L^{0}+\alpha_{1}L^{1}</script>，令 <script type="math/tex">w:=\alpha_{0}=-\alpha_{1}</script>，因此对于输入 <script type="math/tex">x</script> ，经过图卷积操作得到输出 <script type="math/tex">y_{output}</script> 可公式化描述为：<br><script type="math/tex">y_{output}=\sigma(w(I_{N}-L) x)</script>，其中 <script type="math/tex">L=I_{N}-D^{-\frac{1}{2}}AD^{-\frac{1}{2}}</script>，因此<br><script type="math/tex">y_{output}=\sigma(w(\hat{D}^{-\frac{1}{2}}\hat{A}\hat{D}^{-\frac{1}{2}} x)</script>。其中， <script type="math/tex">\hat{A}=I_{N}+A</script>，<script type="math/tex">\hat{D}_{ii}=\sum_{j}A_{ij}</script>。<blockquote>
+<li>在原始 ChebNet 中，令 <script type="math/tex">K=1</script>， <script type="math/tex">\sum_{j=0}^{K}\alpha_{j}L^{j}=\alpha_{1}L^{0}+\alpha_{1}L^{1}</script>，令 <script type="math/tex">w:=\alpha_{0}=-\alpha_{1}</script>，因此对于输入 <script type="math/tex">x</script> ，经过图卷积操作得到输出 <script type="math/tex">y_{output}</script> 可公式化描述为：<br><script type="math/tex">y_{output}=\sigma(w(I_{N}-L) x)</script>，其中 <script type="math/tex">L=I_{N}-D^{-\frac{1}{2}}AD^{-\frac{1}{2}}</script>，因此<br><script type="math/tex">y_{output}=\sigma(w(\hat{D}^{-\frac{1}{2}}\hat{A}\hat{D}^{-\frac{1}{2}} x)</script>。其中， <script type="math/tex">\hat{A}=I_{N}+A</script>，<script type="math/tex">\hat{D}_{ii}=\sum_{j}A_{ij}</script>。<blockquote>
 <p>切比雪夫多项式这里需要参照原文<a href="https://chengaf.github.io/afcheng.github.io/2019/10/09/Semi-Supervised-Classfication-with-Graph-Convolutional-Networks/">GCN</a>，这里可能是有点问题的。<br>Kipf,Thomas N,and M.Welling. “Semi-Supervised Classification with Graph Convolutional Networks.”inICLR(2017).</p>
 </blockquote>
 </li>
@@ -613,15 +613,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
               </li>
              
               <li class="article-tag-list-item">

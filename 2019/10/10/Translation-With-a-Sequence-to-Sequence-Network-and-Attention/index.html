@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
-  <title>Little&#39;s Blogs</title>
+  <title>Translation With a Sequence to Sequence Network and Attention | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Little&#39;s Blogs">
-<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/page/2/index.html">
+  <meta name="description" content="Pytorch Tutorial: NLP FROM SCRATCH: TRANSLATION WITH A SEQUENCE TO SEQUENCE NETWORK AND ATTENTIONTutorial 地址: https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html任务：Translate F">
+<meta name="keywords" content="深度学习,自然语言处理,seq2seq,attention">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Translation With a Sequence to Sequence Network and Attention">
+<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/10/10/Translation-With-a-Sequence-to-Sequence-Network-and-Attention/index.html">
 <meta property="og:site_name" content="Little&#39;s Blogs">
+<meta property="og:description" content="Pytorch Tutorial: NLP FROM SCRATCH: TRANSLATION WITH A SEQUENCE TO SEQUENCE NETWORK AND ATTENTIONTutorial 地址: https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html任务：Translate F">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://pytorch.org/tutorials/_images/attention-decoder-network.png">
+<meta property="og:updated_time" content="2019-10-10T05:12:25.070Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Little&#39;s Blogs">
+<meta name="twitter:title" content="Translation With a Sequence to Sequence Network and Attention">
+<meta name="twitter:description" content="Pytorch Tutorial: NLP FROM SCRATCH: TRANSLATION WITH A SEQUENCE TO SEQUENCE NETWORK AND ATTENTIONTutorial 地址: https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html任务：Translate F">
+<meta name="twitter:image" content="https://pytorch.org/tutorials/_images/attention-decoder-network.png">
   
     <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
   
@@ -152,95 +159,72 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-textimg" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+            <article id="post-Translation-With-a-Sequence-to-Sequence-Network-and-Attention" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/afcheng.github.io/2019/09/27/textimg/">textimg</a>
+    <h1 class="article-title" itemprop="name">
+      Translation With a Sequence to Sequence Network and Attention
     </h1>
   
 
         
-        <a href="/afcheng.github.io/2019/09/27/textimg/" class="archive-article-date">
-  	<time datetime="2019-09-26T16:08:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-27</time>
+        <a href="/afcheng.github.io/2019/10/10/Translation-With-a-Sequence-to-Sequence-Network-and-Attention/" class="archive-article-date">
+  	<time datetime="2019-10-10T05:07:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-10</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>​    weight penality 强制让模型学习到比较小的权值，举例：</p>
-        
+        <p>Pytorch Tutorial: NLP FROM SCRATCH: TRANSLATION WITH A SEQUENCE TO SEQUENCE NETWORK AND ATTENTION<br>Tutorial 地址: <a href="https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html" target="_blank" rel="noopener">https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html</a><br>任务：Translate French to English  SeqtoSeq + Attention<br>&emsp; 类似name分类每个字符用一个one-hot表示，这里每个单词用一个one-hot。但是因为语料中单词数量很大，因此 only use a few thousand words per language。</p>
+<a id="more"></a>
+<p>做好word和index映射：word2index，index2word，并记录词频：word2count。</p>
+<p>准备数据的完整过程是：</p>
+<p>读取文本文件并拆分为行，将行拆分为成对<br>规范文本，按长度（保留短句子便于快速计算，tutorial嘛）和内容过滤<br>成对建立句子中的单词列表</p>
+<hr>
+<p>以下具体attention如何实现</p>
+<p>Sequence to Sequence</p>
+<p>Traditional： Encoder: The encoder reads an input sequence and outputs a single vector. Decoder: The decoder reads that vector to produce an output sequence.<br>Unlike sequence prediction with a single RNN, where every input corresponds to an output, the seq2seq model frees us from sequence length and order, which makes it ideal for translation between two languages.</p>
+<h3 id="The-Encoder"><a href="#The-Encoder" class="headerlink" title="The Encoder"></a>The Encoder</h3><p>The encoder of a seq2seq network is a RNN that outputs some value for every word from the input sentence. For every input word the encoder outputs a vector and a hidden state, and uses the hidden state for the next input word.</p>
+<h3 id="The-Decoder"><a href="#The-Decoder" class="headerlink" title="The Decoder"></a>The Decoder</h3><p>The decoder is another RNN that takes the encoder output vector(s) and outputs a sequence of words to create the translation.</p>
+<h4 id="Simple-Decoder"><a href="#Simple-Decoder" class="headerlink" title="Simple Decoder"></a>Simple Decoder</h4><p>In the simplest seq2seq decoder we use only last output of the encoder. This last output is sometimes called the <em>context vector</em> as it encodes context from the entire sequence. This context vector is used as the initial hidden state of the decoder.</p>
+<p>At every step of decoding, the decoder is given an input token and hidden state. The initial input token is the start-of-string <code>&lt;SOS&gt;</code> token, and the first hidden state is the context vector (the encoder’s last hidden state).</p>
+<h3 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AttnDecoderRNN</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, hidden_size, output_size, dropout_p=<span class="number">0.1</span>, max_length=MAX_LENGTH)</span>:</span></span><br><span class="line">        super(AttnDecoderRNN, self).__init__()</span><br><span class="line">        self.hidden_size = hidden_size</span><br><span class="line">        self.output_size = output_size</span><br><span class="line">        self.dropout_p = dropout_p</span><br><span class="line">        self.max_length = max_length</span><br><span class="line"></span><br><span class="line">        self.embedding = nn.Embedding(self.output_size, self.hidden_size)</span><br><span class="line">        self.attn = nn.Linear(self.hidden_size * <span class="number">2</span>, self.max_length) </span><br><span class="line">        self.attn_combine = nn.Linear(self.hidden_size * <span class="number">2</span>, self.hidden_size)</span><br><span class="line">        self.dropout = nn.Dropout(self.dropout_p)</span><br><span class="line">        self.gru = nn.GRU(self.hidden_size, self.hidden_size)</span><br><span class="line">        self.out = nn.Linear(self.hidden_size, self.output_size)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, input, hidden, encoder_outputs)</span>:</span></span><br><span class="line">        embedded = self.embedding(input).view(<span class="number">1</span>, <span class="number">1</span>, <span class="number">-1</span>)</span><br><span class="line">        embedded = self.dropout(embedded)</span><br><span class="line">				<span class="comment"># 获取权重，self.attn是全连接输出长度是max_length，权重根据输入embedded和hidden得到。</span></span><br><span class="line">        <span class="comment"># 这里的hidden就是上一个单元输出的hidden，</span></span><br><span class="line">        <span class="comment"># 这里输入embedded根据有无 Teacher 分两种：</span></span><br><span class="line">        <span class="comment">#     从target_tensor获取或者从历史得到（上一个decoder_output取top1然后据此获得）</span></span><br><span class="line">        attn_weights = F.softmax(self.attn(torch.cat((embedded[<span class="number">0</span>], hidden[<span class="number">0</span>]), <span class="number">1</span>)), dim=<span class="number">1</span>)</span><br><span class="line">        <span class="comment"># 权重乘以encoder的输出（应用权重）</span></span><br><span class="line">        attn_applied = torch.bmm(attn_weights.unsqueeze(<span class="number">0</span>), encoder_outputs.unsqueeze(<span class="number">0</span>))</span><br><span class="line">        <span class="comment"># 拼接input和应用权重之后的tensor</span></span><br><span class="line">        output = torch.cat((embedded[<span class="number">0</span>], attn_applied[<span class="number">0</span>]), <span class="number">1</span>)</span><br><span class="line">        <span class="comment"># 上一步拼接完之后size变为2倍的，在经过全连接self.attn_combine给降到self.hidden_size</span></span><br><span class="line">        output = self.attn_combine(output).unsqueeze(<span class="number">0</span>)</span><br><span class="line">				<span class="comment"># 这里F.relu作用的output是结合了embedded（也就是input）和focus了重要程度的encoder_outputs（乘了权重）</span></span><br><span class="line">        output = F.relu(output)</span><br><span class="line">        output, hidden = self.gru(output, hidden)</span><br><span class="line"></span><br><span class="line">        output = F.log_softmax(self.out(output[<span class="number">0</span>]), dim=<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> output, hidden, attn_weights</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initHidden</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> torch.zeros(<span class="number">1</span>, <span class="number">1</span>, self.hidden_size, device=device)</span><br></pre></td></tr></table></figure>
+<p>attention 的图</p>
+<p><img src="https://pytorch.org/tutorials/_images/attention-decoder-network.png" alt="img"></p>
+<hr>
+<p>以下知识补充</p>
+<p><strong>pytorch torch.nn.Embedding</strong> </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">torch.nn.Embedding(num_embeddings, embedding_dim, padding_idx=<span class="keyword">None</span>, max_norm=<span class="keyword">None</span>, norm_type=<span class="number">2.0</span>, scale_grad_by_freq=<span class="keyword">False</span>, sparse=<span class="keyword">False</span>, _weight=<span class="keyword">None</span>)</span><br><span class="line"><span class="comment"># 一个简单的查找表，用于存储固定字典和大小的嵌入。</span></span><br><span class="line"><span class="comment"># 该模块通常用于存储单词嵌入并使用索引检索它们。模块的输入是索引列表，而输出是相应的词嵌入。</span></span><br><span class="line"><span class="comment"># 例子：</span></span><br><span class="line"><span class="comment"># an Embedding module containing 10 tensors of size 3</span></span><br><span class="line">embedding = nn.Embedding(<span class="number">10</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment"># a batch of 2 samples of 4 indices each</span></span><br><span class="line">input = torch.LongTensor([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">5</span>],[<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">9</span>]]) <span class="comment"># 按照id取embedding</span></span><br><span class="line">embedding(input)</span><br><span class="line">tensor([[[<span class="number">-0.0251</span>, <span class="number">-1.6902</span>,  <span class="number">0.7172</span>],</span><br><span class="line">         [<span class="number">-0.6431</span>,  <span class="number">0.0748</span>,  <span class="number">0.6969</span>],</span><br><span class="line">         [ <span class="number">1.4970</span>,  <span class="number">1.3448</span>, <span class="number">-0.9685</span>],</span><br><span class="line">         [<span class="number">-0.3677</span>, <span class="number">-2.7265</span>, <span class="number">-0.1685</span>]],</span><br><span class="line"></span><br><span class="line">        [[ <span class="number">1.4970</span>,  <span class="number">1.3448</span>, <span class="number">-0.9685</span>],</span><br><span class="line">         [ <span class="number">0.4362</span>, <span class="number">-0.4004</span>,  <span class="number">0.9400</span>],</span><br><span class="line">         [<span class="number">-0.6431</span>,  <span class="number">0.0748</span>,  <span class="number">0.6969</span>],</span><br><span class="line">         [ <span class="number">0.9124</span>, <span class="number">-2.3616</span>,  <span class="number">1.1151</span>]]])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># example with padding_idx</span></span><br><span class="line">embedding = nn.Embedding(<span class="number">10</span>, <span class="number">3</span>, padding_idx=<span class="number">0</span>) <span class="comment"># 将input中id为padding_idx的位置补为0</span></span><br><span class="line">input = torch.LongTensor([[<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">5</span>]])</span><br><span class="line">embedding(input)</span><br><span class="line">tensor([[[ <span class="number">0.0000</span>,  <span class="number">0.0000</span>,  <span class="number">0.0000</span>],</span><br><span class="line">         [ <span class="number">0.1535</span>, <span class="number">-2.0309</span>,  <span class="number">0.9315</span>],</span><br><span class="line">         [ <span class="number">0.0000</span>,  <span class="number">0.0000</span>,  <span class="number">0.0000</span>],</span><br><span class="line">         [<span class="number">-0.1655</span>,  <span class="number">0.9897</span>,  <span class="number">0.0635</span>]]])</span><br></pre></td></tr></table></figure>
+<p><strong>pytorch torch.bmm</strong>  批矩阵相乘（应用权重时用的）</p>
+<p>总结：通过这个Tutorial看 Seq2Seq + Attention怎么实现</p>
+
       
 
       
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/afcheng.github.io/2019/09/27/textimg/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-doraemon" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/afcheng.github.io/2019/09/18/doraemon/">doraemon</a>
-    </h1>
-  
-
-        
-        <a href="/afcheng.github.io/2019/09/18/doraemon/" class="archive-article-date">
-  	<time datetime="2019-09-18T02:12:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>收集的各种奇奇怪怪的小东西：矢量图、英语搭配……</p>
-        
-      
-
       
     </div>
     <div class="article-info article-info-index">
@@ -251,167 +235,19 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">百宝箱</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/afcheng.github.io/2019/09/18/doraemon/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-GMNN-Graph-Markov-Neural-Networks" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/afcheng.github.io/2019/09/12/GMNN-Graph-Markov-Neural-Networks/">GMNN: Graph Markov Neural Networks</a>
-    </h1>
-  
-
-        
-        <a href="/afcheng.github.io/2019/09/12/GMNN-Graph-Markov-Neural-Networks/" class="archive-article-date">
-  	<time datetime="2019-09-11T22:53:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>传统的针对节点分类问题（semi-suprivised object classification in relational data）的研究可分为两类方法：统计关系学习和图神经网络。前者通过条件随机场有效建模object之间的依赖关系实现分类，后者通过端对端的训练学习object的表示进而实现分类。本文融合这两类方法即结合条件随机场与图神经网络，条件随机场建模object/node标签联合分布(此篇文章中与node同义，都表示graph中的一个实体，因为在统计关系学习中常用object但是在图神经网络中习惯用node)，利用变分EM算法进行训练。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">图神经网络</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">论文笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/afcheng.github.io/2019/09/12/GMNN-Graph-Markov-Neural-Networks/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-快速排序" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/afcheng.github.io/2019/09/10/快速排序/">快速排序</a>
-    </h1>
-  
-
-        
-        <a href="/afcheng.github.io/2019/09/10/快速排序/" class="archive-article-date">
-  	<time datetime="2019-09-10T04:17:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>快速排序算法：使用分治法(divide and conquer)策略，把一个数组分为值较大和较小的两个数组(用index划分)，然后递归地排序两个子序列。<br>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">基础算法</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">自然语言处理</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数组</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">seq2seq</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">排序</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">attention</a>
         		</li>
       		
 		</ul>
@@ -420,16 +256,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/afcheng.github.io/2019/09/10/快速排序/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://chengaf.github.io/afcheng.github.io/2019/10/10/Translation-With-a-Sequence-to-Sequence-Network-and-Attention/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/afcheng.github.io/2019/10/09/实体消歧/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">实体消歧</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -449,395 +344,14 @@
 
 
 
-
-  
-    <article id="post-LeetCode-101-Symmetric-Tree" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/afcheng.github.io/2019/09/10/LeetCode-101-Symmetric-Tree/">LeetCode 101. Symmetric Tree</a>
-    </h1>
-  
-
-        
-        <a href="/afcheng.github.io/2019/09/10/LeetCode-101-Symmetric-Tree/" class="archive-article-date">
-  	<time datetime="2019-09-09T16:59:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>题目：Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">LeetCode</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">树</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/afcheng.github.io/2019/09/10/LeetCode-101-Symmetric-Tree/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-PageRank-and-RWR" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/afcheng.github.io/2019/09/09/PageRank-and-RWR/">PageRank and RWR</a>
-    </h1>
-  
-
-        
-        <a href="/afcheng.github.io/2019/09/09/PageRank-and-RWR/" class="archive-article-date">
-  	<time datetime="2019-09-09T15:14:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>a. 一篇paper里用RWR (random walk with restart)，得到网络Network中每个节点的初始化特征。<br>b. RWR以及PageRank的简单理解</em></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">基础算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/afcheng.github.io/2019/09/09/PageRank-and-RWR/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Graph-Generation-Paper-List" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/afcheng.github.io/2019/09/09/Graph-Generation-Paper-List/">Graph Generation Paper List</a>
-    </h1>
-  
-
-        
-        <a href="/afcheng.github.io/2019/09/09/Graph-Generation-Paper-List/" class="archive-article-date">
-  	<time datetime="2019-09-09T15:14:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Paper List of Graph Generation Model</p>
-<p>图生成相关论文，时不时(碰见了or想起来了or闲了)就更新一下。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">论文列表</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/afcheng.github.io/2019/09/09/Graph-Generation-Paper-List/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-LeetCode 110-Balanced-Binary-Tree" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/afcheng.github.io/2019/09/09/LeetCode 110-Balanced-Binary-Tree/">LeetCode 110. Balanced Binary Tree</a>
-    </h1>
-  
-
-        
-        <a href="/afcheng.github.io/2019/09/09/LeetCode 110-Balanced-Binary-Tree/" class="archive-article-date">
-  	<time datetime="2019-09-09T03:33:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>平衡二叉树</em></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">LeetCode</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">树</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/afcheng.github.io/2019/09/09/LeetCode 110-Balanced-Binary-Tree/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-LeetCode-104-Maximum-Depth-of-Binary-Tree" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/afcheng.github.io/2019/09/09/LeetCode-104-Maximum-Depth-of-Binary-Tree/">LeetCode 104. Maximum Depth of Binary Tree</a>
-    </h1>
-  
-
-        
-        <a href="/afcheng.github.io/2019/09/09/LeetCode-104-Maximum-Depth-of-Binary-Tree/" class="archive-article-date">
-  	<time datetime="2019-09-09T02:59:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>二叉树深度-递归</em></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">LeetCode</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">树</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/afcheng.github.io/2019/09/09/LeetCode-104-Maximum-Depth-of-Binary-Tree/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/afcheng.github.io/">&laquo; Prev</a><a class="page-number" href="/afcheng.github.io/">1</a><span class="page-number current">2</span>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -860,8 +374,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

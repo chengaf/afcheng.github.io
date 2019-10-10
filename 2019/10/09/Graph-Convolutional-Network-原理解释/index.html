@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/图卷积傅立叶变换.jpg">
-<meta property="og:updated_time" content="2019-10-09T03:34:33.413Z">
+<meta property="og:updated_time" content="2019-10-10T00:51:14.310Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Graph Convolutional Network 原理解释">
 <meta name="twitter:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—&amp;gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— &amp;gt;GCN 的代表性工作(方法的发展) &amp;ensp;—&amp;gt;GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
@@ -289,7 +289,7 @@ u_{N}(1) & u_{N}(2) & \cdots &u_{N}(N)
 </li>
 <li><p>Graph Convolution Network 目的是需要设计共享的（Parameter Sharing）、可学习的（Trainable）卷积核（Convolutional Kernel）。对 Graph Convolution 而言就是 <script type="math/tex">U\Lambda U^{T}X</script> 这个 <script type="math/tex">\Lambda</script>。</p>
 </li>
-<li><p>此外许多地方将图卷积写成 <script type="math/tex">(f*h)_{G}=U((U^{T}h)\bigodot(U^{T}f))</script>，其中$ $\bigodot$$ 为哈达玛积，对应元素相乘。</p>
+<li><p>此外许多地方将图卷积写成 <script type="math/tex">(f*h)_{G}=U((U^{T}h)\bigodot(U^{T}f))</script>，其中<script type="math/tex">\bigodot</script> 为哈达玛积，对应元素相乘。</p>
 <p>把 <script type="math/tex">\bigodot</script> 转为矩阵乘法，因为：</p>
 <script type="math/tex; mode=display">\left( \begin{matrix} x_{1}\\ \vdots \\x_{n} \end{matrix}\right)\bigodot \left( \begin{matrix} y_{1}\\ \vdots \\y_{n} \end{matrix}\right)=\left( \begin{matrix} x_{1}&\cdots&0 \\ \vdots&\ddots&\vdots \\0&\cdots&x_{n} \end{matrix}\right)\left( \begin{matrix} y_{1}\\ \vdots \\y_{n} \end{matrix}\right)</script><p>所以可将 <script type="math/tex">(U^{T}h)\bigodot</script> 这部分写成 <script type="math/tex">diag(\hat{h}(\lambda_{l}))</script>，</p>
 <p>即为另一种形式：<script type="math/tex">(f*h)_{G}=U
@@ -613,15 +613,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">树</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
               </li>
              
               <li class="article-tag-list-item">

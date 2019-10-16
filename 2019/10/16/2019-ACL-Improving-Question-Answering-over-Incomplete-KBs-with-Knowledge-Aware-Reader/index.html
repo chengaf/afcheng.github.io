@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Little&#39;s Blogs">
 <meta property="og:description" content="论文信息Title: Improving Question Answering over Incomplete KBs with Knowledge-Aware Reader Wenhan Xiong † , Mo Yu ∗ , Shiyu Chang ∗ , Xiaoxiao Guo ∗ , William Yang Wang ††University of California, Santa">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-16T06:06:32.008Z">
+<meta property="og:updated_time" content="2019-10-16T06:09:31.400Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2019 ACL Improving Question Answering over Incomplete KBs with Knowledge-Aware Reader">
 <meta name="twitter:description" content="论文信息Title: Improving Question Answering over Incomplete KBs with Knowledge-Aware Reader Wenhan Xiong † , Mo Yu ∗ , Shiyu Chang ∗ , Xiaoxiao Guo ∗ , William Yang Wang ††University of California, Santa">
@@ -187,7 +187,7 @@
 <ul>
 <li>Question-Relation Matching<br>为了能够在同构隐藏空间中匹配问题和KB关系，使用一个共享的LSTM去编码问题<script type="math/tex">\{w_{1}^{q},w_{2}^{q},...,w_{l_{q}}^{q}\}</script>和标记的关系<script type="math/tex">\{w_{1}^{r},w_{2}^{r},...,w_{l_{r}}^{r}\}</script> 利用生成的问题隐层状态<script type="math/tex">\mathbf{h^{q}}\in R^{l_{q}*d_{h}}</script>以及关系隐层状态<script type="math/tex">\mathbf{h^{r}}\in R^{l_{r}*d_{h}}</script> 首先利用self-attention encoder获取关系的表示：<script type="math/tex; mode=display">\vec{r}=\sum_{i}\alpha_{i}\vec{h_{i}^{r}}, \alpha_{i}\propto exp(\vec{w_{r}}\cdot \vec{h_{i}^{r}})</script>因为每个问题匹配多个关系，但是每个关系只描述问题的某一部分，因此需要更细粒度地计算关系-问题的匹配得分。<script type="math/tex; mode=display">s_{r}=\vec{r}\cdot \sum{j}\beta_{j}\vec{h_{j}^{q}}, \beta_{j}\propto exp(\vec{r}\cdot \vec{h_{j}^{q}})</script></li>
 <li>Extra Attention over Topic Entity Neighbors<br>利用主题实体从新计算关系-实体得分<script type="math/tex">\hat{s}_{(r_{i},e_{i})}</script>，如果一个主题实例<script type="math/tex">e</script>连接的邻居<script type="math/tex">(r_{i}, e_{i})</script>出现在了问题中<script type="math/tex">I[e_{i}\in E_{0}]</script>，那么对应 KB 中的三元组<script type="math/tex">(e,r_{i}, e_{i})</script>将会比那些非主题实例的邻居对问题的语义表示更有用，因此在邻居节点上的注意力值最终表示为：<script type="math/tex; mode=display">\hat{s}_{(r_{i},e_{i})}\propto exp(I[e_{i}\in E_{0}]+s_{r_{i}})</script></li>
-<li>Information Propagation from Neighbors<br>为了从链接的三元组中积累知识，对每个实体<script type="math/tex">e</script>定一个传播规则：<script type="math/tex; mode=display">\vec{e^{'}}=r^{e}\vec{e}+(1-r^{e})\sum_{e_{i},r_{i}\in N_{e}}\hat{s}_{r_{i},e_{i}}\sigma(W_{e}[\vec{r_{i}};\vec{e_{i}}])</script><script type="math/tex">r_{e}</script>是一个trade-off参数，通过一个线性门函数定义：<br><script type="math/tex">r_{e}=g(\vec{e},\sum_{e_{i},r_{i}}\in N_{e}) \hat{s}_{r_{r},e_{i}\sigma(W_{e}[\vec{r_{i}};\vec{e_{i}})}</script>，用<script type="math/tex">r_{e}</script>来控制从源表示<script type="math/tex">\vec{e}</script>保留多少信息。</li>
+<li>Information Propagation from Neighbors<br>为了从链接的三元组中积累知识，对每个实体<script type="math/tex">e</script>定一个传播规则：<script type="math/tex; mode=display">\vec{e^{'}}=r^{e}\vec{e}+(1-r^{e})\sum_{e_{i},r_{i}\in N_{e}}\hat{s}_{r_{i},e_{i}}\sigma(W_{e}[\vec{r_{i}};\vec{e_{i}}])</script><script type="math/tex">r_{e}</script>是一个trade-off参数，通过一个线性门函数定义：<br><script type="math/tex">r_{e}=g(\vec{e},\sum_{e_{i},r_{i}}\in N_{e}) \hat{s}_{(r_{r},e_{i})}\sigma(W_{e}[\vec{r_{i}};\vec{e_{i}])}</script>，用<script type="math/tex">r_{e}</script>来控制从源表示<script type="math/tex">\vec{e}</script>保留多少信息。</li>
 </ul>
 <p><strong>Knowledge-Aware Text Reader - KAREADER</strong><br>上一个模块SGREADER中获取了KB的表示，这里利用它加深对问题和文档的理解，用了个已有的阅读理解模型。(With the learned KB embeddings, our model enhances text reading with KAREADER . Briefly, we use an existing reading comprehension model (Chen et al., 2017) and improve it by learning more knowledge-aware representations for both question and documents.)</p>
 <ul>
@@ -475,6 +475,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
@@ -483,15 +487,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -511,6 +507,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">知识图谱</a>
               </li>
              
@@ -527,11 +527,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">问答</a>
+                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
+                <a href="javascript:void(0)" class="js-tag color3">问答</a>
               </li>
              
               <li class="article-tag-list-item">

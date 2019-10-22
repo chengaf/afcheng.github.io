@@ -154,95 +154,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-LeetCode-133-Clone-Graph" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/afcheng.github.io/2019/10/16/LeetCode-133-Clone-Graph/">LeetCode 133. Clone Graph</a>
-    </h1>
-  
-
-        
-        <a href="/afcheng.github.io/2019/10/16/LeetCode-133-Clone-Graph/" class="archive-article-date">
-  	<time datetime="2019-10-16T07:17:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>克隆图</p>
-<p>给定无向<a href="https://baike.baidu.com/item/连通图/6460995?fr=aladdin" target="_blank" rel="noopener"><strong>连通</strong></a>图中一个节点的引用，返回该图的<a href="https://baike.baidu.com/item/深拷贝/22785317?fr=aladdin" target="_blank" rel="noopener"><strong>深拷贝</strong></a>（克隆）。图中的每个节点都包含它的值 <code>val</code>（<code>Int</code>） 和其邻居的列表（<code>list[Node]</code>）。</p>
-<h4 id="输入："><a href="#输入：" class="headerlink" title="输入："></a>输入：</h4><p>总乱码，参见原题吧就。</p>
-<p>解释：<br>节点 1 的值是 1，它有两个邻居：节点 2 和 4 。<br>节点 2 的值是 2，它有两个邻居：节点 1 和 3 。<br>节点 3 的值是 3，它有两个邻居：节点 2 和 4 。<br>节点 4 的值是 4，它有两个邻居：节点 1 和 3 。</p>
-<h4 id="提示："><a href="#提示：" class="headerlink" title="提示："></a>提示：</h4><blockquote>
-<ol>
-<li>节点数介于 1 到 100 之间。</li>
-<li>无向图是一个简单图，这意味着图中没有重复的边，也没有自环。</li>
-<li>由于图是无向的，如果节点 p 是节点 q 的邻居，那么节点 q 也必须是节点 p 的邻居。</li>
-<li>必须将给定节点的拷贝作为对克隆图的引用返回。</li>
-</ol>
-</blockquote>
-<h4 id="解"><a href="#解" class="headerlink" title="解"></a>解</h4>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">LeetCode</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">图</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/afcheng.github.io/2019/10/16/LeetCode-133-Clone-Graph/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-LeetCode-997-Find-the-Town-Judge" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -988,6 +899,93 @@
 
 
   
+    <article id="post-Graph-Convolutional-Network-原理解释" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/afcheng.github.io/2019/10/09/Graph-Convolutional-Network-原理解释/">Graph Convolutional Network 原理解释</a>
+    </h1>
+  
+
+        
+        <a href="/afcheng.github.io/2019/10/09/Graph-Convolutional-Network-原理解释/" class="archive-article-date">
+  	<time datetime="2019-10-09T01:33:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>写在前面</p>
+<blockquote>
+<ol>
+<li>思路：为什么提出 GCN &ensp;—&gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）—&gt;GCN 的代表性工作(方法的发展) </li>
+<li>根据一些blog（参照最后资源君，侵删）和原论文整理的笔记，加了一些帮助我理解的东西，加了个图。</li>
+<li>清华整理的关于GNN 的 must-read paper list：<a href="https://github.com/thunlp/GNNPapers" target="_blank" rel="noopener">https://github.com/thunlp/GNNPapers</a> </li>
+<li>GNN系列方法的实现1：<a href="https://github.com/rusty1s/pytorch_geometric" target="_blank" rel="noopener">https://github.com/rusty1s/pytorch_geometric</a>  [pytorch]</li>
+<li>GNN系列方法的实现2：<a href="https://github.com/dmlc/dgl" target="_blank" rel="noopener">https://github.com/dmlc/dgl</a> [pytorch]</li>
+</ol>
+</blockquote>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">图神经网络</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/afcheng.github.io/2019/10/09/Graph-Convolutional-Network-原理解释/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/afcheng.github.io/page/2/">2</a><a class="page-number" href="/afcheng.github.io/page/3/">3</a><a class="extend next" rel="next" href="/afcheng.github.io/page/2/">Next &raquo;</a>
@@ -1170,11 +1168,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">问答</a>
+                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
+                <a href="javascript:void(0)" class="js-tag color3">问答</a>
               </li>
              
               <li class="article-tag-list-item">

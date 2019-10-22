@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
   <title>LeetCode 133. Clone Graph | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="题目描述克隆图">
+  <meta name="description" content="题目描述克隆图 给定无向连通图中一个节点的引用，返回该图的深拷贝（克隆）。图中的每个节点都包含它的值 val（Int） 和其邻居的列表（list[Node]）。 输入：{“$id”:”1”,”neighbors”:[{“$id”:”2”,”neighbors”:[{“$ref”:”1”},{“$id”:”3”,”neighbors”:[{“$ref”:”2”},{“$id”:”4”,”neighb">
 <meta name="keywords" content="LeetCode,图">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 133. Clone Graph">
 <meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/10/16/LeetCode-133-Clone-Graph/index.html">
 <meta property="og:site_name" content="Little&#39;s Blogs">
-<meta property="og:description" content="题目描述克隆图">
+<meta property="og:description" content="题目描述克隆图 给定无向连通图中一个节点的引用，返回该图的深拷贝（克隆）。图中的每个节点都包含它的值 val（Int） 和其邻居的列表（list[Node]）。 输入：{“$id”:”1”,”neighbors”:[{“$id”:”2”,”neighbors”:[{“$ref”:”1”},{“$id”:”3”,”neighbors”:[{“$ref”:”2”},{“$id”:”4”,”neighb">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-16T07:17:50.575Z">
+<meta property="og:updated_time" content="2019-10-16T11:29:16.197Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode 133. Clone Graph">
-<meta name="twitter:description" content="题目描述克隆图">
+<meta name="twitter:description" content="题目描述克隆图 给定无向连通图中一个节点的引用，返回该图的深拷贝（克隆）。图中的每个节点都包含它的值 val（Int） 和其邻居的列表（list[Node]）。 输入：{“$id”:”1”,”neighbors”:[{“$id”:”2”,”neighbors”:[{“$ref”:”1”},{“$id”:”3”,”neighbors”:[{“$ref”:”2”},{“$id”:”4”,”neighb">
   
     <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
   
@@ -178,7 +178,18 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>克隆图</p>
-
+<p>给定无向<a href="https://baike.baidu.com/item/连通图/6460995?fr=aladdin" target="_blank" rel="noopener"><strong>连通</strong></a>图中一个节点的引用，返回该图的<a href="https://baike.baidu.com/item/深拷贝/22785317?fr=aladdin" target="_blank" rel="noopener"><strong>深拷贝</strong></a>（克隆）。图中的每个节点都包含它的值 <code>val</code>（<code>Int</code>） 和其邻居的列表（<code>list[Node]</code>）。</p>
+<h4 id="输入："><a href="#输入：" class="headerlink" title="输入："></a>输入：</h4><p>{“$id”:”1”,”neighbors”:<br>[{“$id”:”2”,”neighbors”:[{“$ref”:”1”},{“$id”:”3”,”neighbors”:[{“$ref”:”2”},<br>{“$id”:”4”,”neighbors”:[{“$ref”:”3”},{“$ref”:”1”}],”val”:4}],”val”:3}],”val”:2},{“$ref”:”4”}],”val”:1}</p>
+<p>解释：<br>节点 1 的值是 1，它有两个邻居：节点 2 和 4 。<br>节点 2 的值是 2，它有两个邻居：节点 1 和 3 。<br>节点 3 的值是 3，它有两个邻居：节点 2 和 4 。<br>节点 4 的值是 4，它有两个邻居：节点 1 和 3 。</p>
+<h4 id="提示："><a href="#提示：" class="headerlink" title="提示："></a>提示：</h4><blockquote>
+<ol>
+<li>节点数介于 1 到 100 之间。</li>
+<li>无向图是一个简单图，这意味着图中没有重复的边，也没有自环。</li>
+<li>由于图是无向的，如果节点 p 是节点 q 的邻居，那么节点 q 也必须是节点 p 的邻居。</li>
+<li>必须将给定节点的拷贝作为对克隆图的引用返回。</li>
+</ol>
+</blockquote>
+<h4 id="解"><a href="#解" class="headerlink" title="解"></a>解</h4>
       
 
       
@@ -445,14 +456,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">图神经网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
@@ -462,6 +465,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">图神经网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -497,15 +508,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">数组</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">

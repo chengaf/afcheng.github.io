@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
   <title>Graph Convolutional Network 原理解释 | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—&amp;gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— &amp;gt;GCN 的代表性工作(方法的发展) &amp;ensp;—&amp;gt;GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
+  <meta name="description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—&amp;gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— &amp;gt;GCN 的代表性工作(方法的发展) &amp;ensp;—&amp;gt;GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记，加了一些帮助我理解的东西，加了个图。 清华整理的关于GNN 的 must-read paper list：https://github.">
 <meta name="keywords" content="图神经网络,随笔">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Graph Convolutional Network 原理解释">
 <meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/10/09/Graph-Convolutional-Network-原理解释/index.html">
 <meta property="og:site_name" content="Little&#39;s Blogs">
-<meta property="og:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—&amp;gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— &amp;gt;GCN 的代表性工作(方法的发展) &amp;ensp;—&amp;gt;GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
+<meta property="og:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—&amp;gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— &amp;gt;GCN 的代表性工作(方法的发展) &amp;ensp;—&amp;gt;GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记，加了一些帮助我理解的东西，加了个图。 清华整理的关于GNN 的 must-read paper list：https://github.">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/图卷积傅立叶变换.jpg">
-<meta property="og:updated_time" content="2019-10-16T06:00:14.723Z">
+<meta property="og:updated_time" content="2019-10-22T13:00:54.819Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Graph Convolutional Network 原理解释">
-<meta name="twitter:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—&amp;gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— &amp;gt;GCN 的代表性工作(方法的发展) &amp;ensp;—&amp;gt;GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。">
+<meta name="twitter:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—&amp;gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）&amp;ensp;— &amp;gt;GCN 的代表性工作(方法的发展) &amp;ensp;—&amp;gt;GNN 根据一些blog（参照最后资源君，侵删）和原论文整理的笔记，加了一些帮助我理解的东西，加了个图。 清华整理的关于GNN 的 must-read paper list：https://github.">
 <meta name="twitter:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
@@ -184,7 +184,9 @@
 <blockquote>
 <ol>
 <li>思路：为什么提出 GCN &ensp;—&gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）<br>&ensp;— &gt;GCN 的代表性工作(方法的发展) &ensp;—&gt;GNN</li>
-<li>根据一些blog（参照最后资源君，侵删）和原论文整理的笔记。</li>
+<li>根据一些blog（参照最后资源君，侵删）和原论文整理的笔记，加了一些帮助我理解的东西，加了个图。</li>
+<li>清华整理的关于GNN 的 must-read paper list：<a href="https://github.com/thunlp/GNNPapers" target="_blank" rel="noopener">https://github.com/thunlp/GNNPapers</a> </li>
+<li>GNN系列方法的实现：<a href="https://github.com/rusty1s/pytorch_geometric" target="_blank" rel="noopener">https://github.com/rusty1s/pytorch_geometric</a>  [更新贼快贼快]</li>
 </ol>
 </blockquote>
 <a id="more"></a>
@@ -324,16 +326,19 @@ U^{T}x\right)</script></li>
 </li>
 </ul>
 </li>
-<li>第三代，简化版的 ChebNet 。<ul>
-<li>在原始 ChebNet 中，令 <script type="math/tex">K=1</script>， <script type="math/tex">\sum_{j=0}^{K}\alpha_{j}L^{j}=\alpha_{1}L^{0}+\alpha_{1}L^{1}</script>，令 <script type="math/tex">w:=\alpha_{0}=-\alpha_{1}</script>，因此对于输入 <script type="math/tex">x</script> ，经过图卷积操作得到输出 <script type="math/tex">y_{output}</script> 可公式化描述为：<br><script type="math/tex">y_{output}=\sigma(w(I_{N}-L) x)</script>，其中 <script type="math/tex">L=I_{N}-D^{-\frac{1}{2}}AD^{-\frac{1}{2}}</script>，因此<br><script type="math/tex">y_{output}=\sigma(w(\hat{D}^{-\frac{1}{2}}\hat{A}\hat{D}^{-\frac{1}{2}} x)</script>。其中， <script type="math/tex">\hat{A}=I_{N}+A</script>，<script type="math/tex">\hat{D}_{ii}=\sum_{j}A_{ij}</script>。<blockquote>
-<p>切比雪夫多项式这里需要参照原文的解释，<a href="https://chengaf.github.io/afcheng.github.io/2019/10/09/Semi-Supervised-Classfication-with-Graph-Convolutional-Networks/">在这里GCN</a>，这里可能是有点问题的。<br>Kipf,Thomas N,and M.Welling. “Semi-Supervised Classification with Graph Convolutional Networks.”inICLR(2017).</p>
-</blockquote>
-</li>
+<li><p>第三代，简化版的 ChebNet 。</p>
+<ul>
+<li>参见单独文章，<a href="https://chengaf.github.io/afcheng.github.io/2019/10/09/Semi-Supervised-Classfication-with-Graph-Convolutional-Networks/">在这里GCN</a> 。</li>
 </ul>
+<blockquote>
+<p>Kipf,Thomas N,and M.Welling. “Semi-Supervised Classification with Graph Convolutional Networks.”inICLR(2017).</p>
+</blockquote>
 </li>
 </ul>
 <p></p><p style="background-color:SeaGreen;">.</p><p></p>
 <font face="宋体" color="0099ff">资源君</font>
+
+
 
 <blockquote>
 <ol>
@@ -619,14 +624,6 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">图神经网络</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文笔记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
@@ -636,6 +633,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">图神经网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文笔记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -671,15 +676,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">数组</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">

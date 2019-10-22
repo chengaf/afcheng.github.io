@@ -36,39 +36,55 @@
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
     <div class="left-col" q-class="show:isShow">
-      <% var defaultBg = '#4d4d4d'; %>
-<div class="overlay" style="background: <%= theme.style && theme.style.header ? theme.style.header : defaultBg %>"></div>
+      
+<div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="<%=theme.root%>" class="profilepic">
-			<img src="<%=theme.avatar%>" class="js-avatar show">
+		<a href="/afcheng.github.io/" class="profilepic">
+			<img src="https://chengaf.github.io/afcheng.github.io/assets/img/pika.png" class="js-avatar show">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="<%=theme.root%>"><%=theme.author%></a></h1>
+		  <h1 class="header-author"><a href="/afcheng.github.io/">Little</a></h1>
 		</hgroup>
-		<% if (theme.subtitle){ %>
-		<p class="header-subtitle"><%=theme.subtitle%></p>
-		<%}%>
+		
+		<p class="header-subtitle">人生里有些事情，不能蹉跎。</p>
+		
 
 		<nav class="header-menu">
 			<ul>
-			<% for (var i in theme.menu){ %>
-				<li><a href="<%- url_for(theme.menu[i]) %>"><%= i %></a></li>
-	        <%}%>
+			
+				<li><a href="https://chengaf.github.io/afcheng.github.io/">主页</a></li>
+	        
+				<li><a href="/afcheng.github.io/tags/随笔/">随笔</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
-    		<% for (var i in theme.smart_menu){ %>
-    			<% if(theme.smart_menu[i]){ %>
-    			<a q-on="click: openSlider(e, '<%-i%>')" href="javascript:void(0)"><%= theme.smart_menu[i] %></a>
-    			<% } %>
-            <%}%>
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
 		</nav>
 		<nav class="header-nav">
 			<div class="social">
-				<% for (var i in theme.subnav){ %>
-					<a class="<%= i %>" target="_blank" href="<%- url_for(theme.subnav[i]) %>" title="<%= i %>"><i class="icon-<%= i %>"></i></a>
-		        <%}%>
+				
+					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
 			</div>
 		</nav>
 	</header>		
@@ -160,7 +176,7 @@
       
         <h4 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h4><p>克隆图</p>
 <p>给定无向<a href="https://baike.baidu.com/item/连通图/6460995?fr=aladdin" target="_blank" rel="noopener"><strong>连通</strong></a>图中一个节点的引用，返回该图的<a href="https://baike.baidu.com/item/深拷贝/22785317?fr=aladdin" target="_blank" rel="noopener"><strong>深拷贝</strong></a>（克隆）。图中的每个节点都包含它的值 <code>val</code>（<code>Int</code>） 和其邻居的列表（<code>list[Node]</code>）。</p>
-<h4 id="输入："><a href="#输入：" class="headerlink" title="输入："></a>输入：</h4><p>{“\$id”:”1”,”neighbors”:[{“\$id”:”2”,”neighbors”:[{“\$ref”:”1”},{“​\$id”:”3”,”neighbors”:[{“\$ref”:”2”},{“​\$id”:”4”,”neighbors”:[{“\$ref”:”3”},{“​\$ref”:”1”}],”val”:4}],”val”:3}],”val”:2},{“$ref”:”4”}],”val”:1}</p>
+<h4 id="输入："><a href="#输入：" class="headerlink" title="输入："></a>输入：</h4><p>{“$id”:”1”,”neighbors”:[{“$id”:”2”,”neighbors”:[{“$ref”:”1”},{“$id”:”3”,”neighbors”:[{“$ref”:”2”},{“$id”:”4”,”neighbors”:[{“$ref”:”3”},{“$ref”:”1”}],”val”:4}],”val”:3}],”val”:2},{“$ref”:”4”}],”val”:1}</p>
 <p>解释：<br>节点 1 的值是 1，它有两个邻居：节点 2 和 4 。<br>节点 2 的值是 2，它有两个邻居：节点 1 和 3 。<br>节点 3 的值是 3，它有两个邻居：节点 2 和 4 。<br>节点 4 的值是 4，它有两个邻居：节点 1 和 3 。</p>
 <h4 id="提示："><a href="#提示：" class="headerlink" title="提示："></a>提示：</h4><blockquote>
 <ol>
@@ -1098,6 +1114,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
@@ -1111,10 +1131,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
               </li>
              
               <li class="article-tag-list-item">

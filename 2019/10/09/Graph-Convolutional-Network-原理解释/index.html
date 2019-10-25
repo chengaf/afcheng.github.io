@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/图卷积傅立叶变换.jpg">
-<meta property="og:updated_time" content="2019-10-22T13:13:41.226Z">
+<meta property="og:updated_time" content="2019-10-25T08:19:40.519Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Graph Convolutional Network 原理解释">
 <meta name="twitter:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—&amp;gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）—&amp;gt;GCN 的代表性工作(方法的发展)  根据一些blog（参照最后资源君，侵删）和原论文整理的笔记，加了一些帮助我理解的东西，加了个图。 清华整理的关于GNN 的 must-read paper list：https://github.com/thunlp/GNNPapers">
@@ -290,7 +290,7 @@ u_{N}(1) & u_{N}(2) & \cdots &u_{N}(N)
 <p>卷积：一种运算方式。<br>傅立叶变换：让函数在时域和频域相互转换。<br>卷积定理：时域卷积等于频域乘积，时域乘积等于频域卷积。</p>
 </blockquote>
 </li>
-<li><p>Graph Convolution Network 目的是需要设计共享的（Parameter Sharing）、可学习的（Trainable）卷积核（Convolutional Kernel）。对 Graph Convolution 而言就是 <script type="math/tex">U\Lambda U^{T}X</script> 这个 <script type="math/tex">\Lambda</script>。</p>
+<li><p>Graph Convolution Network 目的是需要设计共享的（Parameter Sharing）、可学习的（Trainable）卷积核（Convolutional Kernel）。对 Graph Convolution 而言就是 <script type="math/tex">U\Lambda U^{T}X</script> 这个 $U\Lambda U^{T}$ 与传统CNN不同的是这玩意儿对一个graph而言可以提前计算不用学习，传播过程中学习权重矩阵就行了。</p>
 </li>
 <li><p>此外许多地方将图卷积写成 <script type="math/tex">(f*h)_{G}=U((U^{T}h)\bigodot(U^{T}f))</script>，其中<script type="math/tex">\bigodot</script> 为哈达玛积，对应元素相乘。</p>
 <p>把 <script type="math/tex">\bigodot</script> 转为矩阵乘法，因为：</p>
@@ -678,10 +678,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">数组</a>
               </li>
              
@@ -690,15 +686,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">问答</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
               </li>
             
             <div class="clearfix"></div>
@@ -835,5 +835,22 @@ MathJax.Hub.Queue(function() {
 
 </div>
   </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
 </body>
 </html>

@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/图卷积傅立叶变换.jpg">
-<meta property="og:updated_time" content="2019-10-25T08:43:52.496Z">
+<meta property="og:updated_time" content="2019-10-25T08:47:06.169Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Graph Convolutional Network 原理解释">
 <meta name="twitter:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—&amp;gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）—&amp;gt;GCN 的代表性工作(方法的发展)  根据一些blog（参照最后资源君，侵删）和原论文整理的笔记，加了一些帮助我理解的东西，加了个图。 清华整理的关于GNN 的 must-read paper list：https://github.com/thunlp/GNNPapers">
@@ -44,39 +44,55 @@
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
     <div class="left-col" q-class="show:isShow">
-      <% var defaultBg = '#4d4d4d'; %>
-<div class="overlay" style="background: <%= theme.style && theme.style.header ? theme.style.header : defaultBg %>"></div>
+      
+<div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="<%=theme.root%>" class="profilepic">
-			<img src="<%=theme.avatar%>" class="js-avatar show">
+		<a href="/afcheng.github.io/" class="profilepic">
+			<img src="https://chengaf.github.io/afcheng.github.io/assets/img/pika.png" class="js-avatar show">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="<%=theme.root%>"><%=theme.author%></a></h1>
+		  <h1 class="header-author"><a href="/afcheng.github.io/">Little</a></h1>
 		</hgroup>
-		<% if (theme.subtitle){ %>
-		<p class="header-subtitle"><%=theme.subtitle%></p>
-		<%}%>
+		
+		<p class="header-subtitle">人生里有些事情，不能蹉跎。</p>
+		
 
 		<nav class="header-menu">
 			<ul>
-			<% for (var i in theme.menu){ %>
-				<li><a href="<%- url_for(theme.menu[i]) %>"><%= i %></a></li>
-	        <%}%>
+			
+				<li><a href="https://chengaf.github.io/afcheng.github.io/">主页</a></li>
+	        
+				<li><a href="/afcheng.github.io/tags/图神经网络/">图神经网络</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
-    		<% for (var i in theme.smart_menu){ %>
-    			<% if(theme.smart_menu[i]){ %>
-    			<a q-on="click: openSlider(e, '<%-i%>')" href="javascript:void(0)"><%= theme.smart_menu[i] %></a>
-    			<% } %>
-            <%}%>
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
 		</nav>
 		<nav class="header-nav">
 			<div class="social">
-				<% for (var i in theme.subnav){ %>
-					<a class="<%= i %>" target="_blank" href="<%- url_for(theme.subnav[i]) %>" title="<%= i %>"><i class="icon-<%= i %>"></i></a>
-		        <%}%>
+				
+					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
 			</div>
 		</nav>
 	</header>		
@@ -254,9 +270,9 @@ f(2)\\
 f(N)
 \end{matrix}\right)=
 \left( \begin{matrix} 
-u_{1}(1)& u_{2}(1)& \cdots&u_{N}(1)\\  
+u_{1}(1)& u_{2}(1)& \cdots&u_{N}(1)\\
 u_{1}(2)& u_{2}(2)& \cdots&u_{N}(2)\\
-\vdots & \vdots & \ddots &\vdots\\  
+\vdots & \vdots & \ddots &\vdots\\
 u_{1}(N) & u_{2}(N) & \cdots &u_{N}(N)
 \end{matrix}\right)\left( \begin{matrix}
 \hat f(\lambda_{1})\\
@@ -274,7 +290,7 @@ u_{1}(N) & u_{2}(N) & \cdots &u_{N}(N)
 <p>卷积：一种运算方式。<br>傅立叶变换：让函数在时域和频域相互转换。<br>卷积定理：时域卷积等于频域乘积，时域乘积等于频域卷积。</p>
 </blockquote>
 </li>
-<li><p>Graph Convolution Network 目的是需要设计共享的（Parameter Sharing）、可学习的（Trainable）卷积核（Convolutional Kernel）。对 Graph Convolution 而言就是 <script type="math/tex">U\Lambda U^{T}X</script> 这个 $U\Lambda U^{T}$ 与传统CNN不同的是这玩意儿对一个graph而言可以提前计算不用学习，传播过程中学习权重矩阵就行了。</p>
+<li><p>Graph Convolution Network 目的是需要设计共享的（Parameter Sharing）、可学习的（Trainable）卷积核（Convolutional Kernel）。对 Graph Convolution 而言就是 <script type="math/tex">U\Lambda U^{T}X</script> 这个 <script type="math/tex">U\Lambda U^{T}</script> 与传统CNN不同的是这玩意儿对一个graph而言可以提前计算不用学习，传播过程中学习权重矩阵就行了。</p>
 </li>
 <li><p>此外许多地方将图卷积写成 <script type="math/tex">(f*h)_{G}=U((U^{T}h)\bigodot(U^{T}f))</script>，其中<script type="math/tex">\bigodot</script> 为哈达玛积，对应元素相乘。</p>
 <p>把 <script type="math/tex">\bigodot</script> 转为矩阵乘法，因为：</p>
@@ -618,6 +634,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
@@ -626,27 +646,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">图</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">知识图谱</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">自然语言处理</a>
+                <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -654,15 +658,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">数组</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+                <a href="javascript:void(0)" class="js-tag color2">自然语言处理</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -674,11 +670,31 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
+                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">知识图谱</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">数组</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">排序</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">问答</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
               </li>
              
               <li class="article-tag-list-item">

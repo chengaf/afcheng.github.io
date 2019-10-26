@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Little&#39;s Blogs">
 <meta property="og:description" content="关于论文 Kipf,Thomas N,and M.Welling. “Semi-Supervised Classification with Graph Convolutional Networks.” in ICLR(2017) 的笔记。 第三代GCN，基于Chebyshev多项式，使用最多的GCN。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-09T03:17:19.251Z">
+<meta property="og:updated_time" content="2019-10-26T01:58:45.465Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Semi-Supervised Classfication with Graph Convolutional Networks">
 <meta name="twitter:description" content="关于论文 Kipf,Thomas N,and M.Welling. “Semi-Supervised Classification with Graph Convolutional Networks.” in ICLR(2017) 的笔记。 第三代GCN，基于Chebyshev多项式，使用最多的GCN。">
@@ -181,7 +181,7 @@
 <p>第三代GCN，基于Chebyshev多项式，使用最多的GCN。</p>
 <a id="more"></a>
 <h4 id="关键点"><a href="#关键点" class="headerlink" title="关键点"></a>关键点</h4><ul>
-<li>图卷积：输入信号 <script type="math/tex">x\in R^{N}</script>， 卷积核（Filter）：<script type="math/tex">g_{\theta}=diag(\theta)</script>，<script type="math/tex">\theta</script> 为参数。图卷积公式：<script type="math/tex">g_{theta}\star x=Ug_{\theta}U^{T}x</script>。其中，<script type="math/tex">U</script>是正则化拉普拉斯矩阵的特征向量矩阵 <script type="math/tex">L=I_{N}-D^{-\frac{1}{2}}AD^{\frac{1}{2}}=U\Lambda U^{T}</script>，<script type="math/tex">\Lambda</script> 是特征值对角矩阵。理解 <script type="math/tex">g_{\theta}</script> 为 <script type="math/tex">L</script> 特征值的函数：<script type="math/tex">g_{\theta}(\Lambda)</script>。</li>
+<li>图卷积：输入信号 <script type="math/tex">x\in R^{N}</script>， 卷积核（Filter）：<script type="math/tex">g_{\theta}=diag(\theta)</script>，<script type="math/tex">\theta</script> 为参数。图卷积公式：<script type="math/tex">g_{theta}\star x=Ug_{\theta}U^{T}x</script>。其中，<script type="math/tex">U</script>是正则化拉普拉斯矩阵的特征向量矩阵 <script type="math/tex">L=I_{N}-D^{-\frac{1}{2}}AD^{-\frac{1}{2}}=U\Lambda U^{T}</script>，<script type="math/tex">\Lambda</script> 是特征值对角矩阵。理解 <script type="math/tex">g_{\theta}</script> 为 <script type="math/tex">L</script> 特征值的函数：<script type="math/tex">g_{\theta}(\Lambda)</script>。</li>
 <li>用 <script type="math/tex">K</script> 阶截断切比雪夫多项式 <script type="math/tex">T_{k}(x)</script> 近似 <script type="math/tex">g_{\theta}(\Lambda)</script>：<script type="math/tex">g_{\theta '}(\Lambda)=\sum_{k=0}^{K}\theta_{k}'T_{k}(\tilde{\Lambda})</script>，<br>其中，<script type="math/tex">\tilde{\Lambda}=\frac{2}{\lambda_{max}}\Lambda - I_{N}</script> 是重新缩放，<script type="math/tex">\lambda_{max}</script> 是 <script type="math/tex">L</script> 的最大特征值，<script type="math/tex">\theta'</script>是切比雪夫系数。切比雪夫多项式满足：<script type="math/tex">T_{k}(x)=2xT_{k-1}(x)-T_{k-2}(x)</script>，<script type="math/tex">T_{0}(x)=1</script>，<script type="math/tex">T_{1}(x)=x</script>。因此图卷积可以表示为：<br><script type="math/tex">g_{\theta'}\star x=\sum_{k=0}^{K}\theta_{k}'T_{k}(\tilde{L})x</script>，其中<script type="math/tex">\tilde{L}=\frac{2}{\lambda_{max}}L - I_{N}</script>。</li>
 </ul>
 <h4 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h4><p>&emsp;1. 取 <script type="math/tex">K=1</script>，且 <script type="math/tex">\lambda_{max}\thickapprox2</script>。因此图卷积为：<br>&emsp;&emsp;&emsp;<script type="math/tex">g_{\theta'}\star x\thickapprox \theta_{0}'T_{0}(\tilde{L})x+\theta_{1}'T_{1}(\tilde{L})x</script><br>&emsp;&emsp;&emsp;<script type="math/tex">=\theta_{0}'x+\theta_{1}'\tilde{L}x</script><br>&emsp;&emsp;&emsp;<script type="math/tex">=\theta_{0}'x+\theta_{1}'(L-I_{N})x</script></p>
@@ -471,10 +471,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
@@ -483,11 +479,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">图</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -504,10 +508,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">attention</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -672,22 +672,5 @@ MathJax.Hub.Queue(function() {
 
 </div>
   </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
 </body>
 </html>

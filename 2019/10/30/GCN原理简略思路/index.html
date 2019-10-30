@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
-  <title>知识图谱概述 | Little&#39;s Blogs</title>
+  <title>GCN原理简略思路 | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="知识图谱概述-基础概念   概念 基本单元 图数据结构 知识图谱符号化的表示">
-<meta name="keywords" content="自然语言处理,知识图谱">
+  <meta name="description" content="写在前面，GCN提出目的、输入输出、方法分类。   GCN提出目的：在Graph这一广泛使用的数据结构上做深度学习。传统CNN无法直接迁移到Graph上，因此提出GCN这一研究体系/方法框架。 GCN方法分类：时域、频域（有理论保证是目前的主流方法，这里的总结）。 输入：Graph的邻接矩阵 A\in R^{N\times N} ,节点的特征矩阵 X\in R^{N\times F} 。 输出：节">
+<meta name="keywords" content="图神经网络">
 <meta property="og:type" content="article">
-<meta property="og:title" content="知识图谱概述">
-<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/10/09/知识图谱概述/index.html">
+<meta property="og:title" content="GCN原理简略思路">
+<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/10/30/GCN原理简略思路/index.html">
 <meta property="og:site_name" content="Little&#39;s Blogs">
-<meta property="og:description" content="知识图谱概述-基础概念   概念 基本单元 图数据结构 知识图谱符号化的表示">
+<meta property="og:description" content="写在前面，GCN提出目的、输入输出、方法分类。   GCN提出目的：在Graph这一广泛使用的数据结构上做深度学习。传统CNN无法直接迁移到Graph上，因此提出GCN这一研究体系/方法框架。 GCN方法分类：时域、频域（有理论保证是目前的主流方法，这里的总结）。 输入：Graph的邻接矩阵 A\in R^{N\times N} ,节点的特征矩阵 X\in R^{N\times F} 。 输出：节">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-09T06:11:04.214Z">
+<meta property="og:updated_time" content="2019-10-30T07:26:43.016Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="知识图谱概述">
-<meta name="twitter:description" content="知识图谱概述-基础概念   概念 基本单元 图数据结构 知识图谱符号化的表示">
+<meta name="twitter:title" content="GCN原理简略思路">
+<meta name="twitter:description" content="写在前面，GCN提出目的、输入输出、方法分类。   GCN提出目的：在Graph这一广泛使用的数据结构上做深度学习。传统CNN无法直接迁移到Graph上，因此提出GCN这一研究体系/方法框架。 GCN方法分类：时域、频域（有理论保证是目前的主流方法，这里的总结）。 输入：Graph的邻接矩阵 A\in R^{N\times N} ,节点的特征矩阵 X\in R^{N\times F} 。 输出：节">
   
     <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
   
@@ -157,41 +157,95 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-知识图谱概述" class="article article-type-post " itemscope="" itemprop="blogPost">
+            <article id="post-GCN原理简略思路" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      知识图谱概述
+      GCN原理简略思路
     </h1>
   
 
         
-        <a href="/afcheng.github.io/2019/10/09/知识图谱概述/" class="archive-article-date">
-  	<time datetime="2019-10-09T05:38:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-09</time>
+        <a href="/afcheng.github.io/2019/10/30/GCN原理简略思路/" class="archive-article-date">
+  	<time datetime="2019-10-30T07:24:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-30</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>知识图谱概述-基础概念</p>
+        <p>写在前面，GCN提出目的、输入输出、方法分类。</p>
 <blockquote>
 <ol>
-<li>概念</li>
-<li>基本单元</li>
-<li>图数据结构</li>
-<li>知识图谱符号化的表示</li>
+<li>GCN提出目的：在Graph这一广泛使用的数据结构上做深度学习。传统CNN无法直接迁移到Graph上，因此提出GCN这一研究体系/方法框架。</li>
+<li>GCN方法分类：时域、频域（有理论保证是目前的主流方法，这里的总结）。</li>
+<li>输入：Graph的邻接矩阵 <script type="math/tex">A\in R^{N\times N}</script> ,节点的特征矩阵 <script type="math/tex">X\in R^{N\times F}</script> 。</li>
+<li>输出：节点的低维向量表示 <script type="math/tex">F_{output}\in R^{N\times d}</script>，输出 <script type="math/tex">F_{output}</script> 是融合了结构信息的向量表示。在 <script type="math/tex">F_{output}</script> 基础上可以再接对应task的损失函数。</li>
+<li>GCN最终干了个啥，就是个根据网络全局节点信息的一个节点表示过程。</li>
 </ol>
 </blockquote>
 <a id="more"></a>
-<h3 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h3><p>&emsp; 知识图谱 - Konwledge Graph 于2012年由Google提出并成功应用于搜索引擎中。知识图谱用结构化的形式描述客观世界中概念、实体及其之间的关系，将互联网信息表达成更接近人类认知世界的形式，提供了一种更好的组织、理解和管理信息的能力。<br>&emsp; <strong>知识是认知，图谱是载体，数据库是实现。知识图谱就是再数据库系统上利用知识图谱这种抽象载体表示知识这种认知内容。</strong><br>&emsp; 数据的结构化并和已有的结构化数据进行关联，就构成知识图谱。<br>&emsp; 知识图谱对于知识服务有重要的支撑作用，能够将浅层语义分析的信息服务范式提升到基于深层语义的只是服务。</p>
-<h3 id="2-基本单元"><a href="#2-基本单元" class="headerlink" title="2. 基本单元"></a>2. 基本单元</h3><p>&emsp; 实体（事务）、概念、属性（命题）。<br>&emsp; <strong>实体</strong> 是具有可区别性且独立存在的事务。如一个人、某个城市某种植物、某一件商品等。世界万物有具体事务组成，此指实体。实体是知识图谱中最基本的元素，不同实体存在不同的关系。<br>&emsp; <strong>概念</strong> 指的是拥有同种特性实体构成的集合，如国家、民族、书籍和电脑等。<br>&emsp; <strong>属性</strong> 是对一类事务本质特性的反应，用于区分概念的特征，不同的概念具有有不同的属性。不同的属性值类型对应于不同类型属性的边。如果属性值对应的是概念或实体，则属性值描述两个实体之间的关系，称为对象属性；如果属性值是具体的数值，则称为数据属性。</p>
-<h3 id="3-图数据结构"><a href="#3-图数据结构" class="headerlink" title="3. 图数据结构"></a>3. 图数据结构</h3><p>&emsp; 图是一种能够有效表示数据之间结构的表达形式，数据之间蕴含的知识可用图的结构进行形式化表示。</p>
-<h3 id="4-知识图谱表示形式"><a href="#4-知识图谱表示形式" class="headerlink" title="4. 知识图谱表示形式"></a>4. 知识图谱表示形式</h3><p>&emsp; 知识图谱以结构化三元组的形式存储现实世界中的实体以及实体之间的关系，表示为 <script type="math/tex">G=(E,R,S)</script> 其中 <script type="math/tex">E=\{e_{1},e_{2},...,e_{|e|}\}</script> 表示实体集合，<script type="math/tex">R=\{r_{1},r_{2},...,r_{|R|}\}</script> 表示关系集合，<script type="math/tex">S=R\times E\times E</script> 表示知识图谱中三元组的结合。<br>&emsp; 三元组通常描述了一个特定邻域中的事实，由实体、尾实体和描述这两个实体之间的关系组成。</p>
-<font face="宋体" color="0099ff">《知识图谱》 -- 赵军</font>
+<p>基于谱的GCN的总结思路</p>
+<blockquote>
+<ol>
+<li>在频域进行操作，首先要将节点特征转化到频域。时域到频域的相互转换是利用傅立叶变换 <script type="math/tex">F(\cdot)</script> 与逆变换 <script type="math/tex">F^{-1}(\cdot)</script> 进行。</li>
+<li>卷积定理：频域乘积等于时/空域卷积。因此，要求时域卷积只需要求转换到频域的乘积，实际上也就是要在频域做特征提取（频域的频谱相关）。</li>
+<li>因此时域卷积 <script type="math/tex">g_{\theta}\star x</script> 操作的流程是：将输入特征利用傅立叶变换转化 <script type="math/tex">F(\cdot)</script> 到频域 <script type="math/tex">F(x)</script> ； 然后在频域对信号进行特征提取，如果假设特征提取函数是 <script type="math/tex">g_{\theta}</script> ，那么提取之后的特征可以表示为 <script type="math/tex">g_{\theta}F(x)</script> ，乘积操作是因为频域乘积等于时域卷积；最后利用傅立叶逆变换将提取到的特征转回到时域得到最终的卷积结果 <script type="math/tex">F^{-1}(g_{\theta}F(x))</script> 。那么需要解决的问题就是：<strong>1. Graph上的傅立叶变换 <script type="math/tex">F(\cdot)</script> 与逆变换 <script type="math/tex">F^{-1}(\cdot)</script> 的定义；2. 特征提取函数 <script type="math/tex">g_{\theta}</script> （频域的频谱相关）的定义。</strong></li>
+<li>从传统傅立叶变换到Graph上的傅立叶变换。</li>
+<li>从频域研究Graph的体系（谱图论）中，如何定义Graph的频谱和基。</li>
+<li>因此一下思路：定义Graph的频谱和基（Graph傅立叶变换中会用到，所以先定义）—&gt; Graph上傅立叶变换 —&gt; GCN的发展（从原始版本到最终得以广泛应用的版本，共三版）</li>
+</ol>
+</blockquote>
+<h4 id="1-Graph上的频谱和基"><a href="#1-Graph上的频谱和基" class="headerlink" title="1. Graph上的频谱和基"></a>1. Graph上的频谱和基</h4><p>谱图论：借助拉普拉斯矩阵的特征值和特征向量对Graph的性质进行研究的一套方法体系。特征值就相当于图的频谱，特征向量相当于频域的基。（恩…这就提出了图拉普拉斯矩阵的特征分解）</p>
+<p>拉普拉斯矩阵定义：<script type="math/tex">L=I_{N}-D^{-\frac{1}{2}}AD^{-\frac{1}{2}}</script>  （拉普拉斯矩阵的一种形式）。</p>
+<p>特征分解：<script type="math/tex">L=U\Lambda U^{-1}</script> ，其中 <script type="math/tex">U=[u_{1},u_{2},...,u_{N}]</script> 为特征向量矩阵，<script type="math/tex">u_{1}</script> 为列向量，<script type="math/tex">\Lambda</script> 特征值对角矩。</p>
+<p>对Graph而言，特征值 <script type="math/tex">\Lambda</script> 是频谱，特征向量 <script type="math/tex">U</script> 是基。</p>
+<h4 id="2-Graph上的傅立叶变换与逆变换"><a href="#2-Graph上的傅立叶变换与逆变换" class="headerlink" title="2. Graph上的傅立叶变换与逆变换"></a>2. Graph上的傅立叶变换与逆变换</h4><h5 id="2-1-Graph上的傅立叶变换"><a href="#2-1-Graph上的傅立叶变换" class="headerlink" title="2.1 Graph上的傅立叶变换"></a>2.1 Graph上的傅立叶变换</h5><p>传统傅立叶变换定义：<script type="math/tex">F(w)=\int_{-\infty}^{+\infty}f(t)e^{-iwt}dt</script> ，信号 <script type="math/tex">f(t)</script> 与基函数 <script type="math/tex">e^{-iwt}</script> 的积分，<script type="math/tex">w</script> 为实数。这里的基函数 <script type="math/tex">e^{-iwt}</script> 是拉普拉斯算子的特征方程，实数 <script type="math/tex">w</script> 和特征值相关，基函数 <script type="math/tex">e^{-iwt}</script> 与和 <script type="math/tex">w</script> 相关的特征向量相关（就是和特征值对应的特征向量相关）。</p>
+<p>对于Graph数据而言，节点离散，节点 <script type="math/tex">i</script> 输入特征用 <script type="math/tex">f(i)</script> 表示（节点的特征矩阵 <script type="math/tex">X\in R^{N\times F}</script> 的一行），Graph上的傅立叶变换可定义为：<script type="math/tex">F(\lambda_{l})=\hat{f}(\lambda_{l})=\sum_{i=1}^{N}f(i)u_{l}(i)</script> ，展开用矩阵形式表示：</p>
+<script type="math/tex; mode=display">\left( \begin{matrix} 
+u_{1}(1)& u_{1}(2)& \cdots&u_{1}(N)\\
+u_{2}(1)& u_{2}(2)& \cdots&u_{2}(N)\\
+\vdots & \vdots & \ddots &\vdots\\  
+u_{N}(1) & u_{N}(2) & \cdots &u_{N}(N)
+\end{matrix}\right)
+\left( \begin{matrix}
+f(1)\\
+f(2)\\
+\vdots\\
+f(N)
+\end{matrix}\right)=\hat{f}(\lambda_{l})=\left( \begin{matrix}
+\hat f(\lambda_{1})\\
+\hat f(\lambda_{2})\\
+\vdots\\
+\hat f(\lambda_{N})
+\end{matrix}\right)</script><p>即：<script type="math/tex">f</script> 在Graph上的傅立叶变换为 <script type="math/tex">\hat{f}=U^{T}f</script> ，变换之后就是 <script type="math/tex">\hat{f}</script> 了。</p>
+<h5 id="2-2-Graph上的傅立叶逆变换"><a href="#2-2-Graph上的傅立叶逆变换" class="headerlink" title="2.2 Graph上的傅立叶逆变换"></a>2.2 Graph上的傅立叶逆变换</h5><p>传统傅立叶逆变换定义：<script type="math/tex">F^{-1}(F(w))=\frac{1}{2\pi}\int F(w)e^{-iwt}dw</script> ，也就是反过来了。Graph上定义为：<script type="math/tex">f(i)=\sum_{i=1}^{N}\hat{f}(\lambda_{i})u_{l}(i)</script> ，推广到矩阵形式：</p>
+<script type="math/tex; mode=display">\left( \begin{matrix}
+f(1)\\
+f(2)\\
+\vdots\\
+f(N)
+\end{matrix}\right)=
+\left( \begin{matrix} 
+u_{1}(1)& u_{2}(1)& \cdots&u_{N}(1)\\
+u_{1}(2)& u_{2}(2)& \cdots&u_{N}(2)\\
+\vdots & \vdots & \ddots &\vdots\\
+u_{1}(N) & u_{2}(N) & \cdots &u_{N}(N)
+\end{matrix}\right)\left( \begin{matrix}
+\hat f(\lambda_{1})\\
+\hat f(\lambda_{2})\\
+\vdots\\
+\hat f(\lambda_{N})
+\end{matrix}\right)</script><p>即：Graph上的傅立叶变换为 <script type="math/tex">f=U\hat{f}</script>。</p>
+<h4 id="3-Graph上卷积定义"><a href="#3-Graph上卷积定义" class="headerlink" title="3. Graph上卷积定义"></a>3. Graph上卷积定义</h4><p>假设频域特征提取函数为 <script type="math/tex">g_{\theta}</script> ，节点Feature特征矩为 <script type="math/tex">X</script> ，Graph卷积可以数学描述为：<script type="math/tex">Ug_{\theta}U^{T}X</script> 这也是一层卷积。其中 <script type="math/tex">g_{\theta}</script> 与特征值相关，可以写成 <script type="math/tex">g_{\theta}(\Lambda)</script> , <script type="math/tex">\theta</script> 为需要学习的参数。然后就是如何定义函数 <script type="math/tex">g_{\theta}(\Lambda)</script> 了，涉及三代GCN的演变，复杂度在逐渐降低。</p>
+<hr>
+<blockquote>
+<p>本文是大体思路，细节参考[Graph-Convolutional-Network-原理解释][[<a href="https://chengaf.github.io/afcheng.github.io/2019/10/09/Graph-Convolutional-Network-%E5%8E%9F%E7%90%86%E8%A7%A3%E9%87%8A/]，以及[第三代GCN][https://chengaf.github.io/afcheng.github.io/2019/10/09/Semi-Supervised-Classfication-with-Graph-Convolutional-Networks/">https://chengaf.github.io/afcheng.github.io/2019/10/09/Graph-Convolutional-Network-%E5%8E%9F%E7%90%86%E8%A7%A3%E9%87%8A/]，以及[第三代GCN][https://chengaf.github.io/afcheng.github.io/2019/10/09/Semi-Supervised-Classfication-with-Graph-Convolutional-Networks/</a>] 。</p>
+</blockquote>
+
       
 
       
@@ -235,11 +289,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">自然语言处理</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">知识图谱</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">图神经网络</a>
         		</li>
       		
 		</ul>
@@ -295,7 +345,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://chengaf.github.io/afcheng.github.io/2019/10/09/知识图谱概述/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://chengaf.github.io/afcheng.github.io/2019/10/30/GCN原理简略思路/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -309,18 +359,9 @@
   
 <nav id="article-nav">
   
-    <a href="/afcheng.github.io/2019/10/09/实体识别和扩展/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          实体识别和扩展
-        
-      </div>
-    </a>
   
-  
-    <a href="/afcheng.github.io/2019/10/09/优化器/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">优化器</div>
+    <a href="/afcheng.github.io/2019/10/16/LeetCode-997-Find-the-Town-Judge/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">LeetCode 997. Find the Town Judge</div>
       <i class="icon-circle-right"></i>
     </a>
   

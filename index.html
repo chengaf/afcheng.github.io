@@ -154,6 +154,89 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-GCN原理简略思路" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/afcheng.github.io/2019/10/30/GCN原理简略思路/">GCN原理简略思路</a>
+    </h1>
+  
+
+        
+        <a href="/afcheng.github.io/2019/10/30/GCN原理简略思路/" class="archive-article-date">
+  	<time datetime="2019-10-30T07:24:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>写在前面，GCN提出目的、输入输出、方法分类。</p>
+<blockquote>
+<ol>
+<li>GCN提出目的：在Graph这一广泛使用的数据结构上做深度学习。传统CNN无法直接迁移到Graph上，因此提出GCN这一研究体系/方法框架。</li>
+<li>GCN方法分类：时域、频域（有理论保证是目前的主流方法，这里的总结）。</li>
+<li>输入：Graph的邻接矩阵 <script type="math/tex">A\in R^{N\times N}</script> ,节点的特征矩阵 <script type="math/tex">X\in R^{N\times F}</script> 。</li>
+<li>输出：节点的低维向量表示 <script type="math/tex">F_{output}\in R^{N\times d}</script>，输出 <script type="math/tex">F_{output}</script> 是融合了结构信息的向量表示。在 <script type="math/tex">F_{output}</script> 基础上可以再接对应task的损失函数。</li>
+<li>GCN最终干了个啥，就是个根据网络全局节点信息的一个节点表示过程。</li>
+</ol>
+</blockquote>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">图神经网络</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/afcheng.github.io/2019/10/30/GCN原理简略思路/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-LeetCode-997-Find-the-Town-Judge" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -899,93 +982,6 @@
 
 
   
-    <article id="post-Graph-Convolutional-Network-原理解释" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/afcheng.github.io/2019/10/09/Graph-Convolutional-Network-原理解释/">Graph Convolutional Network 原理解释</a>
-    </h1>
-  
-
-        
-        <a href="/afcheng.github.io/2019/10/09/Graph-Convolutional-Network-原理解释/" class="archive-article-date">
-  	<time datetime="2019-10-09T01:33:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>写在前面</p>
-<blockquote>
-<ol>
-<li>思路：为什么提出 GCN &ensp;—&gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）—&gt;GCN 的代表性工作(方法的发展) </li>
-<li>根据一些blog（参照最后资源君，侵删）和原论文整理的笔记，加了一些帮助我理解的东西，加了个图。</li>
-<li>清华整理的关于GNN 的 must-read paper list：<a href="https://github.com/thunlp/GNNPapers" target="_blank" rel="noopener">https://github.com/thunlp/GNNPapers</a> </li>
-<li>GNN系列方法的实现1：<a href="https://github.com/rusty1s/pytorch_geometric" target="_blank" rel="noopener">https://github.com/rusty1s/pytorch_geometric</a>  [pytorch]</li>
-<li>GNN系列方法的实现2：<a href="https://github.com/dmlc/dgl" target="_blank" rel="noopener">https://github.com/dmlc/dgl</a> [pytorch]</li>
-</ol>
-</blockquote>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">图神经网络</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/afcheng.github.io/2019/10/09/Graph-Convolutional-Network-原理解释/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/afcheng.github.io/page/2/">2</a><a class="page-number" href="/afcheng.github.io/page/3/">3</a><a class="extend next" rel="next" href="/afcheng.github.io/page/2/">Next &raquo;</a>
@@ -1128,6 +1124,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">深度学习</a>
               </li>
              
@@ -1141,10 +1141,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">attention</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">图</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -2,30 +2,41 @@
 <html>
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
-  <% var="" title="page.title;" if="" (is_archive()){="" ;="" (is_month()){="" +=": " page.year="" '="" page.month;="" }="" else="" (is_year()){="" page.year;="" (is_category()){="" page.category;="" (is_tag()){="" page.tag;="" %="">
+  
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="<%= config.url %>">
-  <title><% if="" (title){="" %=""><%= title="" %=""> | <% }="" %=""><%= config.title="" %=""></%=></%></%=></%></title>
+  <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
+  <title>Graph Generation Paper List | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <%- open_graph({twitter_id:="" theme.twitter,="" google_plus:="" theme.google_plus,="" fb_admins:="" theme.fb_admins,="" fb_app_id:="" theme.fb_app_id})="" %="">
-  <% if="" (theme.rss){="" %="">
-    <link rel="alternative" href="<%- theme.rss %>" title="<%= config.title %>" type="application/atom+xml">
-  <% }="" %="">
-  <% if="" (theme.favicon){="" %="">
-    <link rel="icon" href="<%- theme.favicon %>">
-  <% }="" %="">
-  <%- partial('css')="" %="">
+  <meta name="description" content="Paper List of Graph Generation Model 图生成相关论文，时不时(碰见了or想起来了or闲了)就更新一下。">
+<meta name="keywords" content="论文列表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Graph Generation Paper List">
+<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/09/09/Graph-Generation-Paper-List/index.html">
+<meta property="og:site_name" content="Little&#39;s Blogs">
+<meta property="og:description" content="Paper List of Graph Generation Model 图生成相关论文，时不时(碰见了or想起来了or闲了)就更新一下。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-09-09T15:15:09.260Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Graph Generation Paper List">
+<meta name="twitter:description" content="Paper List of Graph Generation Model 图生成相关论文，时不时(碰见了or想起来了or闲了)就更新一下。">
+  
+    <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
+  
+  
+  <link rel="stylesheet" type="text/css" href="/afcheng.github.io/./main.0cf68a.css">
   <style type="text/css">
-  <% var defaultCtnBg = 'linear-gradient(200deg,#a0cfe4,#e8c37e)' %>
+  
     #container.show {
-      background: <%= theme.style && theme.style.slider ? theme.style.slider : defaultCtnBg %>;
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
     }
   </style>
-  <%- partial('google-analytics')="" %="">
-  <%- partial('baidu-analytics')="" %="">
-</%-></%-></%-></%></%></%></%></%-></%></head>
+  
 
+  
+
+</head>
+</html>
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -143,7 +154,7 @@
       <div id="wrapper" class="body-wrap">
         <div class="menu-l">
           <div class="canvas-wrap">
-            <canvas data-colors="#eaeaea" data-sectionheight="100" data-contentid="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
             <article id="post-Graph-Generation-Paper-List" class="article article-type-post " itemscope="" itemprop="blogPost">
@@ -327,25 +338,6 @@
 </aside>
 
 
-<div class="gitalk">
-    <div id="gitalk-container"></div>
-    <script type="text/javascript">
-        const gitalk = new Gitalk({
-            clientID: '',
-            clientSecret: '',
-            repo: 'afcheng.github.io',
-            owner: '',
-            admin: [''],
-            id: md5(location.pathname),      // Ensure uniqueness and length less than 50
-            distractionFreeMode: false  // Facebook-like distraction free mode
-        })
- 
-        gitalk.render('gitalk-container')
-    </script>
-</div>
-
-
-
 
   
   
@@ -353,6 +345,28 @@
 
   
 
+  
+
+  
+    <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+
+if(true){
+	var gitalk = new Gitalk({
+  	clientID: '915e8774adc939071e67',
+  	clientSecret: 'cb8e00f6cba6b8e0ed0d28e646a7ef9d228e394c',
+  	repo: 'afcheng.github.io',
+  	owner: 'chengaf',
+  	admin: ['chengaf'],
+  	id: 'Mon Sep 09 2019 23:14:13 GMT+0800',
+  	distractionFreeMode: 'true'
+})
+gitalk.render('gitalk-container') 
+}
+</script>
   
 
   
@@ -473,11 +487,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
+                <a href="javascript:void(0)" class="js-tag color5">论文笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -486,6 +500,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -505,15 +527,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">图</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
+                <a href="javascript:void(0)" class="js-tag color5">知识图谱</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -529,7 +543,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">知识图谱</a>
+                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -537,7 +551,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
+                <a href="javascript:void(0)" class="js-tag color2">图</a>
               </li>
             
             <div class="clearfix"></div>

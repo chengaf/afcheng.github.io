@@ -2,30 +2,41 @@
 <html>
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
-  <% var="" title="page.title;" if="" (is_archive()){="" ;="" (is_month()){="" +=": " page.year="" '="" page.month;="" }="" else="" (is_year()){="" page.year;="" (is_category()){="" page.category;="" (is_tag()){="" page.tag;="" %="">
+  
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="<%= config.url %>">
-  <title><% if="" (title){="" %=""><%= title="" %=""> | <% }="" %=""><%= config.title="" %=""></%=></%></%=></%></title>
+  <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
+  <title>GCN原理简略思路 | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <%- open_graph({twitter_id:="" theme.twitter,="" google_plus:="" theme.google_plus,="" fb_admins:="" theme.fb_admins,="" fb_app_id:="" theme.fb_app_id})="" %="">
-  <% if="" (theme.rss){="" %="">
-    <link rel="alternative" href="<%- theme.rss %>" title="<%= config.title %>" type="application/atom+xml">
-  <% }="" %="">
-  <% if="" (theme.favicon){="" %="">
-    <link rel="icon" href="<%- theme.favicon %>">
-  <% }="" %="">
-  <%- partial('css')="" %="">
+  <meta name="description" content="写在前面，GCN提出目的、输入输出、方法分类。   GCN提出目的：在Graph这一广泛使用的数据结构上做深度学习。传统CNN无法直接迁移到Graph上，因此提出GCN这一研究体系/方法框架。 GCN方法分类：时域、频域（有理论保证是目前的主流方法，这里的总结）。 输入：Graph的邻接矩阵 A\in R^{N\times N} ,节点的特征矩阵 X\in R^{N\times F} 。 输出：节">
+<meta name="keywords" content="图神经网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GCN原理简略思路">
+<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/10/30/GCN原理简略思路/index.html">
+<meta property="og:site_name" content="Little&#39;s Blogs">
+<meta property="og:description" content="写在前面，GCN提出目的、输入输出、方法分类。   GCN提出目的：在Graph这一广泛使用的数据结构上做深度学习。传统CNN无法直接迁移到Graph上，因此提出GCN这一研究体系/方法框架。 GCN方法分类：时域、频域（有理论保证是目前的主流方法，这里的总结）。 输入：Graph的邻接矩阵 A\in R^{N\times N} ,节点的特征矩阵 X\in R^{N\times F} 。 输出：节">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-11-02T06:08:16.776Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GCN原理简略思路">
+<meta name="twitter:description" content="写在前面，GCN提出目的、输入输出、方法分类。   GCN提出目的：在Graph这一广泛使用的数据结构上做深度学习。传统CNN无法直接迁移到Graph上，因此提出GCN这一研究体系/方法框架。 GCN方法分类：时域、频域（有理论保证是目前的主流方法，这里的总结）。 输入：Graph的邻接矩阵 A\in R^{N\times N} ,节点的特征矩阵 X\in R^{N\times F} 。 输出：节">
+  
+    <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
+  
+  
+  <link rel="stylesheet" type="text/css" href="/afcheng.github.io/./main.0cf68a.css">
   <style type="text/css">
-  <% var defaultCtnBg = 'linear-gradient(200deg,#a0cfe4,#e8c37e)' %>
+  
     #container.show {
-      background: <%= theme.style && theme.style.slider ? theme.style.slider : defaultCtnBg %>;
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
     }
   </style>
-  <%- partial('google-analytics')="" %="">
-  <%- partial('baidu-analytics')="" %="">
-</%-></%-></%-></%></%></%></%></%-></%></head>
+  
 
+  
+
+</head>
+</html>
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -143,7 +154,7 @@
       <div id="wrapper" class="body-wrap">
         <div class="menu-l">
           <div class="canvas-wrap">
-            <canvas data-colors="#eaeaea" data-sectionheight="100" data-contentid="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
             <article id="post-GCN原理简略思路" class="article article-type-post " itemscope="" itemprop="blogPost">
@@ -387,25 +398,6 @@ u_{1}(N) & u_{2}(N) & \cdots &u_{N}(N)
 </aside>
 
 
-<div class="gitalk">
-    <div id="gitalk-container"></div>
-    <script type="text/javascript">
-        const gitalk = new Gitalk({
-            clientID: '',
-            clientSecret: '',
-            repo: 'afcheng.github.io',
-            owner: '',
-            admin: [''],
-            id: md5(location.pathname),      // Ensure uniqueness and length less than 50
-            distractionFreeMode: false  // Facebook-like distraction free mode
-        })
- 
-        gitalk.render('gitalk-container')
-    </script>
-</div>
-
-
-
 
   
   
@@ -413,6 +405,28 @@ u_{1}(N) & u_{2}(N) & \cdots &u_{N}(N)
 
   
 
+  
+
+  
+    <div id="gitalk-container" style="padding: 0px 30px 0px 30px;"></div> 
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+
+if(true){
+	var gitalk = new Gitalk({
+  	clientID: '915e8774adc939071e67',
+  	clientSecret: 'cb8e00f6cba6b8e0ed0d28e646a7ef9d228e394c',
+  	repo: 'afcheng.github.io',
+  	owner: 'chengaf',
+  	admin: ['chengaf'],
+  	id: 'Wed Oct 30 2019 15:24:01 GMT+0800',
+  	distractionFreeMode: 'true'
+})
+gitalk.render('gitalk-container') 
+}
+</script>
   
 
   
@@ -533,11 +547,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
+                <a href="javascript:void(0)" class="js-tag color5">论文笔记</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文笔记</a>
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -546,6 +560,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -565,15 +587,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">图</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
+                <a href="javascript:void(0)" class="js-tag color5">知识图谱</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -589,7 +603,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">知识图谱</a>
+                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -597,7 +611,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
+                <a href="javascript:void(0)" class="js-tag color2">图</a>
               </li>
             
             <div class="clearfix"></div>

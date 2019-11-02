@@ -9,7 +9,7 @@
   <title>Translation With a Sequence to Sequence Network and Attention | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Pytorch Tutorial: NLP FROM SCRATCH: TRANSLATION WITH A SEQUENCE TO SEQUENCE NETWORK AND ATTENTIONTutorial 地址: https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html任务：Translate F">
-<meta name="keywords" content="深度学习,自然语言处理,seq2seq,attention">
+<meta name="keywords" content="自然语言处理,深度学习,seq2seq,attention">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Translation With a Sequence to Sequence Network and Attention">
 <meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/10/10/Translation-With-a-Sequence-to-Sequence-Network-and-Attention/index.html">
@@ -17,7 +17,7 @@
 <meta property="og:description" content="Pytorch Tutorial: NLP FROM SCRATCH: TRANSLATION WITH A SEQUENCE TO SEQUENCE NETWORK AND ATTENTIONTutorial 地址: https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html任务：Translate F">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://pytorch.org/tutorials/_images/attention-decoder-network.png">
-<meta property="og:updated_time" content="2019-10-10T05:12:25.070Z">
+<meta property="og:updated_time" content="2019-11-02T06:33:04.725Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Translation With a Sequence to Sequence Network and Attention">
 <meta name="twitter:description" content="Pytorch Tutorial: NLP FROM SCRATCH: TRANSLATION WITH A SEQUENCE TO SEQUENCE NETWORK AND ATTENTIONTutorial 地址: https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html任务：Translate F">
@@ -245,11 +245,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">自然语言处理</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">自然语言处理</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">深度学习</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -357,6 +357,19 @@
             </div>
         </div>
         
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Encoder"><span class="toc-number">1.</span> <span class="toc-text">The Encoder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Decoder"><span class="toc-number">2.</span> <span class="toc-text">The Decoder</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Simple-Decoder"><span class="toc-number">2.1.</span> <span class="toc-text">Simple Decoder</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Attention"><span class="toc-number">3.</span> <span class="toc-text">Attention</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
         
     </div>
 </aside>
@@ -493,10 +506,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
@@ -505,7 +514,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">图</a>
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -513,11 +522,23 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">深度学习</a>
+                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">知识图谱</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">自然语言处理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">深度学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -529,11 +550,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">知识图谱</a>
+                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -545,15 +562,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
+                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">问答</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
               </li>
             
             <div class="clearfix"></div>

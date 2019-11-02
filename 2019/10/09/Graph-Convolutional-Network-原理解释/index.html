@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/图卷积傅立叶变换.jpg">
-<meta property="og:updated_time" content="2019-11-02T05:32:21.175Z">
+<meta property="og:updated_time" content="2019-11-02T05:36:59.810Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Graph Convolutional Network 原理解释">
 <meta name="twitter:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—&amp;gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）—&amp;gt;GCN 的代表性工作(方法的发展)  根据一些blog（参照最后资源君，侵删）和原论文整理的笔记，加了一些帮助我理解的东西，加了个图。 清华整理的关于GNN 的 must-read paper list：https://github.com/thunlp/GNNPapers">
@@ -44,39 +44,55 @@
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
     <div class="left-col" q-class="show:isShow">
-      <% var defaultBg = '#4d4d4d'; %>
-<div class="overlay" style="background: <%= theme.style && theme.style.header ? theme.style.header : defaultBg %>"></div>
+      
+<div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="<%=theme.root%>" class="profilepic">
-			<img src="<%=theme.avatar%>" class="js-avatar show">
+		<a href="/afcheng.github.io/" class="profilepic">
+			<img src="https://chengaf.github.io/afcheng.github.io/assets/img/pika.png" class="js-avatar show">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="<%=theme.root%>"><%=theme.author%></a></h1>
+		  <h1 class="header-author"><a href="/afcheng.github.io/">Little</a></h1>
 		</hgroup>
-		<% if (theme.subtitle){ %>
-		<p class="header-subtitle"><%=theme.subtitle%></p>
-		<%}%>
+		
+		<p class="header-subtitle">人生里有些事情，不能蹉跎。</p>
+		
 
 		<nav class="header-menu">
 			<ul>
-			<% for (var i in theme.menu){ %>
-				<li><a href="<%- url_for(theme.menu[i]) %>"><%= i %></a></li>
-	        <%}%>
+			
+				<li><a href="https://chengaf.github.io/afcheng.github.io/">主页</a></li>
+	        
+				<li><a href="/afcheng.github.io/tags/图神经网络/">图神经网络</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
-    		<% for (var i in theme.smart_menu){ %>
-    			<% if(theme.smart_menu[i]){ %>
-    			<a q-on="click: openSlider(e, '<%-i%>')" href="javascript:void(0)"><%= theme.smart_menu[i] %></a>
-    			<% } %>
-            <%}%>
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
 		</nav>
 		<nav class="header-nav">
 			<div class="social">
-				<% for (var i in theme.subnav){ %>
-					<a class="<%= i %>" target="_blank" href="<%- url_for(theme.subnav[i]) %>" title="<%= i %>"><i class="icon-<%= i %>"></i></a>
-		        <%}%>
+				
+					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
 			</div>
 		</nav>
 	</header>		
@@ -177,9 +193,7 @@
 <a id="more"></a>
 <h2 id="1-为什么要研究GCN"><a href="#1-为什么要研究GCN" class="headerlink" title="1. 为什么要研究GCN"></a>1. 为什么要研究GCN</h2><h3 id="1-1-传统CNN的认识"><a href="#1-1-传统CNN的认识" class="headerlink" title="1.1 传统CNN的认识"></a>1.1 传统CNN的认识</h3><h4 id="1-1-1-卷积定义"><a href="#1-1-1-卷积定义" class="headerlink" title="1.1.1 卷积定义"></a>1.1.1 卷积定义</h4><p><strong>卷积本质上就是一种加权求和</strong>。参见资源君-3<br>&emsp;卷积的定义, 称 <script type="math/tex">(f*g)(n)</script> 为 <script type="math/tex">f,g</script> 的卷积，</p>
 <p>（1）连续定义为： <script type="math/tex">(f*g)(n)=\int_{\tau=-\infty}^{\tau=+\infty}f(\tau)g(n-\tau)d\tau</script> &emsp;&emsp;公式（1）<br>（2）离散定义为： <script type="math/tex">(f*g)(n)=\sum_{\tau=-\infty}^{\tau=+\infty}f(\tau)g(n-\tau)</script> &emsp;&emsp;公式（2）</p>
-<p>&emsp;卷积的理解：“卷”：翻转，施加一种约束，限制“积”；“积”：加权求和，考虑对所有输入的效果累积。卷积本质上就是一种加权求和：最终的效果受所有输入的影响不同，以卷（滑动）控制加权求和。<br>&emsp;例子1：掷两个骰子，和为 <script type="math/tex">n=4</script> 的概率。<br>&emsp;&emsp; <script type="math/tex">f,g</script>  都为掷一个骰，按照卷积的定义即公式（2）可以定义  <script type="math/tex">(f*g)(n)</script> 为： <script type="math/tex">(f*g)(4)=\sum_{\tau=1}^{3}f(\tau)g(4-\tau)</script></p>
-<p>，两个骰子点数之和为4为约束<script type="math/tex">g(4-\tau)</script>，函数 <script type="math/tex">f,g</script> 都为[1,2,3,4,5,6]，翻转函数 <script type="math/tex">g</script> [6,5,4,3,2,1]，滑动函数 <script type="math/tex">g</script> ，图解：</p>
-<p>&emsp;&emsp; <img src="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg" class="js-avatar show"></p>
+<p>&emsp;卷积的理解：“卷”：翻转，施加一种约束，限制“积”；“积”：加权求和，考虑对所有输入的效果累积。卷积本质上就是一种加权求和：最终的效果受所有输入的影响不同，以卷（滑动）控制加权求和。<br>&emsp;例子1：掷两个骰子，和为 <script type="math/tex">n=4</script> 的概率。<script type="math/tex">f,g</script>  都为掷一个骰，按照卷积的定义即公式（2）可以定义  <script type="math/tex">(f*g)(n)</script> 为： <script type="math/tex">(f*g)(4)=\sum_{\tau=1}^{3}f(\tau)g(4-\tau)</script>，两个骰子点数之和为4为约束<script type="math/tex">g(4-\tau)</script>，函数 <script type="math/tex">f,g</script> 都为[1,2,3,4,5,6]，翻转函数 <script type="math/tex">g</script> [6,5,4,3,2,1]，滑动函数 <script type="math/tex">g</script> ，图解：<br>&emsp;&emsp; <img src="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg" class="js-avatar show"></p>
 <p>&emsp;例子2：工厂排放化学物质的残留。工厂不断排放化学物质， <script type="math/tex">t</script> 时刻排放量是 <script type="math/tex">f(t)</script> ，被排放的化学物质在排放 <script type="math/tex">\Delta t</script> 时间后，即 <script type="math/tex">t+\Delta t=u</script> 时刻的残留比率是 <script type="math/tex">g(\Delta t)</script> ，于是 <script type="math/tex">t</script> 时刻排放的化学物质在 <script type="math/tex">t+\Delta t=u</script> 时刻还剩余 <script type="math/tex">g(\Delta t)</script> ，而 <script type="math/tex">u</script> 时刻的化学物质总量等于 <script type="math/tex">u</script> 时刻之前所有时刻的总和，由公式（1）可以得出 <script type="math/tex">u</script> 时刻的化学物质总量为： <script type="math/tex">\int_{-\infty}^{+\infty}f(t)g(u-t)dt</script> ，这就是卷积。化学物质残留比率作为限制，对所有输入（排放的化学物质）对最终总残留值贡献量做出限制。</p>
 <h4 id="1-1-2-Image-上的-CNN"><a href="#1-1-2-Image-上的-CNN" class="headerlink" title="1.1.2 Image 上的 CNN"></a>1.1.2 Image 上的 CNN</h4><p>&emsp;利用参数共享的过滤器（kernel），通过计算中心像素点以及相邻像素点与 kernel 的加权和来构成 Feature Map 实现空间特征提取，加权系数就是卷积核的权重系数。<br>&emsp;卷积核权重系数通过随机初始化初值，再通过误差函数反向传播梯度下降进行迭代优化。<strong>卷积核的参数通过优化求出才能实现特征提取的作用，GCN 也想像这样引入可优化的卷积核，针对不同的任务，优化对应的卷积核。</strong></p>
 <h3 id="1-2-为什么非得用-CNN-处理-Graph-数据"><a href="#1-2-为什么非得用-CNN-处理-Graph-数据" class="headerlink" title="1.2 为什么非得用 CNN 处理 Graph 数据"></a>1.2 为什么非得用 CNN 处理 Graph 数据</h3><p>&emsp;1. CNN 处理 Euclidean Structure 数据十分有效，能够有效地提取特征。<br>&emsp;2. Graph 都快能建模万物了，那 CNN 在 Graph 数据上的使用？Graph 是Non-Euclidean Structure 数据。<br>&emsp; 总结为什么要研究 GCN 的理由（应用范围广泛，效果又好，现有方法又没法儿弄。）：</p>
@@ -283,29 +297,28 @@ u_{1}(N) & u_{2}(N) & \cdots &u_{N}(N)
 <h4 id="2-2-4-Graph-Convolutional（谱）的发展"><a href="#2-2-4-Graph-Convolutional（谱）的发展" class="headerlink" title="2.2.4 Graph Convolutional（谱）的发展"></a>2.2.4 Graph Convolutional（谱）的发展</h4><ul>
 <li>第一代，SCNN。</li>
 <li>直接把 <script type="math/tex">diag(\hat{h}(\lambda_{l}))</script> 变为  <script type="math/tex">diag(\theta_{l})</script> ，通过初始化赋值、误差反向传播进行学习参数 <script type="math/tex">\Theta=(\theta_{1},\theta_{2},...,\theta_{n})</script>。加上激活函数 <script type="math/tex">\sigma(\cdot)</script>，给定输入 <script type="math/tex">x</script> 经过图卷积输出为：<script type="math/tex">y_{output}=\sigma\left(U\left( \begin{matrix} \theta_{1} &  & \\  & \ddots &  \\  &  & \theta_{n}\end{matrix}\right)U^{T}x\right)</script></li>
-<li><p>从 <script type="math/tex">y_{output}</script> 的计算可以看出，每次前向传播都需要计算 <script type="math/tex">U</script>、<script type="math/tex">diag(\theta_{l})</script> 以及 <script type="math/tex">U^{T}</script> 的乘积，计算复杂度是 <script type="math/tex">O(n^{2})</script>，对大规模图而言，复杂度比较高。另外，卷积核参数需要 <script type="math/tex">n</script> 个。</p>
+<li>从 <script type="math/tex">y_{output}</script> 的计算可以看出，每次前向传播都需要计算 <script type="math/tex">U</script>、<script type="math/tex">diag(\theta_{l})</script> 以及 <script type="math/tex">U^{T}</script> 的乘积，计算复杂度是 <script type="math/tex">O(n^{2})</script>，对大规模图而言，复杂度比较高。另外，卷积核参数需要 <script type="math/tex">n</script> 个。</li>
+</ul>
 <blockquote>
 <p>Bruna, Joan, et al. “Spectral Networks and Locally Connected Networks on Graphs.” Computer Science (2013).</p>
 </blockquote>
-</li>
-<li><p>第二代，ChebNet。</p>
-</li>
+<ul>
+<li>第二代，ChebNet。</li>
 <li>把 <script type="math/tex">diag(\hat{h}(\lambda_{l}))</script> 变为 <script type="math/tex">diag(\sum_{j=0}^{K}\alpha_{j}\lambda_{l}^{j})</script>。其中，<script type="math/tex">(\alpha_{1}, \alpha_{2}, ..., \alpha_{K})</script> 为需要学习的参数，同样需要初始化赋值通过误差反向传播进行学习。具体的，<script type="math/tex">diag(\sum_{j=0}^{K}\alpha_{j}\lambda_{l}^{j})=\left( \begin{matrix} \sum_{j=0}^{K}\alpha_{j}\lambda_{1}^{j} &  & \\  & \ddots &  \\  &  & \sum_{j=0}^{K}\alpha_{j}\lambda_{n}^{j}\end{matrix}
 \right)</script> ，假设 <script type="math/tex">\Lambda = diag(\lambda_{1},...,\lambda_{n})</script>，那么<script type="math/tex">diag(\sum_{j=0}^{K}\alpha_{j}\lambda_{l}^{j})=\left( \begin{matrix} \sum_{j=0}^{K}\alpha_{j}\lambda_{1}^{j} &  & \\  & \ddots &  \\  &  & \sum_{j=0}^{K}\alpha_{j}\lambda_{n}^{j}\end{matrix}
 \right)=\sum_{j=0}^{K}\alpha_{j}\Lambda^{j}</script> ，又因为 <script type="math/tex">U\sum_{j=0}^{K}\alpha_{j}\Lambda^{j}U^{T}=\sum_{j=0}^{K}\alpha_{j}U\Lambda^{j}U^{T}=\sum_{j=0}^{K}\alpha_{j}L^{j}</script>，<br>所以对于输入 <script type="math/tex">x</script> ，经过图卷积操作得到输出 <script type="math/tex">y_{output}</script> 可公式化描述为：<script type="math/tex; mode=display">y_{output}=\sigma(\sum_{j=0}^{K}\alpha_{j}L^{j} x)</script></li>
-<li><p>卷积核参数为 <script type="math/tex">K+1</script> 个，远小于 <script type="math/tex">n</script> 。矩阵变换之后不需要做特征分解，直接用拉普拉斯矩阵进行变换，计算复杂度变为 <script type="math/tex">O(n)</script>。</p>
+<li>卷积核参数为 <script type="math/tex">K+1</script> 个，远小于 <script type="math/tex">n</script> 。矩阵变换之后不需要做特征分解，直接用拉普拉斯矩阵进行变换，计算复杂度变为 <script type="math/tex">O(n)</script>。</li>
+</ul>
 <blockquote>
 <p>Defferrard, Michaël, X. Bresson, and P. Vandergheynst. “Convolutional Neural Networks on Graphs with Fast Localized Spectral Filtering.” in NIPS (2016).</p>
 </blockquote>
-</li>
-<li><p>第三代，简化版的 ChebNet 。</p>
-</li>
-<li><p>参见单独文章，<a href="https://chengaf.github.io/afcheng.github.io/2019/10/09/Semi-Supervised-Classfication-with-Graph-Convolutional-Networks/">在这里GCN</a> 。</p>
+<ul>
+<li>第三代，简化版的 ChebNet 。</li>
+<li>参见单独文章，<a href="https://chengaf.github.io/afcheng.github.io/2019/10/09/Semi-Supervised-Classfication-with-Graph-Convolutional-Networks/">在这里GCN</a> 。</li>
+</ul>
 <blockquote>
 <p>Kipf,Thomas N,and M.Welling. “Semi-Supervised Classification with Graph Convolutional Networks.”inICLR(2017).</p>
 </blockquote>
-</li>
-</ul>
 <p></p><p style="background-color:SeaGreen;">.</p><p></p>
 <font face="宋体" color="0099ff">资源君</font>
 
@@ -600,6 +613,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
@@ -608,15 +625,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文列表</a>
+                <a href="javascript:void(0)" class="js-tag color2">图</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">图</a>
               </li>
              
               <li class="article-tag-list-item">

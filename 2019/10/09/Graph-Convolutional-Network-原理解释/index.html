@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
 <meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/图卷积傅立叶变换.jpg">
-<meta property="og:updated_time" content="2019-11-02T05:29:12.622Z">
+<meta property="og:updated_time" content="2019-11-02T05:32:21.175Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Graph Convolutional Network 原理解释">
 <meta name="twitter:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—&amp;gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）—&amp;gt;GCN 的代表性工作(方法的发展)  根据一些blog（参照最后资源君，侵删）和原论文整理的笔记，加了一些帮助我理解的东西，加了个图。 清华整理的关于GNN 的 must-read paper list：https://github.com/thunlp/GNNPapers">
@@ -176,10 +176,8 @@
 </blockquote>
 <a id="more"></a>
 <h2 id="1-为什么要研究GCN"><a href="#1-为什么要研究GCN" class="headerlink" title="1. 为什么要研究GCN"></a>1. 为什么要研究GCN</h2><h3 id="1-1-传统CNN的认识"><a href="#1-1-传统CNN的认识" class="headerlink" title="1.1 传统CNN的认识"></a>1.1 传统CNN的认识</h3><h4 id="1-1-1-卷积定义"><a href="#1-1-1-卷积定义" class="headerlink" title="1.1.1 卷积定义"></a>1.1.1 卷积定义</h4><p><strong>卷积本质上就是一种加权求和</strong>。参见资源君-3<br>&emsp;卷积的定义, 称 <script type="math/tex">(f*g)(n)</script> 为 <script type="math/tex">f,g</script> 的卷积，</p>
-<pre><code>（1）连续定义为： $$(f*g)(n)=\int_{\tau=-\infty}^{\tau=+\infty}f(\tau)g(n-\tau)d\tau$$ &amp;emsp;&amp;emsp;公式（1）
-
-（2）离散定义为： $$(f*g)(n)=\sum_{\tau=-\infty}^{\tau=+\infty}f(\tau)g(n-\tau)$$ &amp;emsp;&amp;emsp;公式（2）
-</code></pre><p>&emsp;卷积的理解：“卷”：翻转，施加一种约束，限制“积”；“积”：加权求和，考虑对所有输入的效果累积。卷积本质上就是一种加权求和：最终的效果受所有输入的影响不同，以卷（滑动）控制加权求和。<br>&emsp;例子1：掷两个骰子，和为 <script type="math/tex">n=4</script> 的概率。<br>&emsp;&emsp; <script type="math/tex">f,g</script>  都为掷一个骰，按照卷积的定义即公式（2）可以定义  <script type="math/tex">(f*g)(n)</script> 为： <script type="math/tex">(f*g)(4)=\sum_{\tau=1}^{3}f(\tau)g(4-\tau)</script></p>
+<p>（1）连续定义为： <script type="math/tex">(f*g)(n)=\int_{\tau=-\infty}^{\tau=+\infty}f(\tau)g(n-\tau)d\tau</script> &emsp;&emsp;公式（1）<br>（2）离散定义为： <script type="math/tex">(f*g)(n)=\sum_{\tau=-\infty}^{\tau=+\infty}f(\tau)g(n-\tau)</script> &emsp;&emsp;公式（2）</p>
+<p>&emsp;卷积的理解：“卷”：翻转，施加一种约束，限制“积”；“积”：加权求和，考虑对所有输入的效果累积。卷积本质上就是一种加权求和：最终的效果受所有输入的影响不同，以卷（滑动）控制加权求和。<br>&emsp;例子1：掷两个骰子，和为 <script type="math/tex">n=4</script> 的概率。<br>&emsp;&emsp; <script type="math/tex">f,g</script>  都为掷一个骰，按照卷积的定义即公式（2）可以定义  <script type="math/tex">(f*g)(n)</script> 为： <script type="math/tex">(f*g)(4)=\sum_{\tau=1}^{3}f(\tau)g(4-\tau)</script></p>
 <p>，两个骰子点数之和为4为约束<script type="math/tex">g(4-\tau)</script>，函数 <script type="math/tex">f,g</script> 都为[1,2,3,4,5,6]，翻转函数 <script type="math/tex">g</script> [6,5,4,3,2,1]，滑动函数 <script type="math/tex">g</script> ，图解：</p>
 <p>&emsp;&emsp; <img src="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg" class="js-avatar show"></p>
 <p>&emsp;例子2：工厂排放化学物质的残留。工厂不断排放化学物质， <script type="math/tex">t</script> 时刻排放量是 <script type="math/tex">f(t)</script> ，被排放的化学物质在排放 <script type="math/tex">\Delta t</script> 时间后，即 <script type="math/tex">t+\Delta t=u</script> 时刻的残留比率是 <script type="math/tex">g(\Delta t)</script> ，于是 <script type="math/tex">t</script> 时刻排放的化学物质在 <script type="math/tex">t+\Delta t=u</script> 时刻还剩余 <script type="math/tex">g(\Delta t)</script> ，而 <script type="math/tex">u</script> 时刻的化学物质总量等于 <script type="math/tex">u</script> 时刻之前所有时刻的总和，由公式（1）可以得出 <script type="math/tex">u</script> 时刻的化学物质总量为： <script type="math/tex">\int_{-\infty}^{+\infty}f(t)g(u-t)dt</script> ，这就是卷积。化学物质残留比率作为限制，对所有输入（排放的化学物质）对最终总残留值贡献量做出限制。</p>
@@ -598,15 +596,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">论文笔记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">LeetCode</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">树</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文笔记</a>
               </li>
              
               <li class="article-tag-list-item">

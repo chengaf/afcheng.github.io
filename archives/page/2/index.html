@@ -2,95 +2,73 @@
 <html>
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
-  
+  <% var="" title="page.title;" if="" (is_archive()){="" ;="" (is_month()){="" +=": " page.year="" '="" page.month;="" }="" else="" (is_year()){="" page.year;="" (is_category()){="" page.category;="" (is_tag()){="" page.tag;="" %="">
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
-  <title>Archives | Little&#39;s Blogs</title>
+  <link rel="dns-prefetch" href="<%= config.url %>">
+  <title><% if="" (title){="" %=""><%= title="" %=""> | <% }="" %=""><%= config.title="" %=""></%=></%></%=></%></title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Little&#39;s Blogs">
-<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/archives/page/2/index.html">
-<meta property="og:site_name" content="Little&#39;s Blogs">
-<meta property="og:locale" content="default">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Little&#39;s Blogs">
-  
-    <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
-  
-  
-  <link rel="stylesheet" type="text/css" href="/afcheng.github.io/./main.0cf68a.css">
+  <%- open_graph({twitter_id:="" theme.twitter,="" google_plus:="" theme.google_plus,="" fb_admins:="" theme.fb_admins,="" fb_app_id:="" theme.fb_app_id})="" %="">
+  <% if="" (theme.rss){="" %="">
+    <link rel="alternative" href="<%- theme.rss %>" title="<%= config.title %>" type="application/atom+xml">
+  <% }="" %="">
+  <% if="" (theme.favicon){="" %="">
+    <link rel="icon" href="<%- theme.favicon %>">
+  <% }="" %="">
+  <%- partial('css')="" %="">
   <style type="text/css">
-  
+  <% var defaultCtnBg = 'linear-gradient(200deg,#a0cfe4,#e8c37e)' %>
     #container.show {
-      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+      background: <%= theme.style && theme.style.slider ? theme.style.slider : defaultCtnBg %>;
     }
   </style>
-  
+  <%- partial('google-analytics')="" %="">
+  <%- partial('baidu-analytics')="" %="">
+</%-></%-></%-></%></%></%></%></%-></%></head>
 
-  
-
-</head>
-</html>
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
     <div class="left-col" q-class="show:isShow">
-      
-<div class="overlay" style="background: #4d4d4d"></div>
+      <% var="" defaultbg="#4d4d4d" ;="" %="">
+<div class="overlay" style="background: <%= theme.style && theme.style.header ? theme.style.header : defaultBg %>"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/afcheng.github.io/" class="profilepic">
-			<img src="https://chengaf.github.io/afcheng.github.io/assets/img/pika.png" class="js-avatar show">
+		<a href="<%=theme.root%>" class="profilepic">
+			<img src="<%=theme.avatar%>" class="js-avatar show">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/afcheng.github.io/">Little</a></h1>
+		  <h1 class="header-author"><a href="<%=theme.root%>"><%=theme.author%></%=theme.author%></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">人生里有些事情，不能蹉跎。</p>
-		
+		<% if="" (theme.subtitle){="" %="">
+		<p class="header-subtitle"><%=theme.subtitle%></%=theme.subtitle%></p>
+		<%}%>
 
 		<nav class="header-menu">
 			<ul>
-			
-				<li><a href="https://chengaf.github.io/afcheng.github.io/">主页</a></li>
-	        
-				<li><a href="/afcheng.github.io/tags/图神经网络/">图神经网络</a></li>
-	        
-			</ul>
+			<% for="" (var="" i="" in="" theme.menu){="" %="">
+				<li><a href="<%- url_for(theme.menu[i]) %>"><%= i="" %=""></%=></a></li>
+	        <%}%>
+			</%}%></%></ul>
 		</nav>
 		<nav class="header-smart-menu">
-    		
-    			
-    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
-    			
-            
-    			
-    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
-    			
-            
-    			
-    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
-    			
-            
-		</nav>
+    		<% for="" (var="" i="" in="" theme.smart_menu){="" %="">
+    			<% if(theme.smart_menu[i]){="" %="">
+    			<a q-on="click: openSlider(e, '<%-i%>')" href="javascript:void(0)"><%= theme.smart_menu[i]="" %=""></%=></a>
+    			<% }="" %="">
+            <%}%>
+		</%}%></%></%></%></nav>
 		<nav class="header-nav">
 			<div class="social">
-				
-					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
-		        
-					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
-		        
-					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
-		        
-					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
-		        
-			</div>
+				<% for="" (var="" i="" in="" theme.subnav){="" %="">
+					<a class="<%= i %>" target="_blank" href="<%- url_for(theme.subnav[i]) %>" title="<%= i %>"><i class="icon-<%= i %>"></i></a>
+		        <%}%>
+			</%}%></%></div>
 		</nav>
-	</header>		
+	</%}%></%></header>		
 </div>
 
-    </div>
+    </%></div>
     <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
       
 <nav id="mobile-nav">
@@ -107,7 +85,7 @@
 			  <h1 class="header-author js-header-author">Little</h1>
 			</hgroup>
 			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>人生里有些事情，不能蹉跎。<i class="icon icon-quo-right"></i></p>
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>人生不如意之事十有八九。常想一二，不思八九，事事如意。&lt;br&gt; 嘿，我有一二了。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -149,7 +127,7 @@
       <div id="wrapper" class="body-wrap">
         <div class="menu-l">
           <div class="canvas-wrap">
-            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+            <canvas data-colors="#eaeaea" data-sectionheight="100" data-contentid="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
             
@@ -574,7 +552,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 Little
+    		&copy; 2020 Little
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -702,11 +680,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">图</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -726,14 +708,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">知识图谱</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">数组</a>
               </li>
              
@@ -742,15 +716,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">知识图谱</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">问答</a>
+                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
+                <a href="javascript:void(0)" class="js-tag color3">问答</a>
               </li>
             
             <div class="clearfix"></div>

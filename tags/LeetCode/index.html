@@ -30,45 +30,61 @@
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
     <div class="left-col" q-class="show:isShow">
-      <% var="" defaultbg="#4d4d4d" ;="" %="">
-<div class="overlay" style="background: <%= theme.style && theme.style.header ? theme.style.header : defaultBg %>"></div>
+      
+<div class="overlay" style="background: #4d4d4d"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="<%=theme.root%>" class="profilepic">
-			<img src="<%=theme.avatar%>" class="js-avatar show">
+		<a href="/afcheng.github.io/" class="profilepic">
+			<img src="https://chengaf.github.io/afcheng.github.io/assets/img/pika.png" class="js-avatar show">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="<%=theme.root%>"><%=theme.author%></%=theme.author%></a></h1>
+		  <h1 class="header-author"><a href="/afcheng.github.io/">Little</a></h1>
 		</hgroup>
-		<% if="" (theme.subtitle){="" %="">
-		<p class="header-subtitle"><%=theme.subtitle%></%=theme.subtitle%></p>
-		<%}%>
+		
+		<p class="header-subtitle">人生不如意之事十有八九。常想一二，不思八九，事事如意。&lt;/br&gt; 嘿，我有一二了。</p>
+		
 
 		<nav class="header-menu">
 			<ul>
-			<% for="" (var="" i="" in="" theme.menu){="" %="">
-				<li><a href="<%- url_for(theme.menu[i]) %>"><%= i="" %=""></%=></a></li>
-	        <%}%>
-			</%}%></%></ul>
+			
+				<li><a href="https://chengaf.github.io/afcheng.github.io/">主页</a></li>
+	        
+				<li><a href="/afcheng.github.io/tags/图神经网络/">图神经网络</a></li>
+	        
+			</ul>
 		</nav>
 		<nav class="header-smart-menu">
-    		<% for="" (var="" i="" in="" theme.smart_menu){="" %="">
-    			<% if(theme.smart_menu[i]){="" %="">
-    			<a q-on="click: openSlider(e, '<%-i%>')" href="javascript:void(0)"><%= theme.smart_menu[i]="" %=""></%=></a>
-    			<% }="" %="">
-            <%}%>
-		</%}%></%></%></%></nav>
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
+		</nav>
 		<nav class="header-nav">
 			<div class="social">
-				<% for="" (var="" i="" in="" theme.subnav){="" %="">
-					<a class="<%= i %>" target="_blank" href="<%- url_for(theme.subnav[i]) %>" title="<%= i %>"><i class="icon-<%= i %>"></i></a>
-		        <%}%>
-			</%}%></%></div>
+				
+					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
+			</div>
 		</nav>
-	</%}%></%></header>		
+	</header>		
 </div>
 
-    </%></div>
+    </div>
     <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
       
 <nav id="mobile-nav">
@@ -85,7 +101,7 @@
 			  <h1 class="header-author js-header-author">Little</h1>
 			</hgroup>
 			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>人生不如意之事十有八九。常想一二，不思八九，事事如意。&lt;br&gt; 嘿，我有一二了。<i class="icon icon-quo-right"></i></p>
+			<p class="header-subtitle"><i class="icon icon-quo-left"></i>人生不如意之事十有八九。常想一二，不思八九，事事如意。&lt;/br&gt; 嘿，我有一二了。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -459,6 +475,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">深度学习</a>
               </li>
              
@@ -472,10 +492,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">attention</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -495,11 +511,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">问答</a>
+                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RNN</a>
+                <a href="javascript:void(0)" class="js-tag color3">问答</a>
               </li>
             
             <div class="clearfix"></div>

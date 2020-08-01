@@ -2,30 +2,44 @@
 <html>
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
-  <% var="" title="page.title;" if="" (is_archive()){="" ;="" (is_month()){="" +=": " page.year="" '="" page.month;="" }="" else="" (is_year()){="" page.year;="" (is_category()){="" page.category;="" (is_tag()){="" page.tag;="" %="">
+  
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="<%= config.url %>">
-  <title><% if="" (title){="" %=""><%= title="" %=""> | <% }="" %=""><%= config.title="" %=""></%=></%></%=></%></title>
+  <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
+  <title>Graph Convolutional Network 原理解释 | Little&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <%- open_graph({twitter_id:="" theme.twitter,="" google_plus:="" theme.google_plus,="" fb_admins:="" theme.fb_admins,="" fb_app_id:="" theme.fb_app_id})="" %="">
-  <% if="" (theme.rss){="" %="">
-    <link rel="alternative" href="<%- theme.rss %>" title="<%= config.title %>" type="application/atom+xml">
-  <% }="" %="">
-  <% if="" (theme.favicon){="" %="">
-    <link rel="icon" href="<%- theme.favicon %>">
-  <% }="" %="">
-  <%- partial('css')="" %="">
+  <meta name="description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—&amp;gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）—&amp;gt;GCN 的代表性工作(方法的发展)  根据一些blog（参照最后资源君，侵删）和原论文整理的笔记，加了一些帮助我理解的东西，加了个图。 清华整理的关于GNN 的 must-read paper list：https://github.com/thunlp/GNNPapers">
+<meta name="keywords" content="图神经网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Graph Convolutional Network 原理解释">
+<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/10/09/Graph-Convolutional-Network-原理解释/index.html">
+<meta property="og:site_name" content="Little&#39;s Blogs">
+<meta property="og:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—&amp;gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）—&amp;gt;GCN 的代表性工作(方法的发展)  根据一些blog（参照最后资源君，侵删）和原论文整理的笔记，加了一些帮助我理解的东西，加了个图。 清华整理的关于GNN 的 must-read paper list：https://github.com/thunlp/GNNPapers">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
+<meta property="og:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/图卷积傅立叶变换.jpg">
+<meta property="og:updated_time" content="2019-11-02T05:40:55.952Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Graph Convolutional Network 原理解释">
+<meta name="twitter:description" content="写在前面   思路：为什么提出 GCN &amp;ensp;—&amp;gt; 如何从传统意义的 CNN 到 GCN（谱角度解释）—&amp;gt;GCN 的代表性工作(方法的发展)  根据一些blog（参照最后资源君，侵删）和原论文整理的笔记，加了一些帮助我理解的东西，加了个图。 清华整理的关于GNN 的 must-read paper list：https://github.com/thunlp/GNNPapers">
+<meta name="twitter:image" content="https://chengaf.github.io/afcheng.github.io/assets/blog_img/卷积掷骰子例子.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
+  
+  
+  <link rel="stylesheet" type="text/css" href="/afcheng.github.io/./main.0cf68a.css">
   <style type="text/css">
-  <% var defaultCtnBg = 'linear-gradient(200deg,#a0cfe4,#e8c37e)' %>
+  
     #container.show {
-      background: <%= theme.style && theme.style.slider ? theme.style.slider : defaultCtnBg %>;
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
     }
   </style>
-  <%- partial('google-analytics')="" %="">
-  <%- partial('baidu-analytics')="" %="">
-</%-></%-></%-></%></%></%></%></%-></%></head>
+  
 
+  
+
+</head>
+</html>
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -95,7 +109,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="assets/img/yier.png" class="js-avatar">
+				<img src="assets/img/yier.jpeg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Little</h1>
@@ -143,7 +157,7 @@
       <div id="wrapper" class="body-wrap">
         <div class="menu-l">
           <div class="canvas-wrap">
-            <canvas data-colors="#eaeaea" data-sectionheight="100" data-contentid="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
             <article id="post-Graph-Convolutional-Network-原理解释" class="article article-type-post " itemscope="" itemprop="blogPost">
@@ -650,15 +664,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">图</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -678,11 +688,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">知识图谱</a>
+                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
+                <a href="javascript:void(0)" class="js-tag color5">知识图谱</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -691,6 +701,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -2,43 +2,30 @@
 <html>
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
-  
+  <% var="" title="page.title;" if="" (is_archive()){="" ;="" (is_month()){="" +=": " page.year="" '="" page.month;="" }="" else="" (is_year()){="" page.year;="" (is_category()){="" page.category;="" (is_tag()){="" page.tag;="" %="">
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="https://chengaf.github.io/afcheng.github.io">
-  <title>Translation With a Sequence to Sequence Network and Attention | Little&#39;s Blogs</title>
+  <link rel="dns-prefetch" href="<%= config.url %>">
+  <title><% if="" (title){="" %=""><%= title="" %=""> | <% }="" %=""><%= config.title="" %=""></%=></%></%=></%></title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Pytorch Tutorial: NLP FROM SCRATCH: TRANSLATION WITH A SEQUENCE TO SEQUENCE NETWORK AND ATTENTIONTutorial 地址: https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html任务：Translate F">
-<meta name="keywords" content="深度学习,自然语言处理,seq2seq,attention">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Translation With a Sequence to Sequence Network and Attention">
-<meta property="og:url" content="https://chengaf.github.io/afcheng.github.io/2019/10/10/Translation-With-a-Sequence-to-Sequence-Network-and-Attention/index.html">
-<meta property="og:site_name" content="Little&#39;s Blogs">
-<meta property="og:description" content="Pytorch Tutorial: NLP FROM SCRATCH: TRANSLATION WITH A SEQUENCE TO SEQUENCE NETWORK AND ATTENTIONTutorial 地址: https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html任务：Translate F">
-<meta property="og:locale" content="default">
-<meta property="og:image" content="https://pytorch.org/tutorials/_images/attention-decoder-network.png">
-<meta property="og:updated_time" content="2019-11-02T06:33:04.725Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Translation With a Sequence to Sequence Network and Attention">
-<meta name="twitter:description" content="Pytorch Tutorial: NLP FROM SCRATCH: TRANSLATION WITH A SEQUENCE TO SEQUENCE NETWORK AND ATTENTIONTutorial 地址: https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html任务：Translate F">
-<meta name="twitter:image" content="https://pytorch.org/tutorials/_images/attention-decoder-network.png">
-  
-    <link rel="alternative" href="/atom.xml" title="Little&#39;s Blogs" type="application/atom+xml">
-  
-  
-  <link rel="stylesheet" type="text/css" href="/afcheng.github.io/./main.0cf68a.css">
+  <%- open_graph({twitter_id:="" theme.twitter,="" google_plus:="" theme.google_plus,="" fb_admins:="" theme.fb_admins,="" fb_app_id:="" theme.fb_app_id})="" %="">
+  <% if="" (theme.rss){="" %="">
+    <link rel="alternative" href="<%- theme.rss %>" title="<%= config.title %>" type="application/atom+xml">
+  <% }="" %="">
+  <% if="" (theme.favicon){="" %="">
+    <link rel="icon" href="<%- theme.favicon %>">
+  <% }="" %="">
+  <%- partial('css')="" %="">
   <style type="text/css">
-  
+  <% var defaultCtnBg = 'linear-gradient(200deg,#a0cfe4,#e8c37e)' %>
     #container.show {
-      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+      background: <%= theme.style && theme.style.slider ? theme.style.slider : defaultCtnBg %>;
     }
   </style>
-  
+  <%- partial('google-analytics')="" %="">
+  <%- partial('baidu-analytics')="" %="">
+</%-></%-></%-></%></%></%></%></%-></%></head>
 
-  
-
-</head>
-</html>
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -108,7 +95,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="assets/img/pika.png" class="js-avatar">
+				<img src="assets/img/yier.png" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Little</h1>
@@ -156,7 +143,7 @@
       <div id="wrapper" class="body-wrap">
         <div class="menu-l">
           <div class="canvas-wrap">
-            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+            <canvas data-colors="#eaeaea" data-sectionheight="100" data-contentid="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
             <article id="post-Translation-With-a-Sequence-to-Sequence-Network-and-Attention" class="article article-type-post " itemscope="" itemprop="blogPost">
@@ -544,11 +531,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">图</a>
+                <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">基础算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -568,11 +559,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">百宝箱</a>
+                <a href="javascript:void(0)" class="js-tag color5">知识图谱</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">知识图谱</a>
+                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -581,10 +572,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">机器学习</a>
               </li>
              
               <li class="article-tag-list-item">
